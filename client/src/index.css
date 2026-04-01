@@ -1,0 +1,336 @@
+@import 'react-quill/dist/quill.snow.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+  
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #FF6B00;
+    border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FF8533;
+  }
+  
+  /* Custom Text Selection */
+  ::selection {
+    background-color: #FF6B00;
+    color: white;
+  }
+}
+
+/* Rich Text Editor Customization */
+.quill {
+  @apply border rounded-md bg-white;
+}
+
+.ql-toolbar {
+  @apply border-b !border-gray-300 rounded-t-md;
+}
+
+.ql-container {
+  @apply !border-0 rounded-b-md min-h-[300px];
+  font-family: inherit;
+}
+
+.ql-editor {
+  @apply min-h-[300px] text-gray-800;
+}
+
+/* Blog content styling for frontend display */
+.blog-content h1 {
+  @apply text-3xl font-bold mb-4 mt-6; 
+}
+
+.blog-content h2 {
+  @apply text-2xl font-bold mb-3 mt-5;
+}
+
+.blog-content h3 {
+  @apply text-xl font-bold mb-2 mt-4;
+}
+
+.blog-content p {
+  @apply mb-4 leading-relaxed;
+}
+
+.blog-content ul, .blog-content ol {
+  @apply mb-4 ml-6;
+}
+
+.blog-content ul {
+  @apply list-disc;
+}
+
+.blog-content ol {
+  @apply list-decimal;
+}
+
+.blog-content li {
+  @apply mb-1;
+}
+
+.blog-content a {
+  @apply text-[#0066CC] hover:underline;
+}
+
+.blog-content blockquote {
+  @apply border-l-4 border-[#FF6B00] pl-4 italic my-4;
+}
+
+.blog-content img {
+  @apply max-w-full rounded-md my-4;
+}
+
+.blog-content pre {
+  @apply bg-gray-100 p-4 rounded my-4 overflow-x-auto;
+}
+
+.blog-content code {
+  @apply bg-gray-100 p-1 rounded text-sm;
+}
+
+/* Image animation styles for Startup Plan page */
+.startup-image-wrapper {
+  @apply overflow-hidden rounded-lg shadow-lg relative transform transition-all duration-500;
+}
+
+.startup-image {
+  @apply w-full h-full object-cover transition-all duration-700;
+}
+
+.startup-image-wrapper:hover .startup-image {
+  @apply scale-105;
+}
+
+.startup-image-caption {
+  @apply absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white transform transition-all duration-500 translate-y-full opacity-0;
+}
+
+.startup-image-wrapper:hover .startup-image-caption {
+  @apply translate-y-0 opacity-100;
+}
+
+/* Entrance animations */
+.animate-in {
+  @apply transition-all duration-700 ease-out;
+}
+
+/* Initial states before animation */
+.fade-in {
+  @apply opacity-0;
+}
+
+.fade-in.animate-in {
+  @apply opacity-100;
+}
+
+.slide-up {
+  @apply opacity-0 translate-y-16;
+}
+
+.slide-up.animate-in {
+  @apply opacity-100 translate-y-0;
+}
+
+.slide-right {
+  @apply opacity-0 -translate-x-16;
+}
+
+.slide-right.animate-in {
+  @apply opacity-100 translate-x-0;
+}
+
+.slide-left {
+  @apply opacity-0 translate-x-16;
+}
+
+.slide-left.animate-in {
+  @apply opacity-100 translate-x-0;
+}
+
+.scale-in {
+  @apply opacity-0 scale-95;
+}
+
+.scale-in.animate-in {
+  @apply opacity-100 scale-100;
+}
+
+/* Animation delay utilities */
+.anim-delay-100 {
+  transition-delay: 100ms;
+}
+
+.anim-delay-200 {
+  transition-delay: 200ms;
+}
+
+.anim-delay-300 {
+  transition-delay: 300ms;
+}
+
+.anim-delay-400 {
+  transition-delay: 400ms;
+}
+
+.anim-delay-500 {
+  transition-delay: 500ms;
+}
+
+/* Portfolio image animation styles */
+.portfolio-image-container {
+  @apply relative overflow-hidden bg-gray-100;
+  height: 20rem; /* Increased from h-48 (12rem) to 20rem for better visibility */
+}
+
+.portfolio-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.portfolio-card:hover .portfolio-image-container::after {
+  opacity: 1;
+}
+
+.portfolio-image {
+  width: 100%;
+  height: auto;
+  min-height: 300%; /* Increased for more scrolling content */
+  object-fit: cover;
+  object-position: top;
+  transform: translateY(0);
+  transition: none; /* Remove default transition to prevent conflicts */
+}
+
+/* Smooth progressive scroll effect on hover */
+.portfolio-card:hover .portfolio-image {
+  animation: smoothProgressiveScroll 10s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Smooth reverse scroll effect when hover ends */
+.portfolio-card:not(:hover) .portfolio-image {
+  animation: smoothReverseScroll 6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes smoothProgressiveScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-100% + 20rem)); /* 20rem = container height */
+  }
+}
+
+@keyframes smoothReverseScroll {
+  0% {
+    transform: translateY(calc(-100% + 20rem));
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced hover effect for better visibility */
+.portfolio-card {
+  transition: all 0.4s ease;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.portfolio-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-image {
+    transition: none;
+  }
+
+  .portfolio-card:hover .portfolio-image,
+  .portfolio-card:not(:hover) .portfolio-image {
+    transform: none;
+    animation: none;
+  }
+
+  .portfolio-card {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .portfolio-card:hover {
+    transform: none;
+  }
+}
+
+/* Touch device fallback - show slight scale effect instead */
+@media (hover: none) and (pointer: coarse) {
+  .portfolio-card:active .portfolio-image {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+
+  .portfolio-card:hover .portfolio-image,
+  .portfolio-card:not(:hover) .portfolio-image {
+    transform: none;
+    animation: none;
+  }
+
+  .portfolio-card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Responsive card sizing */
+@media (max-width: 768px) {
+  .portfolio-image-container {
+    height: 16rem; /* Smaller on mobile */
+  }
+
+  @keyframes smoothProgressiveScroll {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(calc(-100% + 16rem)); /* Adjust for mobile height */
+    }
+  }
+
+  @keyframes smoothReverseScroll {
+    0% {
+      transform: translateY(calc(-100% + 16rem));
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}
