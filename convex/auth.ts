@@ -34,3 +34,25 @@ export const getCurrentUser = query({
         return await ctx.db.get(args.userId);
     }
 });
+
+// Seed initial admin user if not exists
+export const seedAdmin = mutation({
+  handler: async (ctx) => {
+    const existing = await ctx.db
+      .query("users")
+      .withIndex("by_email", (q) => q.eq("email", "anuj@synergybrandarchitect.in"))
+      .unique();
+    
+    if (existing) return existing._id;
+    
+    return await ctx.db.insert("users", {
+      name: "Anuj",
+      email: "anuj@synergybrandarchitect.in",
+      password: "Anuj@1234", // Note: Plain text for now to match the mock-bcrypt in login mutation
+      role: "admin",
+      permissions: ["view", "create", "edit", "delete", "manage_users"],
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+  },
+});

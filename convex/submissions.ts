@@ -26,3 +26,45 @@ export const getSubmissions = query({
     return await ctx.db.query("submissions").order("desc").collect();
   },
 });
+
+export const updateSubmissionStatus = mutation({
+  args: {
+    id: v.id("submissions"),
+    status: v.string(),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, {
+      status: args.status,
+      updatedAt: Date.now(),
+    });
+    return true;
+  },
+});
+
+export const deleteSubmission = mutation({
+  args: { id: v.id("submissions") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id);
+    return true;
+  },
+});
+
+export const addSubmissionNote = mutation({
+  args: {
+    id: v.id("submissions"),
+    content: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const submission = await ctx.db.get(args.id);
+    if (!submission) throw new Error("Submission not found");
+    
+    const notes = submission.notes || [];
+    notes.push({
+      content: args.content,
+      createdAt: Date.now(),
+    });
+    
+    await ctx.db.patch(args.id, { notes });
+    return true;
+  },
+});

@@ -41,4 +41,21 @@ export default defineSchema({
     userAgent: v.optional(v.string()),
     createdAt: v.number(),
   }),
+  
+  // Blog table for CMS
+  blogs: defineTable({
+    title: v.string(),
+    slug: v.string(),
+    excerpt: v.string(),
+    content: v.string(),
+    coverImage: v.optional(v.string()),
+    authorId: v.optional(v.id("users")),
+    status: v.string(), // 'draft', 'published', 'scheduled'
+    seoTitle: v.optional(v.string()),
+    seoDescription: v.optional(v.string()),
+    seoKeywords: v.optional(v.string()), // Comma separated
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    publishedAt: v.optional(v.number()),
+  }).index("by_slug", ["slug"]),
 });

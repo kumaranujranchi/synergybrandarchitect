@@ -3,7 +3,8 @@ import { useLocation } from "wouter";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from "convex/react";
+import { api } from "../../../../convex/_generated/api";
 import { useToast } from "@/hooks/use-toast";
 import { LoginData } from "@shared/schema";
 
@@ -48,52 +49,36 @@ export default function AdminLogin() {
   });
 
   // Login mutation
-  const loginMutation = useMutation({
-    mutationFn: async (data: LoginData) => {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
-      }
-      
-      return response.json();
-    },
-    onSuccess: (data: any) => {
-      // Store token in localStorage for subsequent requests
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-      }
-      
-      // Show success toast
-      toast({
-        title: "Login successful",
-        description: `Welcome back, ${data.user?.name || 'Admin'}!`,
-      });
-      
-      // Redirect to dashboard using window.location to ensure full page reload
-      window.location.href = "/admin/dashboard";
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Login failed",
-        description: error.message || "Invalid email or password",
-        variant: "destructive",
-      });
-    },
-  });
+  const loginMutation = useMutation(api.auth.login);
 
   // Form submission handler
   async function onSubmit(values: LoginData) {
     setLoading(true);
     try {
-      await loginMutation.mutateAsync(values);
+      const user = await loginMutation({ 
+        email: values.email, 
+        password: values.password 
+      });
+      
+      if (user) {
+        // Store user info in localStorage (no real 'token' needed for simple Convex auth, but we keep the structure)
+        localStorage.setItem("user", JSON.stringify(user));
+        
+        // Show success toast
+        toast({
+          title: "Login successful",
+          description: `Welcome back, ${user.name || 'Admin'}!`,
+        });
+        
+        // Redirect to dashboard
+        window.location.href = "/admin/dashboard";
+      }
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.message || "Invalid email or password",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

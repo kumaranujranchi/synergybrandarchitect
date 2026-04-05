@@ -1,4 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../../../../../convex/_generated/api";
 import { useLocation } from "wouter";
 import AdminLayout from "@/components/admin/layout";
 import { 
@@ -7,8 +8,7 @@ import {
   Edit, 
   Trash2, 
   ExternalLink,
-  MoreHorizontal,
-  Eye
+  MoreHorizontal
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,65 +30,43 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { useState } from "react";
-import { Blog } from "@shared/schema";
 
 export default function AdminBlogList() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading } = useQuery<{ blogs: Blog[] }>({
-    queryKey: ["/api/admin/blogs"],
-  });
+  // Convex Query
+  const blogs = useQuery(api.blogs.listBlogs) || [];
+  
+  // Convex Mutation
+  const deleteMutation = useMutation(api.blogs.deleteBlog);
 
-  const deleteMutation = useMutation({
-    mutationFn: async (id: number) => {
-      const res = await fetch(`/api/admin/blogs/${id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete blog");
-      return res.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/blogs"] });
-      toast({
-        title: "Blog deleted",
-        description: "The blog post has been successfully removed.",
-      });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  });
-
-  const filteredBlogs = data?.blogs.filter(blog => 
+  const filteredBlogs = blogs.filter(blog => 
     blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    blog.slug.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    blog.category?.toLowerCase().includes(searchTerm.toLowerCase())
+    blog.slug.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <AdminLayout title="Blog Management">
-      <div className="flex flex-col gap-6">
+    <AdminLayout>
+      <div className="p-6 flex flex-col gap-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder="Search blogs..."
-              className="pl-10"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <h1 className="text-3xl font-bold">Blog Management</h1>
+          <div className="flex items-center gap-4">
+             <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                placeholder="Search blogs..."
+                className="pl-10"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <Button onClick={() => setLocation("/admin/blogs/new")} className="bg-[#FF6B00] text-white hover:bg-[#FF8533]">
+              <Plus className="h-4 w-4 mr-2" />
+              New Blog Post
+            </Button>
           </div>
-          <Button onClick={() => setLocation("/admin/blogs/new")}>
-            <Plus className="h-4 w-4 mr-2" />
-            New Blog Post
-          </Button>
         </div>
 
         <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
@@ -96,42 +74,34 @@ export default function AdminBlogList() {
             <TableHeader>
               <TableRow>
                 <TableHead>Title</TableHead>
-                <TableHead>Category</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Created At</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {isLoading ? (
-                Array.from({ length: 5 }).map((_, i) => (
-                  <TableRow key={i}>
-                    <TableCell colSpan={5} className="h-12 animate-pulse bg-gray-50/50" />
-                  </TableRow>
-                ))
-              ) : filteredBlogs?.length === 0 ? (
+              {!blogs.length ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-32 text-center text-gray-500">
-                    No blog posts found
+                  <TableCell colSpan={4} className="h-32 text-center text-gray-500">
+                    No blog posts found. Create your first post!
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredBlogs?.map((blog) => (
-                  <TableRow key={blog.id}>
+                filteredBlogs.map((blog: any) => (
+                  <TableRow key={blog._id}>
                     <TableCell>
                       <div className="flex flex-col">
                         <span className="font-medium text-gray-900">{blog.title}</span>
-                        <span className="text-xs text-gray-500 font-mono">/{blog.slug}</span>
+                        <span className="text-xs text-gray-500">/{blog.slug}</span>
                       </div>
                     </TableCell>
-                    <TableCell>{blog.category || "—"}</TableCell>
                     <TableCell>
                       <Badge variant={blog.status === "published" ? "default" : "secondary"}>
-                        {blog.status.charAt(0).toUpperCase() + blog.status.slice(1)}
+                        {blog.status}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-gray-500 text-sm">
-                      {format(new Date(blog.createdAt), "MMM d, yyyy")}
+                      {format(blog.createdAt, "MMM d, yyyy")}
                     </TableCell>
                     <TableCell className="text-right">
                       <DropdownMenu>
@@ -141,7 +111,7 @@ export default function AdminBlogList() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => setLocation(`/admin/blogs/edit/${blog.id}`)}>
+                          <DropdownMenuItem onClick={() => setLocation(`/admin/blogs/edit/${blog._id}`)}>
                             <Edit className="h-4 w-4 mr-2" />
                             Edit
                           </DropdownMenuItem>
@@ -153,9 +123,14 @@ export default function AdminBlogList() {
                           )}
                           <DropdownMenuItem 
                             className="text-red-600"
-                            onClick={() => {
-                              if (confirm("Are you sure you want to delete this blog post?")) {
-                                deleteMutation.mutate(blog.id);
+                            onClick={async () => {
+                              if (confirm("Delete this blog post?")) {
+                                try {
+                                  await deleteMutation({ id: blog._id });
+                                  toast({ title: "Blog deleted" });
+                                } catch (e: any) {
+                                  toast({ title: "Delete failed", description: e.message, variant: "destructive" });
+                                }
                               }
                             }}
                           >
