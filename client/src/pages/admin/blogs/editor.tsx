@@ -204,172 +204,227 @@ export default function AdminBlogEditor() {
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-6">
-                <Card>
-                  <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Type className="h-4 w-4" /> Content</CardTitle></CardHeader>
-                  <CardContent className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Title</FormLabel>
-                          <FormControl><Input {...field} placeholder="Enter blog title" onChange={handleTitleChange} /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="slug"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Slug</FormLabel>
-                          <FormControl>
-                            <div className="flex gap-2">
-                              <span className="flex items-center px-3 rounded-md bg-gray-50 border text-gray-500 text-sm">/blog/</span>
-                              <Input {...field} onChange={(e) => { field.onChange(e); setIsSlugManuallyEdited(true); }} />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="content"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Content</FormLabel>
-                          <FormControl>
-                            <ReactQuill theme="snow" value={field.value} onChange={field.onChange} modules={quillModules} className="h-[400px] mb-12" />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
-                </Card>
+            <div className="max-w-4xl mx-auto space-y-8 pb-12 w-full">
+              {/* Category 1: Basic Information */}
+              <Card className="shadow-sm">
+                <CardHeader className="bg-gray-50/50 pb-4 border-b mb-6">
+                  <CardTitle className="text-xl flex items-center gap-2 text-gray-800">
+                    <Settings className="h-5 w-5 text-gray-500" /> Basic Information
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-8">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-base font-semibold text-gray-700">Blog Title</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="text-lg py-6" placeholder="Enter a descriptive title" onChange={handleTitleChange} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-semibold text-gray-700">URL Slug</FormLabel>
+                        <FormControl>
+                          <div className="flex gap-2">
+                            <span className="flex items-center px-4 rounded-md bg-gray-100 border text-gray-500 text-sm">synergybrandarchitect.in/blog/</span>
+                            <Input {...field} className="bg-gray-50 focus:bg-white" onChange={(e) => { field.onChange(e); setIsSlugManuallyEdited(true); }} />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <Card>
-                  <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Globe className="h-4 w-4" /> SEO & Summary</CardTitle></CardHeader>
-                  <CardContent>
-                    <Tabs defaultValue="summary">
-                      <TabsList className="mb-4">
-                        <TabsTrigger value="summary">Summary</TabsTrigger>
-                        <TabsTrigger value="seo">SEO Settings</TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="summary" className="space-y-4">
-                        <FormField
-                          control={form.control}
-                          name="excerpt"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Excerpt</FormLabel>
-                              <FormControl><Textarea {...field} className="h-24" /></FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </TabsContent>
-                      <TabsContent value="seo" className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t mt-6">
+                    {/* Status Toggle */}
+                    <div className="space-y-3">
+                      <FormLabel className="text-sm font-semibold text-gray-700 flex items-center gap-2">Visibility Status</FormLabel>
+                      <FormField
+                        control={form.control}
+                        name="status"
+                        render={({ field }) => (
+                          <FormItem className="flex items-center justify-between p-4 border rounded-xl bg-gray-50/30 hover:bg-gray-50 transition-colors">
+                            <div>
+                              <div className={`font-semibold ${field.value === "published" ? "text-green-600" : "text-gray-500"}`}>
+                                {field.value === "published" ? "Published" : "Draft"}
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                {field.value === "published" ? "Live to the public" : "Hidden from website"}
+                              </div>
+                            </div>
+                            <FormControl>
+                              <Switch 
+                                checked={field.value === "published"} 
+                                onCheckedChange={v => field.onChange(v ? "published" : "draft")} 
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    {/* Cover Image Upload */}
+                    <div className="space-y-3">
+                      <FormLabel className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                        <ImageIcon className="h-4 w-4" /> Cover Image
+                      </FormLabel>
+                      <FormField
+                        control={form.control}
+                        name="coverImage"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <div className="space-y-3">
+                                {!field.value ? (
+                                  <div className="flex flex-col gap-3">
+                                    <Label htmlFor="image-upload" className={`flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${isUploading ? 'bg-gray-100 border-gray-300 cursor-not-allowed' : 'bg-gray-50/50 border-gray-200 hover:bg-orange-50 hover:border-orange-200'}`}>
+                                      <ImageIcon className={`h-8 w-8 mb-2 ${isUploading ? 'text-gray-400' : 'text-orange-400'}`} />
+                                      <span className="text-sm font-medium text-gray-600">
+                                        {isUploading ? "Uploading image..." : "Click to upload from computer"}
+                                      </span>
+                                    </Label>
+                                    <Input 
+                                      id="image-upload" 
+                                      type="file" 
+                                      accept="image/*" 
+                                      className="hidden" 
+                                      onChange={handleImageUpload}
+                                      disabled={isUploading}
+                                    />
+                                    
+                                    <div className="flex items-center">
+                                      <hr className="flex-1" />
+                                      <span className="text-[10px] uppercase font-bold text-gray-400 mx-3 tracking-wider">or direct url</span>
+                                      <hr className="flex-1" />
+                                    </div>
+                                    <Input {...field} className="text-sm" placeholder="https://example.com/image.jpg" disabled={isUploading} />
+                                  </div>
+                                ) : (
+                                  <div className="relative aspect-[21/9] rounded-xl border overflow-hidden group">
+                                    <img src={field.value} className="w-full h-full object-cover" alt="Cover" />
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                      <Button type="button" variant="destructive" onClick={() => field.onChange("")}>
+                                        <X className="h-4 w-4 mr-2" /> Remove Image
+                                      </Button>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Category 2: Blog Content */}
+              <Card className="shadow-sm overflow-hidden">
+                <CardHeader className="bg-gray-50/50 pb-4 border-b mb-6">
+                  <CardTitle className="text-xl flex items-center gap-2 text-gray-800">
+                    <Type className="h-5 w-5 text-gray-500" /> Article Body
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <FormField
+                    control={form.control}
+                    name="content"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <ReactQuill theme="snow" value={field.value} onChange={field.onChange} modules={quillModules} className="h-[500px] mb-12 sm:mb-16" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Category 3: SEO & Summary Metadata */}
+              <Card className="shadow-sm">
+                <CardHeader className="bg-gray-50/50 pb-4 border-b mb-6">
+                  <CardTitle className="text-xl flex items-center gap-2 text-gray-800">
+                    <Globe className="h-5 w-5 text-gray-500" /> SEO & Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Tabs defaultValue="summary" className="w-full">
+                    <TabsList className="mb-8 grid w-full max-w-md grid-cols-2 p-1 bg-gray-100/80">
+                      <TabsTrigger value="summary" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">Excerpt / Preview</TabsTrigger>
+                      <TabsTrigger value="seo" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">Search Engine Metadata</TabsTrigger>
+                    </TabsList>
+                    
+                    <TabsContent value="summary" className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="excerpt"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="font-semibold text-gray-700">Short Excerpt (Optional)</FormLabel>
+                            <FormControl>
+                              <Textarea {...field} placeholder="A short 1-2 sentence summary of this blog post. Used in blog listing cards." className="h-32 text-base resize-none" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </TabsContent>
+                    
+                    <TabsContent value="seo" className="space-y-6">
+                      <div className="bg-blue-50/50 border border-blue-100 rounded-lg p-4 mb-6">
+                        <p className="text-sm text-blue-800">These fields help your blog post rank higher on Google Search results and determine how the link appears when shared on social media like WhatsApp or LinkedIn.</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <FormField
                           control={form.control}
                           name="seoTitle"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Meta Title</FormLabel>
-                              <FormControl><Input {...field} /></FormControl>
+                              <FormLabel className="font-semibold text-gray-700">Meta Title</FormLabel>
+                              <FormControl><Input {...field} placeholder="Overrides main title for search engines" /></FormControl>
+                              <p className="text-xs text-gray-500 mt-2">Leave blank to default to your blog title.</p>
                             </FormItem>
                           )}
                         />
                         <FormField
                           control={form.control}
-                          name="seoDescription"
+                          name="seoKeywords"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Meta Description</FormLabel>
-                              <FormControl><Textarea {...field} /></FormControl>
+                              <FormLabel className="font-semibold text-gray-700">Focus Keywords</FormLabel>
+                              <FormControl><Input {...field} placeholder="e.g. digital marketing, best agency, seo" /></FormControl>
+                              <p className="text-xs text-gray-500 mt-2">Comma-separated terms.</p>
                             </FormItem>
                           )}
                         />
-                      </TabsContent>
-                    </Tabs>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="space-y-6">
-                <Card>
-                  <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Settings className="h-4 w-4" /> Status</CardTitle></CardHeader>
-                  <CardContent>
-                    <FormField
-                      control={form.control}
-                      name="status"
-                      render={({ field }) => (
-                        <FormItem className="flex items-center justify-between p-3 border rounded-lg">
-                          <div>
-                            <div className="font-medium">Published</div>
-                            <div className="text-xs text-gray-500">{field.value === "published" ? "Live on site" : "Draft"}</div>
-                          </div>
-                          <FormControl>
-                            <Switch 
-                              checked={field.value === "published"} 
-                              onCheckedChange={v => field.onChange(v ? "published" : "draft")} 
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader><CardTitle className="text-lg flex items-center gap-2"><ImageIcon className="h-4 w-4" /> Cover Image</CardTitle></CardHeader>
-                  <CardContent className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="coverImage"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div className="space-y-4">
-                              {/* Keep original URL input capability just in case, but prioritize upload */}
-                              <div className="flex gap-2">
-                                <Label htmlFor="image-upload" className={`flex items-center justify-center h-10 w-full px-4 py-2 border rounded-md cursor-pointer transition-colors ${isUploading ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 hover:bg-gray-100'}`}>
-                                  {isUploading ? "Uploading..." : "Upload from computer"}
-                                </Label>
-                                <Input 
-                                  id="image-upload" 
-                                  type="file" 
-                                  accept="image/*" 
-                                  className="hidden" 
-                                  onChange={handleImageUpload}
-                                  disabled={isUploading}
-                                />
-                              </div>
-                              <div className="flex items-center">
-                                <hr className="flex-1" />
-                                <span className="text-xs text-muted-foreground mx-3">OR ENTER URL</span>
-                                <hr className="flex-1" />
-                              </div>
-                              <Input {...field} placeholder="Direct Image URL (e.g., https://...)" disabled={isUploading} />
-                              
-                              {field.value && (
-                                <div className="relative aspect-video rounded border overflow-hidden mt-4">
-                                  <img src={field.value} className="w-full h-full object-cover" />
-                                  <Button size="icon" variant="destructive" className="absolute top-1 right-1 h-6 w-6" onClick={() => field.onChange("")}><X className="h-3 w-3" /></Button>
-                                </div>
-                              )}
-                            </div>
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                  </CardContent>
-                </Card>
-              </div>
+                      </div>
+                      
+                      <FormField
+                        control={form.control}
+                        name="seoDescription"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="font-semibold text-gray-700">Meta Description</FormLabel>
+                            <FormControl><Textarea {...field} className="h-24 resize-none" placeholder="A compelling description that encourages clicks from Google search pages." /></FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
             </div>
           </form>
         </Form>
