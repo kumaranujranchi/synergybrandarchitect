@@ -1,7 +1,5 @@
 import { ReactNode, useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { useQuery } from "@tanstack/react-query";
-import { getQueryFn } from "@/lib/queryClient";
 import { Menu, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AdminSidebar from "./sidebar";
@@ -45,9 +43,9 @@ export default function AdminLayout({ children, title, description, backButton }
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 relative">
       {/* Sidebar - desktop */}
-      <div className="hidden md:block">
+      <div className="hidden md:block sticky top-0 h-screen z-20 shrink-0 shadow-sm">
         <AdminSidebar />
       </div>
       
@@ -55,16 +53,16 @@ export default function AdminLayout({ children, title, description, backButton }
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
-          <div className="fixed inset-y-0 left-0 w-full max-w-xs">
+          <div className="fixed inset-y-0 left-0 w-full max-w-xs shadow-xl">
             <AdminSidebar />
           </div>
         </div>
       )}
       
       {/* Main content */}
-      <div className="flex flex-1 flex-col min-w-0 min-h-0 overflow-hidden">
+      <div className="flex flex-1 flex-col w-full min-w-0">
         {/* Mobile header */}
-        <div className="md:hidden flex h-16 items-center border-b bg-white px-4">
+        <div className="md:hidden sticky top-0 z-10 flex h-16 shrink-0 items-center border-b bg-white px-4 shadow-sm">
           <Button
             variant="ghost"
             size="sm"
@@ -88,9 +86,9 @@ export default function AdminLayout({ children, title, description, backButton }
         </div>
         
         {/* Page content */}
-        <div className="flex-1 overflow-y-auto p-0 min-h-0">
+        <div className="flex-1 flex flex-col w-full min-w-0">
           {(title || description || backButton) && (
-            <div className="border-b p-6 bg-white">
+            <div className="border-b p-6 bg-white shrink-0">
               {backButton && (
                 <Button 
                   variant="ghost" 
@@ -106,7 +104,7 @@ export default function AdminLayout({ children, title, description, backButton }
               {description && <p className="text-gray-500">{description}</p>}
             </div>
           )}
-          <div className="p-6">
+          <div className="p-6 pb-24 md:pb-12 flex-1 w-full max-w-full overflow-x-hidden">
             {children}
           </div>
         </div>
