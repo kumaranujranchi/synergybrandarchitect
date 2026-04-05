@@ -59,11 +59,14 @@ export default function AdminBlogEditor() {
   // Convex Queries & Mutations
   // Note: We use a custom fetcher for the individual blog if needed, but here we'll just filter from the list or add a getById query later if needed
   // For now, let's use the listBlogs and find the ID (since the list is likely small for an admin)
-  const allBlogs = useQuery(api.blogs.listBlogs) || [];
+  const allBlogs = useQuery(api.blogs.listBlogs, {}) || [];
   const blogData = isEdit ? allBlogs.find(b => b._id === id) : null;
 
   const createMutation = useMutation(api.blogs.createBlog);
   const updateMutation = useMutation(api.blogs.updateBlog);
+  const generateUploadUrl = useMutation(api.blogs.generateUploadUrl);
+  const getImageUrlMutation = useMutation(api.blogs.getImageUrl);
+  const [isUploading, setIsUploading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -109,6 +112,44 @@ export default function AdminBlogEditor() {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
       form.setValue("slug", slug);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      // Step 1: Get short-lived upload URL from Convex
+      const postUrl = await generateUploadUrl();
+      
+      // Step 2: Push the file directly to Convex storage
+      const result = await fetch(postUrl, {
+        method: "POST",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+      
+      if (!result.ok) throw new Error("Failed to upload image");
+      
+      const { storageId } = await result.json();
+      
+      // Step 3: Get the public URL for the storageId and store it inside the form
+      const imageUrl = await getImageUrlMutation({ storageId });
+      if (imageUrl) {
+        form.setValue("coverImage", imageUrl, { shouldValidate: true });
+        toast({ title: "Image uploaded successfully!" });
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        title: "Upload failed",
+        description: error.message || "There was an error uploading the image",
+        variant: "destructive"
+      });
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -294,9 +335,29 @@ export default function AdminBlogEditor() {
                         <FormItem>
                           <FormControl>
                             <div className="space-y-4">
-                              <Input {...field} placeholder="Image URL" />
+                              {/* Keep original URL input capability just in case, but prioritize upload */}
+                              <div className="flex gap-2">
+                                <Label htmlFor="image-upload" className={`flex items-center justify-center h-10 w-full px-4 py-2 border rounded-md cursor-pointer transition-colors ${isUploading ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 hover:bg-gray-100'}`}>
+                                  {isUploading ? "Uploading..." : "Upload from computer"}
+                                </Label>
+                                <Input 
+                                  id="image-upload" 
+                                  type="file" 
+                                  accept="image/*" 
+                                  className="hidden" 
+                                  onChange={handleImageUpload}
+                                  disabled={isUploading}
+                                />
+                              </div>
+                              <div className="flex items-center">
+                                <hr className="flex-1" />
+                                <span className="text-xs text-muted-foreground mx-3">OR ENTER URL</span>
+                                <hr className="flex-1" />
+                              </div>
+                              <Input {...field} placeholder="Direct Image URL (e.g., https://...)" disabled={isUploading} />
+                              
                               {field.value && (
-                                <div className="relative aspect-video rounded border overflow-hidden">
+                                <div className="relative aspect-video rounded border overflow-hidden mt-4">
                                   <img src={field.value} className="w-full h-full object-cover" />
                                   <Button size="icon" variant="destructive" className="absolute top-1 right-1 h-6 w-6" onClick={() => field.onChange("")}><X className="h-3 w-3" /></Button>
                                 </div>
