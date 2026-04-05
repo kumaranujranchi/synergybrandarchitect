@@ -58,4 +58,20 @@ export default defineSchema({
     updatedAt: v.number(),
     publishedAt: v.optional(v.number()),
   }).index("by_slug", ["slug"]),
+
+  // Portfolio items
+  portfolio: defineTable({
+    title: v.string(),
+    category: v.string(),
+    description: v.string(),
+    image: v.string(),
+    results: v.array(v.string()),
+    link: v.string(),
+    featured: v.optional(v.boolean()),
+    external: v.optional(v.boolean()),
+    underDevelopment: v.optional(v.boolean()),
+    order: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }),
 });

@@ -8,7 +8,8 @@ import {
   LogOut,
   ChevronRight,
   LayoutDashboard,
-  Newspaper
+  Newspaper,
+  FolderKanban
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -168,6 +169,15 @@ export default function AdminSidebar() {
           >
             <Newspaper className="h-5 w-5" />
             {!isCollapsed && <span>Blogs</span>}
+          </Button>
+
+          <Button
+            variant="ghost"
+            className={menuItemClass('/admin/portfolio')}
+            onClick={() => setLocation('/admin/portfolio')}
+          >
+            <FolderKanban className="h-5 w-5" />
+            {!isCollapsed && <span>Portfolio</span>}
           </Button>
         </nav>
       </div>

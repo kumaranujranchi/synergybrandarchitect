@@ -34,6 +34,8 @@ import AdminSubmissions from "@/pages/admin/submissions";
 import AdminUsers from "@/pages/admin/users";
 import AdminBlogs from "@/pages/admin/blogs/index";
 import AdminBlogEditor from "@/pages/admin/blogs/editor";
+import AdminPortfolio from "@/pages/admin/portfolio/index";
+import AdminPortfolioEditor from "@/pages/admin/portfolio/editor";
 
 import WishluvBuildconCaseStudy from "@/pages/case-studies/wishluv-buildcon";
 import BiryaniMahalCaseStudy from "@/pages/case-studies/biryani-mahal";
@@ -112,6 +114,9 @@ function Router() {
       <Route path="/admin/blogs" component={AdminBlogs} />
       <Route path="/admin/blogs/new" component={AdminBlogEditor} />
       <Route path="/admin/blogs/edit/:id" component={AdminBlogEditor} />
+      <Route path="/admin/portfolio" component={AdminPortfolio} />
+      <Route path="/admin/portfolio/new" component={AdminPortfolioEditor} />
+      <Route path="/admin/portfolio/edit/:id" component={AdminPortfolioEditor} />
 
 
       
