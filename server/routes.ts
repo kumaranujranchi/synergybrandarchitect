@@ -10,7 +10,9 @@ import {
   updateSubmissionSchema,
 
 
-  registerSchema
+  registerSchema,
+  insertBlogSchema,
+  updateBlogSchema
 } from '@shared/schema';
 import { generateToken, authenticateJWT, authorize, requirePermission } from './auth';
 import cookieParser from 'cookie-parser';
@@ -100,6 +102,28 @@ export function registerRoutes(app: Express): void {
   app.get('/api/debug/submissions', async (req, res) => {
     const submissions = await storage.listSubmissions({});
     res.status(200).json({ count: submissions.length, submissions });
+  });
+
+  // Blog Public API
+  app.get('/api/blogs', async (req, res) => {
+    try {
+      const blogs = await storage.listBlogs({ status: 'published' });
+      res.status(200).json({ blogs });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch blogs' });
+    }
+  });
+
+  app.get('/api/blogs/:slug', async (req, res) => {
+    try {
+      const blog = await storage.getBlogBySlug(req.params.slug);
+      if (!blog || blog.status !== 'published') {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+      res.status(200).json({ blog });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch blog' });
+    }
   });
 
   // Authentication routes
@@ -694,6 +718,95 @@ export function registerRoutes(app: Express): void {
       res.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Failed to delete user' });
+    }
+  });
+
+  // Admin Blog API
+  app.get('/api/admin/blogs', authorize(['admin', 'manager']), async (req, res) => {
+    try {
+      const blogs = await storage.listBlogs();
+      res.status(200).json({ blogs });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch blogs' });
+    }
+  });
+
+  app.post('/api/admin/blogs', authorize(['admin', 'manager']), async (req, res) => {
+    try {
+      const blogData = insertBlogSchema.parse({
+        ...req.body,
+        authorId: req.user!.id
+      });
+      
+      // Check if slug is unique
+      const existing = await storage.getBlogBySlug(blogData.slug);
+      if (existing) {
+        return res.status(400).json({ message: 'Slug already in use' });
+      }
+      
+      const blog = await storage.createBlog(blogData);
+      
+      storage.logAudit({
+        userId: req.user!.id,
+        action: 'Create blog',
+        ipAddress: req.ip ? req.ip : null,
+        userAgent: req.headers['user-agent'] ? req.headers['user-agent'] : null,
+        details: { blogId: blog.id, title: blog.title }
+      });
+      
+      res.status(201).json({ blog });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: error.errors[0].message });
+      }
+      res.status(400).json({ message: 'Invalid blog data' });
+    }
+  });
+
+  app.patch('/api/admin/blogs/:id', authorize(['admin', 'manager']), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const blogData = updateBlogSchema.parse(req.body);
+      
+      const blog = await storage.updateBlog(id, blogData);
+      if (!blog) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+      
+      storage.logAudit({
+        userId: req.user!.id,
+        action: 'Update blog',
+        ipAddress: req.ip ? req.ip : null,
+        userAgent: req.headers['user-agent'] ? req.headers['user-agent'] : null,
+        details: { blogId: id, changes: Object.keys(blogData) }
+      });
+      
+      res.status(200).json({ blog });
+    } catch (error) {
+      res.status(400).json({ message: 'Invalid blog data' });
+    }
+  });
+
+  app.delete('/api/admin/blogs/:id', authorize(['admin', 'manager']), async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteBlog(id);
+      
+      if (!success) {
+        return res.status(404).json({ message: 'Blog not found' });
+      }
+      
+      storage.logAudit({
+        userId: req.user!.id,
+        action: 'Delete blog',
+        ipAddress: req.ip ? req.ip : null,
+        userAgent: req.headers['user-agent'] ? req.headers['user-agent'] : null,
+        details: { blogId: id }
+      });
+      
+      res.status(200).json({ message: 'Blog deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to delete blog' });
     }
   });
 

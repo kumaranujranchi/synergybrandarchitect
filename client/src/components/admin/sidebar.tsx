@@ -7,7 +7,8 @@ import {
   Users,
   LogOut,
   ChevronRight,
-  LayoutDashboard
+  LayoutDashboard,
+  Newspaper
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -159,6 +160,15 @@ export default function AdminSidebar() {
               {!isCollapsed && <span>User Management</span>}
             </Button>
           )}
+
+          <Button
+            variant="ghost"
+            className={menuItemClass('/admin/blogs')}
+            onClick={() => setLocation('/admin/blogs')}
+          >
+            <Newspaper className="h-5 w-5" />
+            {!isCollapsed && <span>Blogs</span>}
+          </Button>
         </nav>
       </div>
       

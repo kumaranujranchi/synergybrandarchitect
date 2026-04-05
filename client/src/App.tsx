@@ -15,6 +15,7 @@ import Portfolio from "@/pages/portfolio";
 import Resources from "@/pages/resources";
 import Sitemap from "@/pages/sitemap";
 import Blog from "@/pages/blog";
+import BlogDetail from "@/pages/blog-detail";
 import ContactPage from "@/pages/contact";
 import CaseStudyPage from "@/pages/case-study";
 import AboutPage from "@/pages/about";
@@ -27,13 +28,13 @@ import Automation from "@/pages/services/automation";
 import PerformanceMarketing from "@/pages/services/performance-marketing";
 import SEO from "@/pages/services/seo";
 
-import DigitalMarketingTrends from "@/pages/blog/digital-marketing-trends";
-import LocalSEOGuide from "@/pages/blog/local-seo-guide";
-import BuildingBrandResonance from "@/pages/blog/building-brand-resonance";
-
 import AdminLogin from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/dashboard";
-import AdminSubmissions from "@/pages/admin/submissions-wrapper";
+import AdminSubmissions from "@/pages/admin/submissions";
+import AdminUsers from "@/pages/admin/users";
+import AdminBlogs from "@/pages/admin/blogs/index";
+import AdminBlogEditor from "@/pages/admin/blogs/editor";
+
 import WishluvBuildconCaseStudy from "@/pages/case-studies/wishluv-buildcon";
 import BiryaniMahalCaseStudy from "@/pages/case-studies/biryani-mahal";
 import TheHelpingHandCaseStudy from "@/pages/case-studies/the-helping-hand";
@@ -46,9 +47,6 @@ import { AuthProvider } from "@/hooks/use-auth";
 import { updateSchemaMarkup } from "@/utils/schemaMarkup";
 
 import { SmoothScroll } from "@/components/SmoothScroll";
-
-// Lazy load admin components
-const AdminUsers = lazy(() => import('./pages/admin/users'));
 
 
 function Router() {
@@ -76,13 +74,7 @@ function Router() {
       
       {/* Blog Routes */}
       <Route path="/blog" component={Blog} />
-      <Route path="/blog/digital-marketing-trends" component={DigitalMarketingTrends} />
-      <Route path="/blog/digital-marketing-trends-2023" component={DigitalMarketingTrends} />
-      <Route path="/blog/local-seo-guide" component={LocalSEOGuide} />
-      <Route path="/blog/local-seo-guide-patna-businesses" component={LocalSEOGuide} />
-      <Route path="/blog/building-brand-resonance" component={BuildingBrandResonance} />
-      <Route path="/blog/build-brand-that-resonates-with-audience" component={BuildingBrandResonance} />
-      <Route path="/blog/post10" component={DigitalMarketingTrends} />
+      <Route path="/blog/:slug" component={BlogDetail} />
       
       {/* Contact Route */}
       <Route path="/contact" component={ContactPage} />
@@ -116,11 +108,10 @@ function Router() {
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/admin/submissions" component={AdminSubmissions} />
-      <Route path="/admin/users">
-        <Suspense fallback={<div className="py-24 text-center">Loading...</div>}>
-          <AdminUsers />
-        </Suspense>
-      </Route>
+      <Route path="/admin/users" component={AdminUsers} />
+      <Route path="/admin/blogs" component={AdminBlogs} />
+      <Route path="/admin/blogs/new" component={AdminBlogEditor} />
+      <Route path="/admin/blogs/edit/:id" component={AdminBlogEditor} />
 
 
       

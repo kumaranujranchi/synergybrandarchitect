@@ -2,7 +2,7 @@ import { ReactNode, useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { getQueryFn } from "@/lib/queryClient";
-import { Menu } from "lucide-react";
+import { Menu, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AdminSidebar from "./sidebar";
 
@@ -10,9 +10,13 @@ interface AdminLayoutProps {
   children: ReactNode;
   title?: string;
   description?: string;
+  backButton?: {
+    label: string;
+    href: string;
+  };
 }
 
-export default function AdminLayout({ children, title, description }: AdminLayoutProps) {
+export default function AdminLayout({ children, title, description, backButton }: AdminLayoutProps) {
   const [, setLocation] = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -92,8 +96,19 @@ export default function AdminLayout({ children, title, description }: AdminLayou
         
         {/* Page content */}
         <div className="flex-1 overflow-auto">
-          {(title || description) && (
+          {(title || description || backButton) && (
             <div className="border-b p-6 bg-white">
+              {backButton && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="mb-4 -ml-2 text-gray-500"
+                  onClick={() => setLocation(backButton.href)}
+                >
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  {backButton.label}
+                </Button>
+              )}
               {title && <h1 className="text-xl font-semibold mb-1">{title}</h1>}
               {description && <p className="text-gray-500">{description}</p>}
             </div>

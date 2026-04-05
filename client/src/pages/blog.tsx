@@ -2,60 +2,25 @@ import { useEffect } from 'react';
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
-import { Calendar, User, ArrowRight, TrendingUp, MapPin, Users } from 'lucide-react';
+import { Calendar, User, ArrowRight, TrendingUp, Clock } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { Blog } from '@shared/schema';
+import { format } from 'date-fns';
+import { useLocation } from 'wouter';
 
-interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  date: string;
-  author: string;
-  category: string;
-  readTime: string;
-  image: string;
-  icon: any;
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "5 Digital Marketing Trends to Watch in 2023",
-    excerpt: "The digital marketing space is transforming rapidly. From AI-powered personalization to voice search optimization, discover the trends shaping the future of marketing and how to leverage them for your business.",
-    date: "January 15, 2025",
-    author: "Synergy Team",
-    category: "Digital Marketing",
-    readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
-    icon: TrendingUp
-  },
-  {
-    id: 2,
-    title: "The Ultimate Guide to Local SEO for Patna Businesses",
-    excerpt: "Standing out locally is crucial for Patna businesses. Learn actionable steps to optimize your Google Business Profile, build citations, and dominate local search results to attract customers in your neighborhood.",
-    date: "January 18, 2025",
-    author: "Synergy Team",
-    category: "SEO",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=500&fit=crop",
-    icon: MapPin
-  },
-  {
-    id: 3,
-    title: "How to Build a Brand That Resonates With Your Audience",
-    excerpt: "A brand is more than a logo—it's an emotional connection. Discover how to define your brand purpose, develop a distinct voice, and create authentic experiences that turn customers into loyal advocates.",
-    date: "January 20, 2025",
-    author: "Synergy Team",
-    category: "Branding",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=500&fit=crop",
-    icon: Users
-  }
-];
-
-export default function Blog() {
+export default function BlogList() {
+  const [, setLocation] = useLocation();
+  
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = "Our Blog | Synergy Brand Architect - Insights & Trends";
   }, []);
+
+  const { data, isLoading } = useQuery<{ blogs: Blog[] }>({
+    queryKey: ['/api/blogs'],
+  });
+
+  const publishedBlogs = data?.blogs || [];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -92,26 +57,38 @@ export default function Blog() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post) => {
-                const IconComponent = post.icon;
-                return (
+            {isLoading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-white rounded-xl shadow-lg h-96 animate-pulse" />
+                ))}
+              </div>
+            ) : publishedBlogs.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-gray-500 text-lg">No blog posts published yet. Stay tuned!</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {publishedBlogs.map((post) => (
                   <article 
                     key={post.id}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group"
+                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
+                    onClick={() => setLocation(`/blog/${post.slug}`)}
                   >
                     {/* Blog Image */}
                     <div className="relative h-48 overflow-hidden bg-gray-200">
                       <img 
-                        src={post.image} 
+                        src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop"} 
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-[#FF6B00] text-white text-xs font-semibold px-3 py-1 rounded-full">
-                          {post.category}
-                        </span>
-                      </div>
+                      {post.category && (
+                        <div className="absolute top-4 left-4">
+                          <span className="bg-[#FF6B00] text-white text-xs font-semibold px-3 py-1 rounded-full">
+                            {post.category}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Blog Content */}
@@ -120,11 +97,11 @@ export default function Blog() {
                       <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                         <div className="flex items-center gap-1">
                           <Calendar size={14} />
-                          <span>{post.date}</span>
+                          <span>{post.publishedAt ? format(new Date(post.publishedAt), 'MMM dd, yyyy') : format(new Date(post.createdAt), 'MMM dd, yyyy')}</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <User size={14} />
-                          <span>{post.author}</span>
+                          <Clock size={14} />
+                          <span>5 min read</span>
                         </div>
                       </div>
 
@@ -135,12 +112,11 @@ export default function Blog() {
 
                       {/* Excerpt */}
                       <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                        {post.excerpt}
+                        {post.excerpt || post.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...'}
                       </p>
 
                       {/* Read More Link */}
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">{post.readTime}</span>
                         <button className="flex items-center gap-2 text-[#0066CC] font-semibold text-sm group-hover:gap-3 transition-all">
                           Read More
                           <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -148,11 +124,11 @@ export default function Blog() {
                       </div>
                     </div>
                   </article>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            )}
 
-            {/* Coming Soon Message */}
+            {/* Newsletter section or Placeholder */}
             <div className="mt-16 text-center">
               <div className="bg-white rounded-xl shadow-md p-8 max-w-2xl mx-auto border border-gray-200">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#0066CC] to-[#004999] rounded-full flex items-center justify-center mx-auto mb-4">

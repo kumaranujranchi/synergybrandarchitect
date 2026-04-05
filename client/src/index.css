@@ -4,6 +4,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Quill Editor Alignment Support */
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-right {
+  text-align: right;
+}
+.ql-align-justify {
+  text-align: justify;
+}
+
+/* Ensure images in prose are responsive */
+.prose img {
+  @apply mx-auto rounded-xl shadow-lg my-8;
+}
+
 /* Lenis Smooth Scroll Styles */
 html.lenis, html.lenis body {
   height: auto;

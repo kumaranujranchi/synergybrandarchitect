@@ -28,6 +28,25 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Blogs table
+export const blogs = pgTable("blogs", {
+  id: serial("id").primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  content: text("content").notNull(),
+  excerpt: text("excerpt"),
+  coverImage: varchar("cover_image", { length: 255 }),
+  category: varchar("category", { length: 100 }),
+  authorId: integer("author_id").references(() => users.id),
+  metaTitle: varchar("meta_title", { length: 255 }),
+  metaDescription: text("meta_description"),
+  metaKeywords: varchar("meta_keywords", { length: 255 }),
+  status: varchar("status", { length: 20 }).notNull().default('draft'), // draft, published
+  publishedAt: timestamp("published_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 // Contact form submissions
 export const submissions = pgTable("submissions", {
   id: serial("id").primaryKey(),
@@ -174,6 +193,21 @@ export const resetPasswordWithOTPSchema = z.object({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 export type User = typeof users.$inferSelect;
+
+export const insertBlogSchema = createInsertSchema(blogs)
+  .omit({ id: true, createdAt: true, updatedAt: true, publishedAt: true })
+  .extend({
+    slug: z.string().min(2, "Slug must be at least 2 characters").regex(/^[a-z0-9-]+$/, "Slug must only contain lowercase letters, numbers, and hyphens"),
+    content: z.string().min(10, "Content must be at least 10 characters")
+  });
+
+export const updateBlogSchema = createInsertSchema(blogs)
+  .partial()
+  .omit({ id: true, createdAt: true, updatedAt: true, authorId: true });
+
+export type Blog = typeof blogs.$inferSelect;
+export type InsertBlog = z.infer<typeof insertBlogSchema>;
+export type UpdateBlog = z.infer<typeof updateBlogSchema>;
 
 export type InsertSubmission = z.infer<typeof insertSubmissionSchema>;
 export type UpdateSubmission = z.infer<typeof updateSubmissionSchema>;
