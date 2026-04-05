@@ -126,7 +126,7 @@ export default function About() {
           <h2 className="font-poppins font-semibold text-3xl mb-10 text-[#333333] text-center">
             Our Values
           </h2>
-          <div className="mobile-scroll-container">
+          <div className="mobile-scroll-container lg:grid-cols-2">
             {values.map((value, index) => (
               <div key={index} className="mobile-scroll-item">
                 <motion.div

@@ -11,7 +11,7 @@ export default function Stats() {
   return (
     <section className="section-padding bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white">
       <div className="container mx-auto container-padding">
-        <div className="mobile-scroll-container text-center">
+        <div className="mobile-scroll-container text-center lg:grid-cols-4">
           {stats.map((stat, index) => (
             <motion.div
               key={index}

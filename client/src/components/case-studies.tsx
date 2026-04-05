@@ -48,7 +48,7 @@ export default function CaseStudies() {
           </p>
         </div>
 
-        <div className="mobile-scroll-container">
+        <div className="mobile-scroll-container lg:grid-cols-3">
           {caseStudies.map((study) => (
             <div key={study.id} className="mobile-scroll-item h-full">
               <Card className="border border-gray-200 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">

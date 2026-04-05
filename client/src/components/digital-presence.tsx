@@ -82,7 +82,7 @@ export default function DigitalPresence() {
           </motion.div>
           
           <motion.div 
-            className="mobile-scroll-container"
+            className="mobile-scroll-container lg:grid-cols-2"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"

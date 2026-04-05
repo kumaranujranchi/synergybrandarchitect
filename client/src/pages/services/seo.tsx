@@ -156,7 +156,7 @@ export default function SEO() {
             </div>
 
             <div className="max-w-5xl mx-auto">
-              <div className="mobile-scroll-container">
+              <div className="mobile-scroll-container lg:grid-cols-3">
                 {authoritySteps.map((item, idx) => (
                   <motion.div 
                     key={idx}
@@ -186,7 +186,7 @@ export default function SEO() {
               <p className="text-gray-600 max-w-2xl mx-auto font-inter">SEO is evolving. The brands that win in 2026 are those that adapt to AI search and zero-click environments.</p>
             </div>
 
-            <div className="mobile-scroll-container">
+            <div className="mobile-scroll-container lg:grid-cols-3">
               {[
                 { 
                   icon: <Sparkles />, 
@@ -243,7 +243,7 @@ export default function SEO() {
           </div>
 
           <div className="container mx-auto container-padding">
-            <div className="mobile-scroll-container">
+            <div className="mobile-scroll-container lg:grid-cols-2">
               {[
                 { title: "Technical SEO", items: ["Speed & Core Vitals", "Schema Markup", "Mobile-First Logic"], icon: <Terminal /> },
                 { title: "Content Strategy", items: ["Topical Clusters", "AI Content Tuning", "Blog Ecosystems"], icon: <FileText /> },
@@ -279,7 +279,7 @@ export default function SEO() {
                 <TrendingUp size={200} />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-8 uppercase tracking-tighter">Visible, Verifiable Results.</h2>
-              <div className="mobile-scroll-container mb-10">
+              <div className="mobile-scroll-container mb-10 lg:grid-cols-3">
                 <div className="mobile-scroll-item">
                   <div className="text-4xl font-bold text-indigo-400 mb-2">300%</div>
                   <p className="text-sm text-indigo-100 opacity-60 uppercase tracking-widest">Avg Traffic Increase</p>

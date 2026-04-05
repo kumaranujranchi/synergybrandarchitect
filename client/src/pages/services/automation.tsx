@@ -155,7 +155,7 @@ export default function Automation() {
             </div>
 
             <div className="max-w-5xl mx-auto">
-              <div className="mobile-scroll-container">
+              <div className="mobile-scroll-container lg:grid-cols-3">
                 {smartOpsSteps.map((item, idx) => (
                   <motion.div 
                     key={idx}
@@ -185,7 +185,7 @@ export default function Automation() {
               <p className="text-gray-600 italic font-inter">“If your systems aren't learning, they're decaying.”</p>
             </div>
 
-            <div className="mobile-scroll-container">
+            <div className="mobile-scroll-container lg:grid-cols-3">
               {[
                 { 
                   icon: <Bot />, 
@@ -239,7 +239,7 @@ export default function Automation() {
         <section className="section-padding bg-gray-50">
           <div className="container mx-auto container-padding text-center">
             <h2 className="text-3xl md:text-5xl font-poppins font-bold text-gray-900 mb-16">Tools of the Trade</h2>
-            <div className="mobile-scroll-container">
+            <div className="mobile-scroll-container lg:grid-cols-2">
               {[
                 { name: "n8n", desc: "Complex logic & data sovereignty", icon: <Workflow className="w-10 h-10 text-emerald-600" /> },
                 { name: "Make.com", desc: "Visual multi-platform integrations", icon: <MousePointer2 className="w-10 h-10 text-emerald-600" /> },
@@ -264,7 +264,7 @@ export default function Automation() {
                 <Settings size={200} />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-8 transition-colors hover:text-emerald-400 uppercase tracking-tighter">The Efficiency Multiplier</h2>
-              <div className="mobile-scroll-container mb-10">
+              <div className="mobile-scroll-container mb-10 lg:grid-cols-3">
                 <div className="mobile-scroll-item">
                   <div className="text-4xl font-bold text-emerald-400 mb-2">1200+</div>
                   <p className="text-sm text-emerald-100 opacity-60 uppercase tracking-widest">Monthly Hours Saved</p>

@@ -154,7 +154,7 @@ export default function PerformanceMarketing() {
             </div>
 
             <div className="max-w-5xl mx-auto">
-              <div className="mobile-scroll-container">
+              <div className="mobile-scroll-container lg:grid-cols-3">
                 {roiEngineSteps.map((item, idx) => (
                   <motion.div 
                     key={idx}
@@ -184,7 +184,7 @@ export default function PerformanceMarketing() {
               <p className="text-gray-600">While others rely on hacks, we rely on architectures.</p>
             </div>
 
-            <div className="mobile-scroll-container">
+            <div className="mobile-scroll-container lg:grid-cols-3">
               {[
                 { 
                   icon: <Sparkles />, 
@@ -242,7 +242,7 @@ export default function PerformanceMarketing() {
               <p className="text-gray-600">Platform-specific strategies for maximum impact.</p>
             </div>
             
-            <div className="mobile-scroll-container">
+            <div className="mobile-scroll-container lg:grid-cols-3">
                {[
                  { platform: "Meta (IG/FB)", focus: "Creative Velocity & CAPI Mastery" },
                  { platform: "Google (Search/PMAX)", focus: "Intent Accuracy & Negative Filtering" },
@@ -271,7 +271,7 @@ export default function PerformanceMarketing() {
                 <Coins size={200} />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold mb-8 uppercase tracking-tighter">Numbers Define Our Success.</h2>
-              <div className="mobile-scroll-container mb-10">
+              <div className="mobile-scroll-container mb-10 lg:grid-cols-3">
                 <div className="mobile-scroll-item">
                   <div className="text-4xl font-bold text-amber-400 mb-2">₹10Cr+</div>
                   <p className="text-sm text-amber-100 opacity-60 uppercase tracking-widest">Ad Spend Managed</p>

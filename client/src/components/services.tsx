@@ -181,7 +181,7 @@ export default function Services() {
             Establish a memorable brand identity that resonates with your audience and stands out in the market. Our brand building solutions create the foundation for your business growth.
           </motion.p>
           <motion.div 
-            className="mobile-scroll-container"
+            className="mobile-scroll-container lg:grid-cols-2"
             variants={container}
             initial="hidden"
             whileInView="show"
@@ -216,7 +216,7 @@ export default function Services() {
             Drive traffic, generate leads, and increase conversions with our comprehensive digital marketing strategies. As one of the best digital marketing services in Patna, we focus on delivering measurable results.
           </motion.p>
           <motion.div 
-            className="mobile-scroll-container"
+            className="mobile-scroll-container lg:grid-cols-3"
             variants={container}
             initial="hidden"
             whileInView="show"

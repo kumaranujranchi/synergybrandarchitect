@@ -359,11 +359,12 @@ html.lenis, html.lenis body {
 /* Mobile Horizontal Scroll Utilities */
 @layer utilities {
   .mobile-scroll-container {
-    @apply flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 scrollbar-hide md:grid md:overflow-x-visible md:snap-none md:pb-0 md:mx-0 md:px-0;
+    @apply flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 -mx-4 px-4 scrollbar-hide 
+           md:grid md:grid-cols-2 md:overflow-x-visible md:snap-none md:pb-0 md:mx-0 md:px-0 lg:gap-8;
   }
   
   .mobile-scroll-item {
-    @apply min-w-[85vw] sm:min-w-[320px] snap-center md:min-w-0 md:snap-align-none;
+    @apply min-w-[85vw] sm:min-w-[320px] snap-center md:min-w-0 md:snap-align-none h-full flex flex-col;
   }
   
   .scrollbar-hide::-webkit-scrollbar {
