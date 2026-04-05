@@ -32,6 +32,11 @@ export function registerRoutes(app: Express): void {
     // Get protocol considering potential proxies
     const protocol = req.header('x-forwarded-proto') || req.protocol;
     
+    // Skip SEO redirects for API calls to avoid issues with non-GET methods or JSON expectations
+    if (path.startsWith('/api')) {
+      return next();
+    }
+    
     // Check for HTTPS to ensure consistent protocol
     if (process.env.NODE_ENV === 'production' && protocol !== 'https') {
       const secureUrl = `https://${host}${req.originalUrl || req.url}`;
