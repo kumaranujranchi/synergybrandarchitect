@@ -62,7 +62,7 @@ export default function AdminLayout({ children, title, description, backButton }
       )}
       
       {/* Main content */}
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col min-w-0 min-h-0 overflow-hidden">
         {/* Mobile header */}
         <div className="md:hidden flex h-16 items-center border-b bg-white px-4">
           <Button
@@ -88,7 +88,7 @@ export default function AdminLayout({ children, title, description, backButton }
         </div>
         
         {/* Page content */}
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-y-auto p-0 min-h-0">
           {(title || description || backButton) && (
             <div className="border-b p-6 bg-white">
               {backButton && (
