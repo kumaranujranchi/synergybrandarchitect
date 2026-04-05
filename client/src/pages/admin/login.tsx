@@ -53,14 +53,18 @@ export default function AdminLogin() {
 
   // Form submission handler
   async function onSubmit(values: LoginData) {
+    console.log("LOGIN ATTEMPT STARTED", { email: values.email });
     setLoading(true);
     try {
+      console.log("Calling loginMutation...");
       const user = await loginMutation({ 
         email: values.email, 
         password: values.password 
       });
+      console.log("Mutation response:", user);
       
       if (user) {
+        console.log("User valid. Setting localStorage...");
         // Store user info in localStorage (no real 'token' needed for simple Convex auth, but we keep the structure)
         localStorage.setItem("user", JSON.stringify(user));
         
@@ -70,10 +74,14 @@ export default function AdminLogin() {
           description: `Welcome back, ${user.name || 'Admin'}!`,
         });
         
-        // Redirect to dashboard
-        window.location.href = "/admin/dashboard";
+        console.log("Redirecting to /admin/dashboard via Wouter...");
+        // Redirect to dashboard using Wouter router instead of full page reload
+        setLocation("/admin/dashboard");
+      } else {
+         console.warn("Mutation returned falsy user!");
       }
     } catch (error: any) {
+      console.error("LOGIN FAILED:", error);
       toast({
         title: "Login failed",
         description: error.message || "Invalid email or password",
@@ -81,6 +89,7 @@ export default function AdminLogin() {
       });
     } finally {
       setLoading(false);
+      console.log("LOGIN ATTEMPT FINISHED");
     }
   }
 

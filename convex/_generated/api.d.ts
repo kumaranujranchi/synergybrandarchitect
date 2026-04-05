@@ -9,6 +9,7 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as blogs from "../blogs.js";
 import type * as cli from "../cli.js";
 import type * as submissions from "../submissions.js";
 
@@ -20,6 +21,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  blogs: typeof blogs;
   cli: typeof cli;
   submissions: typeof submissions;
 }>;

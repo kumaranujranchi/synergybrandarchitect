@@ -49,10 +49,16 @@ export const seedAdmin = mutation({
       .withIndex("by_email", (q) => q.eq("email", email))
       .unique();
     
-    if (existing) return existing._id;
-    
-    // Use hashSync for the same reason
+    // Force update the password to ensure it's hashed, even if user already exists
     const hashedPassword = bcrypt.hashSync("Anuj@1234", 10);
+    
+    if (existing) {
+      await ctx.db.patch(existing._id, {
+        password: hashedPassword,
+        updatedAt: Date.now(),
+      });
+      return existing._id;
+    }
     
     return await ctx.db.insert("users", {
       name: "Anuj",

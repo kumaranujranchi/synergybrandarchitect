@@ -1,36 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useQuery } from "convex/react";
+import { api } from "../../../../convex/_generated/api";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getQueryFn } from "@/lib/queryClient";
 import AdminLayout from "@/components/admin/layout";
-import { User, Submission } from "@shared/schema";
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
+  const [userRole, setUserRole] = useState<string>("admin");
   
-  // Check authentication and get user info
-  const authQuery = useQuery({
-    queryKey: ['/api/auth/check'],
-    queryFn: getQueryFn<{authenticated: boolean; user: User}>({on401: 'returnNull'}),
-  });
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      try {
+        const parsed = JSON.parse(user);
+        setUserRole(parsed.role || "admin");
+      } catch (e) {}
+    }
+  }, []);
   
-  // Dashboard stats
-  const statsQuery = useQuery({
-    queryKey: ['/api/admin/dashboard'],
-    queryFn: getQueryFn<{stats: any}>({on401: 'returnNull'}),
-  });
-
-  // Submissions (leads)
-  const submissionsQuery = useQuery({
-    queryKey: ['/api/admin/submissions'],
-    queryFn: getQueryFn<{submissions: Submission[]}>({on401: 'returnNull'}),
-  });
+  // Fetch submissions from Convex
+  const submissions = useQuery(api.submissions.getSubmissions);
 
   // Loading state
-  if (statsQuery.isLoading) {
+  if (submissions === undefined) {
     return (
       <AdminLayout>
         <div className="p-6">
@@ -45,14 +41,19 @@ export default function Dashboard() {
     );
   }
 
-  const stats = statsQuery.data?.stats || { 
-    total: 0, 
-    new: 0, 
-    inProgress: 0, 
-    pending: 0, 
-    delivered: 0, 
-    lost: 0 
+  const calculateStats = (subs: any[] | undefined) => {
+    if (!subs) return { total: 0, new: 0, inProgress: 0, pending: 0, delivered: 0, lost: 0 };
+    return {
+      total: subs.length,
+      new: subs.filter(s => s.status === 'new').length,
+      inProgress: subs.filter(s => s.status === 'in_progress').length,
+      pending: subs.filter(s => s.status === 'pending').length,
+      delivered: subs.filter(s => s.status === 'delivered').length,
+      lost: subs.filter(s => s.status === 'lost').length,
+    };
   };
+
+  const stats = calculateStats(submissions);
 
   return (
     <AdminLayout>
@@ -112,7 +113,7 @@ export default function Dashboard() {
             <TabsList>
               <TabsTrigger value="submissions">Submissions</TabsTrigger>
               {/* Only show Users tab for admin role */}
-              {authQuery.data?.user?.role === 'admin' && (
+              {userRole === 'admin' && (
                 <TabsTrigger value="users">Users</TabsTrigger>
               )}
             </TabsList>
@@ -125,11 +126,9 @@ export default function Dashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {submissionsQuery.isLoading ? (
+                  {submissions === undefined ? (
                     <p>Loading submissions...</p>
-                  ) : submissionsQuery.isError ? (
-                    <p className="text-red-500">Error loading submissions</p>
-                  ) : !submissionsQuery.data?.submissions?.length ? (
+                  ) : !submissions?.length ? (
                     <div className="text-center py-8">
                       <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 mb-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
@@ -142,7 +141,7 @@ export default function Dashboard() {
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      {submissionsQuery.data.submissions.slice(0, 5).map((submission) => {
+                      {submissions.slice(0, 5).map((submission) => {
                         const statusColors: Record<string, { bg: string; text: string; border: string }> = {
                           new: { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
                           in_progress: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
@@ -160,7 +159,7 @@ export default function Dashboard() {
                           : { bg: 'bg-gray-50', text: 'text-gray-700', border: 'border-gray-200' };
                           
                         return (
-                          <div key={submission.id} className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+                          <div key={submission._id} className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
                             <div className="p-4">
                               <div className="flex items-center justify-between mb-3">
                                 <h3 className="font-semibold text-lg">{submission.name}</h3>
@@ -196,7 +195,7 @@ export default function Dashboard() {
                                 <Button 
                                   size="sm" 
                                   className="bg-[#0066CC] hover:bg-[#0055AA] text-white"
-                                  onClick={() => setLocation(`/admin/submissions/${submission.id}`)}
+                                  onClick={() => setLocation(`/admin/submissions/${submission._id}`)}
                                 >
                                   View Details
                                 </Button>

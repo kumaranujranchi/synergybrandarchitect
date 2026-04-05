@@ -21,23 +21,16 @@ export default function AdminLayout({ children, title, description, backButton }
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   
-  // Authentication check
-  const authQuery = useQuery({
-    queryKey: ['/api/auth/check'],
-    queryFn: getQueryFn<{authenticated: boolean; user: any}>({on401: 'returnNull'}),
-  });
-  
-  // Check auth status and redirect if not authenticated
+  // Check auth status from localStorage
   useEffect(() => {
-    if (authQuery.isSuccess) {
-      setIsAuthenticated(!!authQuery.data?.authenticated);
-      if (!authQuery.data?.authenticated) {
-        setLocation('/admin/login');
-      }
-    } else if (authQuery.isError) {
+    const userItem = localStorage.getItem("user");
+    if (userItem) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
       setLocation('/admin/login');
     }
-  }, [authQuery.isSuccess, authQuery.isError, authQuery.data, setLocation]);
+  }, [setLocation]);
 
   // Loading state
   if (isAuthenticated === null) {
