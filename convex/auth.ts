@@ -17,8 +17,8 @@ export const login = mutation({
       throw new Error("Invalid email or password");
     }
 
-    // Verify hashed password
-    const isMatch = await bcrypt.compare(args.password, user.password);
+    // Use compareSync because the async version uses setTimeout which is not allowed in mutations
+    const isMatch = bcrypt.compareSync(args.password, user.password);
     if (!isMatch) {
       throw new Error("Invalid email or password");
     }
@@ -51,8 +51,8 @@ export const seedAdmin = mutation({
     
     if (existing) return existing._id;
     
-    // Hash the default password for new seed
-    const hashedPassword = await bcrypt.hash("Anuj@1234", 10);
+    // Use hashSync for the same reason
+    const hashedPassword = bcrypt.hashSync("Anuj@1234", 10);
     
     return await ctx.db.insert("users", {
       name: "Anuj",
