@@ -9,8 +9,6 @@ import Home from "@/pages/home";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import RefundPolicy from "@/pages/refund-policy";
 import TermsOfService from "@/pages/terms-of-service";
-import Pricing from "@/pages/pricing";
-import StartupPlan from "@/pages/startup-plan-revised";
 
 import Services from "@/pages/services";
 import Portfolio from "@/pages/portfolio";
@@ -21,6 +19,13 @@ import ContactPage from "@/pages/contact";
 import CaseStudyPage from "@/pages/case-study";
 import AboutPage from "@/pages/about";
 import SearchPage from "@/pages/search";
+
+import BrandBuilding from "@/pages/services/brand-building";
+import SocialMedia from "@/pages/services/social-media";
+import WebApp from "@/pages/services/web-app";
+import Automation from "@/pages/services/automation";
+import PerformanceMarketing from "@/pages/services/performance-marketing";
+import SEO from "@/pages/services/seo";
 
 import DigitalMarketingTrends from "@/pages/blog/digital-marketing-trends";
 import LocalSEOGuide from "@/pages/blog/local-seo-guide";
@@ -40,6 +45,8 @@ import { scrollToTop } from "@/lib/scrollHelper";
 import { AuthProvider } from "@/hooks/use-auth";
 import { updateSchemaMarkup } from "@/utils/schemaMarkup";
 
+import { SmoothScroll } from "@/components/SmoothScroll";
+
 // Lazy load admin components
 const AdminUsers = lazy(() => import('./pages/admin/users'));
 
@@ -49,10 +56,14 @@ function Router() {
     <Switch>
       {/* Public Routes */}
       <Route path="/" component={Home} />
-      <Route path="/pricing" component={Pricing} />
-      <Route path="/startup-plan" component={StartupPlan} />
 
       <Route path="/services" component={Services} />
+      <Route path="/services/brand-building" component={BrandBuilding} />
+      <Route path="/services/social-media-marketing" component={SocialMedia} />
+      <Route path="/services/web-app-development" component={WebApp} />
+      <Route path="/services/automation" component={Automation} />
+      <Route path="/services/performance-marketing" component={PerformanceMarketing} />
+      <Route path="/services/seo" component={SEO} />
       <Route path="/portfolio" component={Portfolio} />
       {/* User routes removed */}
       <Route path="/privacy-policy" component={PrivacyPolicy} />
@@ -170,13 +181,22 @@ function App() {
     let title = 'Synergy Brand Architect - Digital Marketing & Brand Building Agency';
     
     // Set specific titles based on routes
-    if (path.startsWith('/services')) {
-      title = 'Services | Digital Marketing, Web Development, Brand Strategy - Synergy Brand Architect';
+    if (path === '/services') {
+      title = 'Our Services | Synergy Brand Architect - Digital Marketing & Branding Solutions';
+    } else if (path === '/services/brand-building') {
+      title = 'Brand Building Services | Synergy Brand Architect';
+    } else if (path === '/services/social-media-marketing') {
+      title = 'Social Media Marketing | Synergy Brand Architect';
+    } else if (path === '/services/web-app-development') {
+      title = 'Web & Mobile App Development | Synergy Brand Architect';
+    } else if (path === '/services/automation') {
+      title = 'Workflow Automation | Synergy Brand Architect';
+    } else if (path === '/services/performance-marketing') {
+      title = 'Performance Marketing | Synergy Brand Architect';
+    } else if (path === '/services/seo') {
+      title = 'SEO Optimization | Synergy Brand Architect';
     } else if (path === '/portfolio') {
       title = 'Portfolio | Our Work & Case Studies - Synergy Brand Architect';
-    } else if (path.startsWith('/startup-plan')) {
-      title = 'Startup Website Package - Get Online at ₹15,000 | Synergy Brand Architect';
-
     } else if (path.startsWith('/resources')) {
       title = 'Digital Marketing Resources & Tools | Synergy Brand Architect';
     } else if (path.startsWith('/case-studies/')) {
@@ -194,9 +214,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Router />
-        {/* Popup removed */}
-        <Toaster />
+        <SmoothScroll>
+          <Router />
+          {/* Popup removed */}
+          <Toaster />
+        </SmoothScroll>
       </AuthProvider>
     </QueryClientProvider>
   );

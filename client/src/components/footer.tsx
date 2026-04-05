@@ -6,7 +6,6 @@ import VisitorCounter from "./visitor-counter";
 const quickLinks = [
   { href: "/", label: "Home", isPage: true },
   { href: "/services", label: "Services", isPage: true },
-  { href: "/pricing", label: "Pricing", isPage: true },
   { href: "/blog", label: "Blog", isPage: true },
   { href: "/contact", label: "Contact", isPage: true }
 ];
@@ -224,46 +223,33 @@ export default function Footer() {
         </div>
           
         {/* SEO Keywords Section */}
-        <div className="border-t border-gray-700 py-10 mb-4 bg-gradient-to-b from-gray-800 to-[#333333]">
-          <div className="max-w-6xl mx-auto px-4">
-            <h4 className="text-center text-gray-300 font-semibold mb-6 text-lg">Our Services in Patna</h4>
-            <div className="flex flex-wrap justify-center">
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Digital Marketing Company in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Website Development Company in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Best Digital Marketing Agency in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Web Design Company in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">SEO Services in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Social Media Marketing Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Website Designer in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">E-commerce Website Development Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Google Ads Expert in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Digital Marketing Services in Patna</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">MERN Stack Development</span>
-              </div>
-              <div className="px-4 py-2 m-1 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors">
-                <span className="text-gray-200 text-sm">Lead Generation Service In Patna</span>
-              </div>
+        <div className="border-t border-gray-700/50 py-12 mt-8">
+          <div className="max-w-5xl mx-auto px-4 text-center">
+            <h4 className="text-gray-400 font-poppins font-semibold mb-8 text-xs uppercase tracking-[0.2em]">Our Presence in Patna</h4>
+            <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-3">
+              {[
+                "Digital Marketing Company in Patna",
+                "Website Development Company in Patna",
+                "Best Digital Marketing Agency in Patna",
+                "Web Design Company in Patna",
+                "SEO Services in Patna",
+                "Social Media Marketing Patna",
+                "Website Designer in Patna",
+                "E-commerce Website Development Patna",
+                "Google Ads Expert in Patna",
+                "Digital Marketing Services in Patna",
+                "MERN Stack Development",
+                "Lead Generation Service In Patna"
+              ].map((keyword, i, arr) => (
+                <div key={i} className="flex items-center">
+                  <span className="text-gray-500 hover:text-[#FF6B00] text-[11px] font-medium tracking-wide transition-colors cursor-default uppercase">
+                    {keyword}
+                  </span>
+                  {i < arr.length - 1 && (
+                    <span className="ml-4 w-1 h-1 rounded-full bg-gray-700" aria-hidden="true" />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>

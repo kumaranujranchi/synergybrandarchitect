@@ -9,45 +9,30 @@ interface ClientLogo {
 
 export default function ClientLogoCarousel() {
   const clientLogos: ClientLogo[] = [
-    {
-      id: 1,
-      name: "State Bank of India",
-      image: "https://i.imgur.com/osIwhrG.png"
-    },
-    {
-      id: 2,
-      name: "Wipro Limited",
-      image: "https://i.imgur.com/guHEeLX.png"
-    },
-    {
-      id: 3,
-      name: "Client 3",
-      image: "https://i.imgur.com/7ehvM3V.png"
-    },
-    {
-      id: 4,
-      name: "Client 4",
-      image: "https://i.imgur.com/URq3bDJ.png"
-    },
-    {
-      id: 5,
-      name: "Client 5",
-      image: "https://i.imgur.com/NbSRANL.png"
-    },
-    {
-      id: 6,
-      name: "Client 6",
-      image: "https://i.imgur.com/Y22DKIx.png"
-    },
-    {
-      id: 7,
-      name: "Client 7",
-      image: "https://i.imgur.com/jSEUeBJ.png"
-    }
+    { id: 1, name: "Client 1", image: "/images/clients/1.png" },
+    { id: 2, name: "Client 2", image: "/images/clients/2.png" },
+    { id: 3, name: "Client 3", image: "/images/clients/3.png" },
+    { id: 4, name: "Client 4", image: "/images/clients/4.png" },
+    { id: 5, name: "Client 5", image: "/images/clients/5.png" },
+    { id: 6, name: "Client 6", image: "/images/clients/6.png" },
+    { id: 7, name: "Client 7", image: "/images/clients/7.png" },
+    { id: 8, name: "Client 8", image: "/images/clients/8.png" },
+    { id: 9, name: "Client 9", image: "/images/clients/9.png" },
+    { id: 10, name: "Client 10", image: "/images/clients/10.png" },
+    { id: 11, name: "Client 11", image: "/images/clients/11.png" },
+    { id: 12, name: "Client 12", image: "/images/clients/12.png" },
+    { id: 13, name: "Client 13", image: "/images/clients/13.png" },
+    { id: 14, name: "Client 14", image: "/images/clients/14.png" },
+    { id: 15, name: "Client 15", image: "/images/clients/15.png" },
+    { id: 16, name: "Client 16", image: "/images/clients/16.png" },
+    { id: 17, name: "Client 17", image: "/images/clients/17.png" },
+    { id: 18, name: "Client 18", image: "/images/clients/18.png" },
+    { id: 19, name: "Client 19", image: "/images/clients/19.png" },
+    { id: 20, name: "Client 20", image: "/images/clients/20.png" }
   ];
 
-  // Duplicate the logos for infinite scrolling effect
-  const allLogos = [...clientLogos, ...clientLogos];
+  // Triplicate the logos for a longer, smoother infinite scrolling effect
+  const allLogos = [...clientLogos, ...clientLogos, ...clientLogos];
   
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -89,13 +74,13 @@ export default function ClientLogoCarousel() {
           
           <motion.div
             ref={containerRef}
-            className="flex items-center gap-16 py-8"
+            className="flex items-center gap-16 py-8 w-max"
             initial={{ x: 0 }}
-            animate={{ x: isMobile ? "-100%" : "-50%" }}
+            animate={{ x: "-33.33%" }}
             transition={{ 
               repeat: Infinity, 
               repeatType: "loop", 
-              duration: isMobile ? 25 : 35, 
+              duration: isMobile ? 30 : 45, 
               ease: "linear"
             }}
           >
@@ -106,7 +91,7 @@ export default function ClientLogoCarousel() {
               >
                 <motion.div
                   whileHover={{ scale: 1.05, boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)" }}
-                  className="bg-white p-6 rounded-xl shadow-md flex items-center justify-center h-40 w-[280px] transition-all border border-gray-100"
+                  className="bg-white p-4 rounded-xl shadow-md flex items-center justify-center h-40 w-[280px] transition-all border border-gray-100"
                 >
                   <img 
                     src={logo.image} 
@@ -120,7 +105,7 @@ export default function ClientLogoCarousel() {
                         e.currentTarget.style.display = 'none';
                       }
                     }}
-                    className="max-h-24 w-auto max-w-[200px] object-contain transition-all duration-300 filter grayscale hover:grayscale-0 p-2"
+                    className="max-h-32 w-auto max-w-[240px] object-contain transition-all duration-300 filter grayscale hover:grayscale-0"
                   />
                 </motion.div>
               </div>

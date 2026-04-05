@@ -31,9 +31,7 @@ const pageCategories = [
       { title: "Home", url: "/" },
       { title: "About Us", url: "/about" },
       { title: "Services", url: "/services" },
-      { title: "Startup Plan", url: "/startup-plan" },
       { title: "Resources", url: "/resources" },
-      { title: "Pricing", url: "/pricing" },
       { title: "Contact", url: "/#contact" },
 
     ]

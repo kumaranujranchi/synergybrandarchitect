@@ -8,7 +8,6 @@ import Services from "@/components/services";
 import AdAccountAccess from "@/components/ad-account-access"; // Added new section
 import CaseStudies from "@/components/case-studies";
 import Testimonials from "@/components/testimonials";
-import PricingCTA from "@/components/pricing-cta";
 
 import Contact from "@/components/contact";
 import Footer from "@/components/footer";
@@ -28,7 +27,6 @@ export default function Home() {
       <AdAccountAccess />
       <CaseStudies />
       <Testimonials />
-      <PricingCTA />
 
       <Contact />
       <Footer />

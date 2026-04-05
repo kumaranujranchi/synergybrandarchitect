@@ -9,10 +9,12 @@ import "./index.css";
 const convexUrl = import.meta.env.VITE_CONVEX_URL;
 
 if (!convexUrl) {
-  console.error("VITE_CONVEX_URL is not defined! Check your Netlify environment variables.");
+  throw new Error(
+    "VITE_CONVEX_URL is not defined. Set it in .env (e.g. VITE_CONVEX_URL=http://localhost:3001) and restart."
+  );
 }
 
-const convex = new ConvexReactClient(convexUrl || "");
+const convex = new ConvexReactClient(convexUrl);
 
 createRoot(document.getElementById("root")!).render(
   <ConvexProvider client={convex}>

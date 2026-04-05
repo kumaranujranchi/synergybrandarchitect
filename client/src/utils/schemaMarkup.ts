@@ -205,37 +205,6 @@ export const updateSchemaMarkup = (pagePath: string, pageData?: any) => {
     };
   }
   
-  // Startup Plan page schema - Product and offer
-  else if (pagePath.includes('/startup-plan')) {
-    markup = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Startup Website Package",
-      "image": "https://imagizer.imageshack.com/img923/1839/irjZDM.jpg",
-      "description": "Professional, custom-coded website at just ₹15,000 - empowering small businesses to go digital affordably.",
-      "brand": {
-        "@type": "Brand",
-        "name": "Synergy Brand Architect"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "15000",
-        "priceCurrency": "INR",
-        "priceValidUntil": "2025-12-31",
-        "availability": "https://schema.org/InStock",
-        "seller": {
-          "@type": "Organization",
-          "name": "Synergy Brand Architect"
-        },
-        "url": "https://synergybrandarchitect.in/startup-plan"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "25"
-      }
-    };
-  }
   
   // Resources page schema - Collection page
   else if (pagePath.includes('/resources')) {
@@ -375,7 +344,7 @@ export const updateSchemaMarkup = (pagePath: string, pageData?: any) => {
           "name": "How much does a website cost?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Our startup website package starts at just ₹15,000, which includes custom design, mobile responsiveness, and basic SEO. Enterprise-level websites with advanced features range from ₹50,000 to ₹1,00,000+."
+            "text": "The cost of a website depends on the complexity and features required. Our professional website packages start with full mobile responsiveness, SEO optimization, and custom design."
           }
         },
         {
@@ -384,58 +353,6 @@ export const updateSchemaMarkup = (pagePath: string, pageData?: any) => {
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Our standard delivery timeline for a basic website is 10-14 working days. For more complex projects, the timeline can extend to 4-6 weeks depending on the requirements and revisions."
-          }
-        }
-      ]
-    };
-  }
-  
-  // Pricing page schema
-  else if (pagePath.includes('/pricing')) {
-    markup = {
-      "@context": "https://schema.org",
-      "@type": "ItemList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "item": {
-            "@type": "Product",
-            "name": "Addition of Page",
-            "description": "Add a new page to your existing website with custom design and content.",
-            "offers": {
-              "@type": "Offer",
-              "price": "2000",
-              "priceCurrency": "INR"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "Product",
-            "name": "WordPress Website Development",
-            "description": "Complete WordPress website with custom theme and plugins.",
-            "offers": {
-              "@type": "Offer",
-              "price": "10000",
-              "priceCurrency": "INR"
-            }
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "item": {
-            "@type": "Product",
-            "name": "SEO Package",
-            "description": "Comprehensive SEO optimization to improve your website's search engine rankings.",
-            "offers": {
-              "@type": "Offer",
-              "price": "8000",
-              "priceCurrency": "INR"
-            }
           }
         }
       ]

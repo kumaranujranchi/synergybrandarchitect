@@ -8,6 +8,8 @@
  * @module
  */
 
+import type * as auth from "../auth.js";
+import type * as cli from "../cli.js";
 import type * as submissions from "../submissions.js";
 
 import type {
@@ -17,6 +19,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  auth: typeof auth;
+  cli: typeof cli;
   submissions: typeof submissions;
 }>;
 

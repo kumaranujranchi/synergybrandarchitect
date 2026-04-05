@@ -10,8 +10,6 @@ const navLinks = [
   { href: "#home", label: "Home", isHome: true },
   { href: "/services", label: "Services", isPage: true },
   { href: "/portfolio", label: "Portfolio", isPage: true },
-  { href: "/pricing", label: "Pricing", isPage: true },
-  { href: "/startup-plan", label: "StartUp Plan", isPage: true, highlight: true },
   { href: "/resources", label: "Resources", isPage: true },
   { href: "#contact", label: "Contact" },
 ];
@@ -91,10 +89,7 @@ export default function Header() {
                 href={link.href}
                 className={cn(
                   "transition-colors font-medium text-xs xl:text-sm whitespace-nowrap relative px-3 py-2 rounded", 
-                  // If it's the StartUp Plan, give it a special highlight style but don't make it look like it's active
-                  link.highlight 
-                    ? "text-[#FF6B00] hover:text-[#FF8533]" 
-                    : "hover:text-[#FF6B00] hover:bg-orange-50",
+                  "hover:text-[#FF6B00] hover:bg-orange-50",
                   // Active state for current page - consistent visual indicator for all menu items
                   isActive(link) && "bg-orange-50 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:w-[60%] after:-translate-x-1/2 after:h-[2px] after:bg-[#FF6B00]"
                 )}
@@ -168,9 +163,7 @@ export default function Header() {
                 href={link.href}
                 className={cn(
                   "transition-colors py-2 px-3 border-b border-gray-100 rounded flex items-center justify-between", 
-                  link.highlight 
-                    ? "text-[#FF6B00]" 
-                    : "hover:text-[#FF6B00] hover:bg-orange-50",
+                  "hover:text-[#FF6B00] hover:bg-orange-50",
                   isActive(link) && "bg-orange-50 text-[#FF6B00]"
                 )}
                 onClick={() => {
