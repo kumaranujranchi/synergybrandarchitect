@@ -35,8 +35,8 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-16 md:py-24">
-      <div className="container mx-auto px-4">
+    <section id="about" className="section-padding">
+      <div className="container mx-auto container-padding">
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
@@ -126,30 +126,31 @@ export default function About() {
           <h2 className="font-poppins font-semibold text-3xl mb-10 text-[#333333] text-center">
             Our Values
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="mobile-scroll-container">
             {values.map((value, index) => (
-              <motion.div
-                key={index}
-                className="bg-white p-6 rounded-xl shadow-lg"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{
-                  y: -5,
-                  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
-                }}
-              >
-                <div className="w-12 h-12 rounded-full bg-[#FF6B00] bg-opacity-10 flex items-center justify-center mb-4">
-                  <span className="text-[#FF6B00] font-bold text-xl">
-                    {index + 1}
-                  </span>
-                </div>
-                <h3 className="font-poppins font-medium text-xl mb-3 text-[#333333]">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600 font-inter">{value.description}</p>
-              </motion.div>
+              <div key={index} className="mobile-scroll-item">
+                <motion.div
+                  className="bg-white p-6 rounded-xl shadow-lg h-full"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{
+                    y: -5,
+                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#FF6B00] bg-opacity-10 flex items-center justify-center mb-4">
+                    <span className="text-[#FF6B00] font-bold text-xl">
+                      {index + 1}
+                    </span>
+                  </div>
+                  <h3 className="font-poppins font-medium text-xl mb-3 text-[#333333]">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray-600 font-inter">{value.description}</p>
+                </motion.div>
+              </div>
             ))}
           </div>
         </motion.div>

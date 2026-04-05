@@ -145,8 +145,8 @@ export default function Services() {
   };
 
   return (
-    <section id="services" className="py-12 sm:py-16 md:py-24">
-      <div className="container mx-auto px-4 sm:px-6">
+    <section id="services" className="section-padding">
+      <div className="container mx-auto container-padding">
         <motion.div 
           className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -181,14 +181,16 @@ export default function Services() {
             Establish a memorable brand identity that resonates with your audience and stands out in the market. Our brand building solutions create the foundation for your business growth.
           </motion.p>
           <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8"
+            className="mobile-scroll-container"
             variants={container}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
           >
             {brandBuildingServices.map((service, index) => (
-              <ServiceCard key={index} service={service} theme="orange" />
+              <div key={index} className="mobile-scroll-item h-full pb-4">
+                <ServiceCard service={service} theme="orange" />
+              </div>
             ))}
           </motion.div>
         </div>
@@ -214,14 +216,16 @@ export default function Services() {
             Drive traffic, generate leads, and increase conversions with our comprehensive digital marketing strategies. As one of the best digital marketing services in Patna, we focus on delivering measurable results.
           </motion.p>
           <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
+            className="mobile-scroll-container"
             variants={container}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
           >
             {digitalMarketingServices.map((service, index) => (
-              <ServiceCard key={index} service={service} theme="blue" />
+              <div key={index} className="mobile-scroll-item h-full pb-4">
+                <ServiceCard service={service} theme="blue" />
+              </div>
             ))}
           </motion.div>
         </div>

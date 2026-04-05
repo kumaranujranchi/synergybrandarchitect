@@ -355,3 +355,31 @@ html.lenis, html.lenis body {
     }
   }
 }
+
+/* Mobile Horizontal Scroll Utilities */
+@layer utilities {
+  .mobile-scroll-container {
+    @apply flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 scrollbar-hide md:grid md:overflow-x-visible md:snap-none md:pb-0 md:mx-0 md:px-0;
+  }
+  
+  .mobile-scroll-item {
+    @apply min-w-[85vw] sm:min-w-[320px] snap-center md:min-w-0 md:snap-align-none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .section-padding {
+    @apply py-12 md:py-20 lg:py-24;
+  }
+  
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+}

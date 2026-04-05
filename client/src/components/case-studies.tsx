@@ -38,8 +38,8 @@ export default function CaseStudies() {
   ];
 
   return (
-    <section id="case-studies" className="py-16 bg-gray-50">
-      <div className="container px-4 mx-auto">
+    <section id="case-studies" className="section-padding bg-gray-50">
+      <div className="container mx-auto container-padding">
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Success Stories</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -48,33 +48,35 @@ export default function CaseStudies() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mobile-scroll-container">
           {caseStudies.map((study) => (
-            <Card key={study.id} className="border border-gray-200 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
-              <CardContent className="pt-6 flex-grow">
-                <div className="flex items-start mb-4 gap-3">
-                  <div className={`p-2 rounded-lg ${study.iconBg}`}>
-                    {study.icon}
+            <div key={study.id} className="mobile-scroll-item h-full">
+              <Card className="border border-gray-200 hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+                <CardContent className="pt-6 flex-grow">
+                  <div className="flex items-start mb-4 gap-3">
+                    <div className={`p-2 rounded-lg ${study.iconBg}`}>
+                      {study.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-xl mb-1">{study.company}</h3>
+                      <div className="text-sm text-gray-500">{study.industry}</div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-xl mb-1">{study.company}</h3>
-                    <div className="text-sm text-gray-500">{study.industry}</div>
-                  </div>
-                </div>
-                <h4 className="font-semibold text-lg mb-3 text-gray-800">{study.title}</h4>
-                <p className="text-gray-700">{study.description}</p>
-              </CardContent>
-              <CardFooter className="pt-0 pb-6">
-                <Link to={study.link}>
-                  <Button 
-                    variant="outline" 
-                    className="w-full text-[#0066CC] border-[#0066CC] hover:bg-[#0066CC] hover:text-white transition-colors"
-                  >
-                    Read Case Study
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+                  <h4 className="font-semibold text-lg mb-3 text-gray-800">{study.title}</h4>
+                  <p className="text-gray-700">{study.description}</p>
+                </CardContent>
+                <CardFooter className="pt-0 pb-6">
+                  <Link href={study.link}>
+                    <Button 
+                      variant="outline" 
+                      className="w-full text-[#0066CC] border-[#0066CC] hover:bg-[#0066CC] hover:text-white transition-colors"
+                    >
+                      Read Case Study
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            </div>
           ))}
         </div>
 

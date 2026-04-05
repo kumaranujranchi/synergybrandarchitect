@@ -63,8 +63,8 @@ export default function DigitalPresence() {
       </div>
       
       {/* Why Digital Presence is Crucial */}
-      <div className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <div className="section-padding bg-white">
+        <div className="container mx-auto container-padding">
           <motion.div 
             className="max-w-4xl mx-auto text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -82,14 +82,14 @@ export default function DigitalPresence() {
           </motion.div>
           
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            className="mobile-scroll-container"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
             <motion.div 
-              className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
               variants={itemVariants}
             >
               <div className="bg-[#FF6B00]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -104,7 +104,7 @@ export default function DigitalPresence() {
             </motion.div>
             
             <motion.div 
-              className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
               variants={itemVariants}
             >
               <div className="bg-[#0066CC]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -119,7 +119,7 @@ export default function DigitalPresence() {
             </motion.div>
             
             <motion.div 
-              className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
               variants={itemVariants}
             >
               <div className="bg-[#FF6B00]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -134,7 +134,7 @@ export default function DigitalPresence() {
             </motion.div>
             
             <motion.div 
-              className="bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
               variants={itemVariants}
             >
               <div className="bg-[#0066CC]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -152,8 +152,8 @@ export default function DigitalPresence() {
       </div>
       
       {/* Service Highlight */}
-      <div className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
+      <div className="section-padding bg-gray-50">
+        <div className="container mx-auto container-padding">
           <div className="max-w-6xl mx-auto">
             <motion.div 
               className="max-w-4xl mx-auto text-center mb-12"
@@ -294,8 +294,8 @@ export default function DigitalPresence() {
       </div>
       
       {/* Benefits & Success Metrics */}
-      <div className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <div className="section-padding bg-white">
+        <div className="container mx-auto container-padding">
           <motion.div 
             className="max-w-4xl mx-auto text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -408,11 +408,11 @@ export default function DigitalPresence() {
       </div>
       
       {/* Final CTA */}
-      <div className="py-16 bg-gradient-to-r from-[#0066CC]/90 to-[#004080]/90 relative overflow-hidden">
+      <div className="section-padding bg-gradient-to-r from-[#0066CC]/90 to-[#004080]/90 relative overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTh2MmgtMnYtMmg5em0tMTAgMGgyek0zNiAxMHYtMmgtMnYyaC00di0yaC0ydjJoLTJ2LTRoMTB2NHptMCA4di00aC0ydjRoLTR2LTRoLTJ2NGgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHptMCA4di00aC0ydjRoLTR2LTRoLTJ2NGgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHptMCA4di0yaC0ydjJoLTR2LTJoLTJ2MmgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto container-padding relative z-10">
           <motion.div 
             className="max-w-4xl mx-auto text-center text-white"
             initial={{ opacity: 0, y: 30 }}

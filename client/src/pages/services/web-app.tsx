@@ -257,8 +257,32 @@ export default function WebApp() {
                 </div>
               </div>
               <div className="lg:w-1/2 grid grid-cols-2 gap-6">
-                <div className="bg-slate-100 h-64 rounded-3xl flex items-center justify-center text-slate-300">Image: Industry 1</div>
-                <div className="bg-indigo-100 h-64 rounded-3xl mt-8 flex items-center justify-center text-indigo-300">Image: Industry 2</div>
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="h-64 rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group"
+                >
+                  <img 
+                    src="/images/services/industry-web.png" 
+                    alt="Web Development for Industries" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  />
+                </motion.div>
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="h-64 rounded-3xl mt-8 overflow-hidden shadow-2xl border border-indigo-200 group"
+                >
+                  <img 
+                    src="/images/services/industry-mobile.png" 
+                    alt="Mobile App Development for Industries" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  />
+                </motion.div>
               </div>
             </div>
           </div>

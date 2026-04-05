@@ -11,12 +11,11 @@ const quickLinks = [
 ];
 
 const serviceLinks = [
-  { href: "/services?tab=brand", label: "Brand Strategy", isPage: true },
-  { href: "/services?tab=brand", label: "Logo & Identity Design", isPage: true },
-  { href: "/services?tab=digital", label: "SEO Optimization", isPage: true },
-  { href: "/services?tab=digital", label: "Social Media Marketing", isPage: true },
-  { href: "/services?tab=digital", label: "Paid Advertising", isPage: true },
-  { href: "/services?tab=digital", label: "Content Marketing", isPage: true }
+  { href: "/services/brand-building", label: "Brand Building", isPage: true },
+  { href: "/services/seo", label: "SEO Optimization", isPage: true },
+  { href: "/services/social-media-marketing", label: "Social Media Marketing", isPage: true },
+  { href: "/services/performance-marketing", label: "Performance Marketing", isPage: true },
+  { href: "/services/automation", label: "Workflow Automation", isPage: true }
 ];
 
 const resourceLinks = [
