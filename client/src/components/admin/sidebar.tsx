@@ -105,7 +105,7 @@ export default function AdminSidebar() {
       )}>
         {!isCollapsed ? (
           <div>
-            <p className="text-sm font-medium">{user?.name || 'Loading...'}</p>
+            <p className="text-sm font-medium truncate">{user?.name || user?.email?.split('@')[0] || 'Admin'}</p>
             <p className="text-xs text-gray-500">{user?.email || ''}</p>
             <div className="mt-1">
               <span className="text-xs bg-gray-100 px-2 py-0.5 rounded text-gray-500 font-medium">

@@ -59,6 +59,11 @@ export default function SocialMedia() {
       step: "05", 
       title: "ROI Attribution & Scaling", 
       desc: "We track the journey from first impression to final sale, scaling what works and pivoting what doesn't." 
+    },
+    { 
+      step: "06", 
+      title: "Omnichannel Expansion & Dominance", 
+      desc: "Taking your validated resonance and scaling it across every relevant platform to ensure total market share and brand authority." 
     }
   ];
 
@@ -160,7 +165,7 @@ export default function SocialMedia() {
                     transition={{ delay: idx * 0.1 }}
                     className="mobile-scroll-item flex flex-col gap-6 items-start p-8 bg-white/5 border border-white/10 rounded-3xl hover:bg-white/10 transition-colors group h-full"
                   >
-                    <div className="text-5xl font-bold text-blue-900/50 group-hover:text-blue-500 transition-colors shrink-0">
+                    <div className="text-5xl font-bold text-white/20 group-hover:text-blue-400 transition-colors shrink-0">
                       {item.step}
                     </div>
                     <div>

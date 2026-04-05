@@ -59,6 +59,11 @@ export default function PerformanceMarketing() {
       step: "05", 
       title: "Aggressive Scaling & Portfolio Mix", 
       desc: "Scaling winning campaigns vertically and horizontally while maintaining a healthy ROAS across your entire ad account." 
+    },
+    { 
+      step: "06", 
+      title: "Continuous Audit & Iteration", 
+      desc: "Performance marketing is never 'finished'. We consistently audit results, pivot strategies based on data, and identify new pockets of growth." 
     }
   ];
 
@@ -150,7 +155,7 @@ export default function PerformanceMarketing() {
           <div className="container mx-auto container-padding relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-poppins font-bold mb-4">The Scalable ROI Engine</h2>
-              <p className="text-amber-400 font-inter tracking-widest uppercase text-sm font-bold border-b border-amber-900/50 pb-4 inline-block">Our 5-Stage Performance Protocol</p>
+              <p className="text-amber-400 font-inter tracking-widest uppercase text-sm font-bold border-b border-amber-900/50 pb-4 inline-block">Our 6-Stage Performance Protocol</p>
             </div>
 
             <div className="max-w-5xl mx-auto">
@@ -162,7 +167,7 @@ export default function PerformanceMarketing() {
                     transition={{ delay: idx * 0.1 }}
                     className="mobile-scroll-item flex flex-col gap-6 items-start p-8 bg-white/5 border border-white/10 rounded-3xl hover:bg-amber-950/20 transition-colors group h-full"
                   >
-                    <div className="text-5xl font-bold text-amber-900/50 group-hover:text-amber-500 transition-colors shrink-0">
+                    <div className="text-5xl font-bold text-amber-600/40 group-hover:text-amber-500 transition-colors shrink-0">
                       {item.step}
                     </div>
                     <div>

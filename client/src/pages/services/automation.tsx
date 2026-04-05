@@ -60,6 +60,11 @@ export default function Automation() {
       step: "05", 
       title: "Performance Monitoring & ROI Sync", 
       desc: "We track the hours saved and efficiency gained, constantly optimizing for maximum operational throughput." 
+    },
+    { 
+      step: "06", 
+      title: "Continuous Scaling & Evolution", 
+      desc: "As your business grows, we evolve your automation engine, adding new capabilities and ensuring your tech stack stays ahead of the curve." 
     }
   ];
 
@@ -163,7 +168,7 @@ export default function Automation() {
                     transition={{ delay: idx * 0.1 }}
                     className="mobile-scroll-item flex flex-col gap-6 items-start p-8 bg-white/5 border border-white/10 rounded-3xl hover:bg-emerald-950/30 transition-colors group h-full"
                   >
-                    <div className="text-5xl font-bold text-emerald-900/50 group-hover:text-emerald-500 transition-colors shrink-0">
+                    <div className="text-5xl font-bold text-emerald-500/40 group-hover:text-emerald-400 transition-colors shrink-0">
                       {item.step}
                     </div>
                     <div>

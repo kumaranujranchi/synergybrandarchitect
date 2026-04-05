@@ -92,7 +92,7 @@ export default function WebApp() {
               {/* Website Development */}
               <motion.div 
                 {...fadeInUp}
-                className="p-10 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-2xl transition-shadow duration-500"
+                className="p-10 rounded-3xl bg-slate-50 border border-slate-100 shadow-md hover:shadow-2xl transition-shadow duration-500"
               >
                 <div className="w-16 h-16 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-6">
                   <Globe size={32} />
@@ -114,7 +114,7 @@ export default function WebApp() {
               {/* Mobile App Development */}
               <motion.div 
                 {...fadeInUp}
-                className="p-10 rounded-3xl bg-indigo-50 border border-indigo-100 hover:shadow-2xl transition-shadow duration-500"
+                className="p-10 rounded-3xl bg-indigo-50 border border-indigo-100 shadow-md hover:shadow-2xl transition-shadow duration-500"
               >
                 <div className="w-16 h-16 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-6">
                   <Smartphone size={32} />
@@ -193,7 +193,7 @@ export default function WebApp() {
                     className="flex flex-col md:flex-row gap-8 items-start md:items-center p-8 bg-slate-50/50 rounded-3xl border border-slate-100 group relative"
                   >
                     <div className="hidden md:block absolute left-[-2rem] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-indigo-600 z-10"></div>
-                    <div className="text-5xl font-bold text-indigo-100 group-hover:text-indigo-200 transition-colors uppercase shrink-0">
+                    <div className="text-5xl font-bold text-indigo-300 group-hover:text-indigo-400 transition-colors uppercase shrink-0">
                       {item.step}
                     </div>
                     <div>
