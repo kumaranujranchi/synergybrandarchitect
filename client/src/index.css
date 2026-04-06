@@ -78,7 +78,8 @@ html.lenis, html.lenis body {
 
 /* Rich Text Editor Customization */
 .quill {
-  @apply border rounded-md bg-white;
+  @apply border rounded-md bg-white flex flex-col overflow-hidden;
+  height: 100% !important;
 }
 
 .ql-toolbar {
@@ -86,8 +87,7 @@ html.lenis, html.lenis body {
 }
 
 .ql-container {
-  @apply !border-0 rounded-b-md;
-  height: inherit;
+  @apply !border-0 rounded-b-md flex-1 min-h-0;
   font-family: inherit;
 }
 
