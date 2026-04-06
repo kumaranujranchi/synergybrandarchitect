@@ -61,6 +61,11 @@ export default function SEO() {
       step: "05", 
       title: "Continuous Conversion Analytics", 
       desc: "Traffic is useless without revenue. We map search terms to sales, doubling down on the intent that actually drives your bottom line." 
+    },
+    { 
+      step: "06", 
+      title: "ROI Synthesis & Strategy Scaling", 
+      desc: "SEO is a long-term compounder. We map every keyword to real revenue, consistently auditing performance and scaling your authority into new profitable territories." 
     }
   ];
 
