@@ -89,7 +89,7 @@ export default function BlogList() {
                   className="lg:col-span-8 group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col transition-all"
                   onClick={() => setLocation(`/blog/${mainFeature.slug}`)}
                 >
-                  <div className="relative h-[300px] lg:h-[400px] overflow-hidden bg-gray-100">
+                  <div className="relative aspect-video lg:max-h-[450px] overflow-hidden bg-gray-100">
                     <img 
                       src={mainFeature.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200"} 
                       alt={mainFeature.title}
@@ -125,7 +125,7 @@ export default function BlogList() {
                     className="flex flex-col group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all"
                     onClick={() => setLocation(`/blog/${post.slug}`)}
                   >
-                    <div className="relative h-40 overflow-hidden bg-gray-100">
+                    <div className="relative aspect-video overflow-hidden bg-gray-100">
                       <img 
                         src={post.coverImage || (idx === 0 ? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" : "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800")} 
                         alt={post.title}
@@ -185,7 +185,7 @@ export default function BlogList() {
                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                        {businessPosts.map((post) => (
                          <div key={post._id} className="bg-white group cursor-pointer" onClick={() => setLocation(`/blog/${post.slug}`)}>
-                            <div className="relative h-44 overflow-hidden mb-4">
+                            <div className="relative aspect-video overflow-hidden mb-4 rounded-t">
                               <img src={post.coverImage || "https://images.unsplash.com/photo-1664575602276-acd073f104c1?w=600"} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt={post.title} />
                               <span className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase z-10">{post.category || "Business"}</span>
                             </div>
@@ -207,8 +207,8 @@ export default function BlogList() {
                      <h3 className="text-xl font-bold font-poppins uppercase tracking-wide border-b-2 border-orange-500 inline-block pb-1 mb-6">Recent Posts</h3>
                      <div className="space-y-6">
                        {recentPostsList.map((post) => (
-                         <div key={post._id} className="flex flex-col sm:flex-row bg-white overflow-hidden shadow-sm group hover:shadow-md transition-shadow cursor-pointer border" onClick={() => setLocation(`/blog/${post.slug}`)}>
-                           <div className="sm:w-2/5 h-48 sm:h-auto relative overflow-hidden">
+                         <div key={post._id} className="flex flex-col sm:flex-row items-center bg-white overflow-hidden shadow-sm group hover:shadow-md transition-shadow cursor-pointer border" onClick={() => setLocation(`/blog/${post.slug}`)}>
+                           <div className="w-full sm:w-2/5 aspect-video relative overflow-hidden flex-shrink-0">
                              <img src={post.coverImage || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt={post.title}/>
                            </div>
                            <div className="sm:w-3/5 p-6 flex flex-col justify-center">
@@ -234,10 +234,10 @@ export default function BlogList() {
                  {giantPost && (
                     <div className="mb-14 border-t-2 border-dashed border-gray-200 pt-8">
                       <div 
-                        className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row overflow-hidden group cursor-pointer transition-shadow hover:shadow-md"
+                        className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center overflow-hidden group cursor-pointer transition-shadow hover:shadow-md"
                         onClick={() => setLocation(`/blog/${giantPost?.slug}`)}
                       >
-                        <div className="md:w-1/2 relative overflow-hidden h-64 md:h-auto">
+                        <div className="w-full md:w-1/2 aspect-video relative overflow-hidden flex-shrink-0">
                           <img src={giantPost.coverImage || "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Feature"/>
                         </div>
                         <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-gray-50 to-white">
