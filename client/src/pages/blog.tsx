@@ -7,6 +7,7 @@ import { useQuery } from 'convex/react';
 import { api } from "../../../convex/_generated/api";
 import { format } from 'date-fns';
 import { useLocation } from 'wouter';
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 export default function BlogList() {
   const [, setLocation] = useLocation();
@@ -54,10 +55,11 @@ export default function BlogList() {
                   onClick={() => setLocation(`/blog/${post.slug}`)}
                 >
                   <div className="h-48 overflow-hidden bg-gray-100">
-                    <img 
+                    <OptimizedImage 
                       src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} 
                       alt={post.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                      containerClassName="h-48"
                     />
                   </div>
                   <div className="p-6">

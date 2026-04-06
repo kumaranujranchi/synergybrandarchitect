@@ -8,6 +8,7 @@ import { Link } from "wouter";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Skeleton } from "@/components/ui/skeleton";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 export default function PortfolioPage() {
   useEffect(() => {
@@ -85,11 +86,11 @@ export default function PortfolioPage() {
                 portfolioItems.filter(item => item.featured).map((item) => (
                 <div key={item._id} className="portfolio-card bg-white shadow-lg border border-gray-100 group">
                     <div className="portfolio-image-container">
-                    <img
+                    <OptimizedImage
                         src={item.image}
                         alt={`${item.title} - Full website preview showing complete page layout and design`}
                         className="portfolio-image"
-                        loading="lazy"
+                        containerClassName="aspect-video"
                     />
                     <div className="absolute top-4 left-4 z-10">
                         <span className="bg-[#FF6B00] text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
@@ -169,11 +170,11 @@ export default function PortfolioPage() {
                 portfolioItems.map((item) => (
                 <div key={item._id} className="portfolio-card bg-white shadow-md border border-gray-100 group">
                     <div className="portfolio-image-container flex">
-                    <img
+                    <OptimizedImage
                         src={item.image}
                         alt={`${item.title} - Full website preview showing complete page layout and design`}
-                        className="portfolio-image object-cover w-full aspect-video"
-                        loading="lazy"
+                        className="portfolio-image object-cover w-full h-full"
+                        containerClassName="w-full aspect-video"
                     />
                     <div className="absolute top-4 left-4 z-10">
                         <span className="bg-[#0066CC] text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">

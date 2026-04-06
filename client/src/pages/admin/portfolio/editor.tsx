@@ -35,6 +35,7 @@ import {
   FormMessage 
 } from "@/components/ui/form";
 import { Id } from "../../../../../convex/_generated/dataModel";
+import { optimizeImage } from "@/lib/imageOptimization";
 
 // Define form schema
 const formSchema = z.object({
@@ -110,11 +111,18 @@ export default function AdminPortfolioEditor() {
 
     setIsUploading(true);
     try {
+      // Automatically optimize image before upload
+      const optimizedFile = await optimizeImage(file, {
+        maxWidth: 1920,
+        quality: 0.8,
+        format: 'image/webp'
+      });
+
       const postUrl = await generateUploadUrl();
       const result = await fetch(postUrl, {
         method: "POST",
-        headers: { "Content-Type": file.type },
-        body: file,
+        headers: { "Content-Type": optimizedFile.type },
+        body: optimizedFile,
       });
       
       if (!result.ok) throw new Error("Failed to upload image");
