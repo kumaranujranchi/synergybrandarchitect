@@ -393,7 +393,7 @@ export default function AdminBlogEditor() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <div style={{ height: heightMap[editorHeight] }} className="transition-all duration-300 ease-in-out mb-12 sm:mb-16">
+                          <div style={{ height: heightMap[editorHeight] }} className="blog-editor-wrapper transition-all duration-300 ease-in-out mb-12 sm:mb-16">
                             <ReactQuill 
                               theme="snow" 
                               value={field.value} 
@@ -488,6 +488,21 @@ export default function AdminBlogEditor() {
           </form>
         </Form>
       </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .blog-editor-wrapper .quill {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+        .blog-editor-wrapper .ql-container {
+          flex: 1;
+          overflow-y: auto;
+          background: white;
+        }
+        .blog-editor-wrapper .ql-editor {
+          height: 100%;
+        }
+      `}} />
     </AdminLayout>
   );
 }
