@@ -496,4 +496,12 @@ html.lenis, html.lenis body {
   .container-padding {
     @apply px-4 sm:px-6 lg:px-8;
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

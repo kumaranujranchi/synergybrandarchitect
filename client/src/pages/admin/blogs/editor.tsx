@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "wouter";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
@@ -59,14 +59,39 @@ export default function AdminBlogEditor() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [isSlugManuallyEdited, setIsSlugManuallyEdited] = useState(false);
-  const [editorHeight, setEditorHeight] = useState<"sm" | "md" | "lg" | "xl">("md");
+  const [editorHeightPx, setEditorHeightPx] = useState(500);
+  const [isResizing, setIsResizing] = useState(false);
+  const editorContainerRef = useRef<HTMLDivElement>(null);
 
-  const heightMap = {
-    sm: "300px",
-    md: "500px",
-    lg: "800px",
-    xl: "1200px",
-  };
+  // Drag-to-resize logic
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing || !editorContainerRef.current) return;
+      
+      const containerTop = editorContainerRef.current.getBoundingClientRect().top;
+      // Subtract scroll position since getBoundingClientRect is relative to viewport
+      const newHeight = Math.max(300, Math.min(1500, e.clientY - containerTop));
+      setEditorHeightPx(newHeight);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.body.style.cursor = 'default';
+      document.body.style.userSelect = 'auto';
+    };
+
+    if (isResizing) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'row-resize';
+      document.body.style.userSelect = 'none';
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   // Convex Queries & Mutations
   // Note: We use a custom fetcher for the individual blog if needed, but here we'll just filter from the list or add a getById query later if needed
@@ -215,7 +240,7 @@ export default function AdminBlogEditor() {
               </Button>
             </div>
 
-            <div className="max-w-4xl mx-auto space-y-8 pb-12 w-full">
+            <div className="max-w-6xl mx-auto space-y-8 pb-12 w-full">
               {/* Category 1: Basic Information */}
               <Card className="shadow-sm">
                 <CardHeader className="bg-gray-50/50 pb-4 border-b mb-6">
@@ -360,19 +385,8 @@ export default function AdminBlogEditor() {
                   <CardTitle className="text-xl flex items-center gap-2 text-gray-800">
                     <Type className="h-5 w-5 text-gray-500" /> Article Body
                   </CardTitle>
-                  <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg border">
-                    {(["sm", "md", "lg", "xl"] as const).map((size) => (
-                      <Button
-                        key={size}
-                        type="button"
-                        variant={editorHeight === size ? "default" : "ghost"}
-                        size="sm"
-                        className={`px-3 h-8 text-xs font-bold uppercase ${editorHeight === size ? 'bg-[#FF6B00] hover:bg-[#FF8533]' : 'text-gray-500'}`}
-                        onClick={() => setEditorHeight(size)}
-                      >
-                        {size}
-                      </Button>
-                    ))}
+                  <div className="text-[10px] uppercase tracking-wider font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded border">
+                    Drag edge to resize
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -382,12 +396,30 @@ export default function AdminBlogEditor() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <div style={{ height: heightMap[editorHeight] }} className="transition-all duration-300 ease-in-out mb-6">
-                            <RichTextEditor 
-                              value={field.value} 
-                              onChange={field.onChange} 
-                              placeholder="Write your article content here..."
-                            />
+                          <div className="relative group/editor">
+                            <div 
+                              ref={editorContainerRef}
+                              style={{ height: `${editorHeightPx}px` }} 
+                              className="w-full relative z-0"
+                            >
+                              <RichTextEditor 
+                                value={field.value} 
+                                onChange={field.onChange} 
+                                placeholder="Write your article content here..."
+                              />
+                            </div>
+                            
+                            {/* Professional Resize Handle */}
+                            <div 
+                              className="h-3 w-full cursor-row-resize bg-gray-50 hover:bg-orange-100 transition-colors flex flex-col items-center justify-center mt-[-1px] rounded-b-xl border-x border-b shadow-sm group/handle relative z-10"
+                              onMouseDown={(e) => {
+                                e.preventDefault();
+                                setIsResizing(true);
+                              }}
+                            >
+                              <div className="w-12 h-[2px] bg-gray-200 group-hover/handle:bg-orange-300 rounded-full mb-[2px]" />
+                              <div className="w-12 h-[2px] bg-gray-200 group-hover/handle:bg-orange-300 rounded-full" />
+                            </div>
                           </div>
                         </FormControl>
                         <FormMessage />

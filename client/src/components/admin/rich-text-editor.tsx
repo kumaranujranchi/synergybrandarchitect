@@ -118,8 +118,8 @@ const RichTextEditor = forwardRef<any, RichTextEditorProps>(
 
     return (
       <div className="flex flex-col w-full h-full border rounded-xl bg-white overflow-hidden shadow-sm group focus-within:ring-2 focus-within:ring-orange-100 focus-within:border-orange-200 transition-all duration-300">
-        {/* Advanced Management Hub */}
-        <div className="flex flex-wrap items-center gap-1 p-2 bg-gray-50/50 border-b border-gray-100 sticky top-0 z-20">
+        {/* Advanced Management Hub - Refined for Single Row */}
+        <div className="flex flex-nowrap items-center gap-1 p-2 bg-gray-50/50 border-b border-gray-100 sticky top-0 z-20 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-1 pr-2 border-r border-gray-200">
             <MenuButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive('bold')} tooltip="Bold (Ctrl+B)"><Bold size={16} /></MenuButton>
             <MenuButton onClick={() => editor.chain().focus().toggleItalic().run()} isActive={editor.isActive('italic')} tooltip="Italic (Ctrl+I)"><Italic size={16} /></MenuButton>
