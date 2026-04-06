@@ -9,6 +9,8 @@ import { format } from 'date-fns';
 import { useLocation } from 'wouter';
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Link } from "wouter";
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer, hoverScale } from "@/lib/animations";
 
 // Helper for generic excerpt
 const getExcerpt = (post: any, length = 120) => {
@@ -77,15 +79,23 @@ export default function BlogList() {
            <p className="text-xl">No blog posts found. Stay tuned for updates!</p>
         </div>
       ) : (
-        <main className="pt-28 pb-20">
+        <motion.main 
+          className="pt-28 pb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+        >
           <div className="container mx-auto px-4 max-w-[1280px]">
             
             {/* --- HERO MAGAZINE SECTION --- */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+            <motion.div variants={fadeUp} className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
               
               {/* Main Feature */}
               {mainFeature && (
-                <div 
+                <motion.div 
+                  variants={fadeUp}
+                  whileHover={{ y: -5 }}
                   className="lg:col-span-8 group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col transition-all"
                   onClick={() => setLocation(`/blog/${mainFeature.slug}`)}
                 >
@@ -114,14 +124,16 @@ export default function BlogList() {
                       </span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               )}
 
               {/* Side Sub-Features */}
               <div className="lg:col-span-4 grid grid-rows-2 gap-6">
                 {subFeatures.map((post, idx) => (
-                  <div 
+                  <motion.div 
                     key={post._id} 
+                    variants={fadeUp}
+                    whileHover={{ x: 5 }}
                     className="flex flex-col group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all"
                     onClick={() => setLocation(`/blog/${post.slug}`)}
                   >
@@ -145,13 +157,13 @@ export default function BlogList() {
                       </h3>
                       <span className="text-sm font-bold text-[#333333] flex items-center gap-1 mt-auto group-hover:text-[#FF6B00] transition-colors">Read More <ArrowRight size={14}/></span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* --- NEWS TICKER --- */}
-            <div className="bg-white text-gray-800 flex flex-col md:flex-row items-center rounded-xl mb-14 overflow-hidden shadow-sm border border-gray-100 relative">
+            <motion.div variants={fadeUp} className="bg-white text-gray-800 flex flex-col md:flex-row items-center rounded-xl mb-14 overflow-hidden shadow-sm border border-gray-100 relative">
                <div className="bg-[#0066CC] text-white font-bold px-6 py-4 whitespace-nowrap z-10 h-full flex items-center uppercase tracking-wide">
                  Latest News
                </div>
@@ -167,7 +179,7 @@ export default function BlogList() {
                    ))}
                  </div>
                </div>
-            </div>
+            </motion.div>
 
             {/* --- MAIN CONTENT & SIDEBAR --- */}
             <div className="flex flex-col lg:flex-row gap-8">
@@ -177,14 +189,20 @@ export default function BlogList() {
                  
                  {/* Business Post Block */}
                  {businessPosts.length > 0 && (
-                   <div className="mb-14 border-t-2 border-dashed border-gray-300 pt-6">
+                   <motion.div variants={fadeUp} className="mb-14 border-t-2 border-dashed border-gray-300 pt-6">
                      <div className="flex items-center justify-between mb-6">
                        <h3 className="text-xl font-bold font-poppins uppercase tracking-wide border-b-2 border-blue-600 inline-block pb-1">Business Post</h3>
                        <span className="text-xs text-gray-500 font-bold uppercase tracking-wider cursor-pointer hover:text-blue-600">View All <ChevronRight size={14} className="inline"/></span>
                      </div>
                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                        {businessPosts.map((post) => (
-                         <div key={post._id} className="bg-white group cursor-pointer" onClick={() => setLocation(`/blog/${post.slug}`)}>
+                         <motion.div 
+                           key={post._id} 
+                           variants={fadeUp}
+                           whileHover={{ y: -5 }}
+                           className="bg-white group cursor-pointer" 
+                           onClick={() => setLocation(`/blog/${post.slug}`)}
+                         >
                             <div className="relative aspect-video overflow-hidden mb-4 rounded-t">
                               <img src={post.coverImage || "https://images.unsplash.com/photo-1664575602276-acd073f104c1?w=600"} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt={post.title} />
                               <span className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase z-10">{post.category || "Business"}</span>
@@ -195,19 +213,25 @@ export default function BlogList() {
                             </div>
                             <p className="text-sm text-gray-600 line-clamp-2 mb-4">{getExcerpt(post, 80)}</p>
                             <span className="text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full group-hover:bg-blue-600 group-hover:text-white transition-colors inline-block">Read Post</span>
-                         </div>
+                         </motion.div>
                        ))}
                      </div>
-                   </div>
+                   </motion.div>
                  )}
 
                  {/* Mixed Recent Posts List */}
                  {recentPostsList.length > 0 && (
-                   <div className="mb-14 border-t-2 border-dashed border-gray-300 pt-6">
+                   <motion.div variants={fadeUp} className="mb-14 border-t-2 border-dashed border-gray-300 pt-6">
                      <h3 className="text-xl font-bold font-poppins uppercase tracking-wide border-b-2 border-orange-500 inline-block pb-1 mb-6">Recent Posts</h3>
                      <div className="space-y-6">
                        {recentPostsList.map((post) => (
-                         <div key={post._id} className="flex flex-col sm:flex-row items-center bg-white overflow-hidden shadow-sm group hover:shadow-md transition-shadow cursor-pointer border" onClick={() => setLocation(`/blog/${post.slug}`)}>
+                         <motion.div 
+                           key={post._id} 
+                           variants={fadeUp}
+                           whileHover={{ scale: 1.01 }}
+                           className="flex flex-col sm:flex-row items-center bg-white overflow-hidden shadow-sm group hover:shadow-md transition-shadow cursor-pointer border" 
+                           onClick={() => setLocation(`/blog/${post.slug}`)}
+                         >
                            <div className="w-full sm:w-2/5 aspect-video relative overflow-hidden flex-shrink-0">
                              <img src={post.coverImage || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt={post.title}/>
                            </div>
@@ -224,15 +248,15 @@ export default function BlogList() {
                                {getExcerpt(post, 140)}
                              </p>
                            </div>
-                         </div>
+                         </motion.div>
                        ))}
                      </div>
-                   </div>
+                   </motion.div>
                  )}
 
                  {/* Giant Feature Interstitial */}
                  {giantPost && (
-                    <div className="mb-14 border-t-2 border-dashed border-gray-200 pt-8">
+                    <motion.div variants={fadeUp} className="mb-14 border-t-2 border-dashed border-gray-200 pt-8">
                       <div 
                         className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center overflow-hidden group cursor-pointer transition-shadow hover:shadow-md"
                         onClick={() => setLocation(`/blog/${giantPost?.slug}`)}
@@ -251,11 +275,11 @@ export default function BlogList() {
                            <span className="flex items-center text-[#333333] font-bold group-hover:text-[#0066CC] transition-colors">Read Full Article <ArrowRight size={16} className="ml-1"/></span>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                  )}
 
                  {/* Minimal text-heavy posts */}
-                 <div className="mb-14">
+                 <motion.div variants={fadeUp} className="mb-14">
                     <h2 className="text-2xl font-bold font-poppins leading-tight mb-4">
                       Exploring the Digital Landscape: Insights from the Edge
                     </h2>
@@ -264,22 +288,28 @@ export default function BlogList() {
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {allPosts.slice(4, 6).map(post => (
-                        <div key={post._id} className="border-t border-gray-200 pt-4 group cursor-pointer" onClick={() => setLocation(`/blog/${post.slug}`)}>
+                        <motion.div 
+                          key={post._id} 
+                          variants={fadeUp}
+                          whileHover={{ x: 5 }}
+                          className="border-t border-gray-200 pt-4 group cursor-pointer" 
+                          onClick={() => setLocation(`/blog/${post.slug}`)}
+                        >
                            <div className="text-xs text-orange-500 font-bold mb-2 uppercase">{post.category || "Analysis"}</div>
                            <h4 className="font-bold text-lg mb-2 group-hover:text-blue-600">{post.title}</h4>
                            <p className="text-sm text-gray-500 line-clamp-3 mb-3">{getExcerpt(post, 120)}</p>
                            <div className="flex items-center text-xs text-gray-400 font-medium">
                              <Calendar size={12} className="mr-1"/> {format(post.publishedAt || post.createdAt, 'MMM dd, yyyy')}
                            </div>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
-                 </div>
+                 </motion.div>
 
                </div>
 
                {/* Right Sidebar - Widgets */}
-               <div className="lg:w-4/12 xl:w-3/12 space-y-8">
+               <motion.div variants={fadeUp} className="lg:w-4/12 xl:w-3/12 space-y-8">
                  
                  {/* Widget 1: Mock Market/Stats Component */}
                  <div className="bg-white text-gray-900 rounded-xl shadow-sm border border-gray-100 p-6 relative overflow-hidden group">
@@ -355,11 +385,10 @@ export default function BlogList() {
                     </div>
                  </div>
 
-               </div>
+               </motion.div>
             </div>
-            
           </div>
-        </main>
+        </motion.main>
       )}
 
       {/* Embedded Marquee Style animation for the ticker */}

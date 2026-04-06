@@ -3,6 +3,7 @@ import { Lightbulb, PaintBucket, Megaphone, Search, FileBarChart, BarChart, Glob
 import { Button } from "@/components/ui/button";
 import { smoothScrollTo } from "@/lib/scrollHelper";
 import { Link } from "wouter";
+import { staggerContainer, fadeUp, hoverScale } from "@/lib/animations";
 
 const brandBuildingServices = [
   {
@@ -102,12 +103,10 @@ const ServiceCard = ({ service, theme }: {
   
   return (
     <motion.div 
-      className="bg-white rounded-xl shadow-lg p-4 sm:p-5 md:p-6 h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
-      variants={{
-        hidden: { opacity: 0, y: 20 },
-        show: { opacity: 1, y: 0 }
-      }}
-      transition={{ duration: 0.3 }}
+      className="bg-white rounded-xl shadow-lg p-4 sm:p-5 md:p-6 h-full cursor-default"
+      variants={hoverScale}
+      initial="rest"
+      whileHover="hover"
     >
       <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full ${isOrange ? 'bg-[#FF6B00]' : 'bg-[#0066CC]'} bg-opacity-10 flex items-center justify-center mb-4 md:mb-6`}>
         {service.icon}
@@ -134,25 +133,17 @@ const ServiceCard = ({ service, theme }: {
 };
 
 export default function Services() {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+// The parent stagger animation is now imported from @/lib/animations
 
   return (
     <section id="services" className="section-padding">
       <div className="container mx-auto container-padding">
         <motion.div 
           className="text-center mb-12 md:mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
         >
           <h2 className="font-poppins font-semibold text-2xl sm:text-3xl md:text-4xl mb-3 md:mb-4 text-[#333333]">Our Services</h2>
           <p className="text-gray-600 max-w-2xl mx-auto font-inter text-sm sm:text-base">
@@ -164,27 +155,27 @@ export default function Services() {
         <div className="mb-16 md:mb-20">
           <motion.h3 
             className="font-poppins font-semibold text-xl sm:text-2xl md:text-3xl mb-6 md:mb-8 text-[#FF6B00] text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
           >
             Brand Building Services
           </motion.h3>
           <motion.p
             className="text-gray-600 max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 text-center font-inter text-sm sm:text-base"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
           >
             Establish a memorable brand identity that resonates with your audience and stands out in the market. Our brand building solutions create the foundation for your business growth.
           </motion.p>
           <motion.div 
             className="mobile-scroll-container lg:grid-cols-2"
-            variants={container}
+            variants={staggerContainer}
             initial="hidden"
-            whileInView="show"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
             {brandBuildingServices.map((service, index) => (
@@ -199,27 +190,27 @@ export default function Services() {
         <div className="mb-12 sm:mb-16">
           <motion.h3 
             className="font-poppins font-semibold text-xl sm:text-2xl md:text-3xl mb-6 md:mb-8 text-[#0066CC] text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
           >
             Digital Marketing Services
           </motion.h3>
           <motion.p
             className="text-gray-600 max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 text-center font-inter text-sm sm:text-base"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
           >
             Drive traffic, generate leads, and increase conversions with our comprehensive digital marketing strategies. As one of the best digital marketing services in Patna, we focus on delivering measurable results.
           </motion.p>
           <motion.div 
             className="mobile-scroll-container lg:grid-cols-3"
-            variants={container}
+            variants={staggerContainer}
             initial="hidden"
-            whileInView="show"
+            whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
             {digitalMarketingServices.map((service, index) => (
@@ -232,9 +223,9 @@ export default function Services() {
         
         <motion.div 
           className="text-center mt-12 sm:mt-16 bg-[#F5F7FA] p-6 sm:p-8 rounded-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
         >
           <h3 className="font-poppins font-semibold text-xl sm:text-2xl mb-3 sm:mb-4 text-[#333333]">Ready to Elevate Your Brand?</h3>

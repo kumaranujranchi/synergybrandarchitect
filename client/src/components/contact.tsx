@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { staggerContainer, fadeUp, slideLeft, slideRight, pulseButton } from "@/lib/animations";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -75,9 +76,9 @@ export default function Contact() {
       <div className="container mx-auto px-4">
         <motion.div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
         >
           <h2 className="font-poppins font-semibold text-3xl md:text-4xl mb-4 text-[#333333]">Get In Touch</h2>
@@ -86,13 +87,16 @@ export default function Contact() {
           </p>
         </motion.div>
         
-        <div className="flex flex-col lg:flex-row gap-12">
+        <motion.div 
+          className="flex flex-col lg:flex-row gap-12"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <motion.div 
             className="lg:w-1/2"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            variants={slideRight}
           >
             <div className="bg-white rounded-xl shadow-lg p-8">
               <Form {...form}>
@@ -217,13 +221,15 @@ export default function Contact() {
                     )}
                   />
                   
-                  <Button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-3 px-8 rounded-full transition-all hover:shadow-md hover:-translate-y-1 w-full h-auto"
-                  >
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </Button>
+                  <motion.div variants={pulseButton} animate="pulse" whileHover="hover">
+                    <Button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-3 px-8 rounded-full transition-all shadow-md w-full h-auto"
+                    >
+                      {isSubmitting ? "Sending..." : "Send Message"}
+                    </Button>
+                  </motion.div>
                 </form>
               </Form>
             </div>
@@ -231,10 +237,7 @@ export default function Contact() {
           
           <motion.div 
             className="lg:w-1/2"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            variants={slideLeft}
           >
             <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
               <h3 className="font-poppins font-semibold text-2xl mb-6 text-[#333333]">Contact Information</h3>
@@ -338,7 +341,7 @@ export default function Contact() {
               </div>
             </div>
           </motion.div>
-        </div>
+          </motion.div>
       </div>
     </section>
   );

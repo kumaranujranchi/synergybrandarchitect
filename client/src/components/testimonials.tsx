@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Star,
   Quote,
@@ -8,6 +8,7 @@ import {
   UserRound,
   CircleUser,
 } from "lucide-react";
+import { staggerContainer, fadeUp, hoverScale } from "@/lib/animations";
 
 const testimonials = [
   {
@@ -63,9 +64,9 @@ export default function Testimonials() {
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
         >
           <div className="flex justify-center mb-4">
@@ -82,42 +83,58 @@ export default function Testimonials() {
         </motion.div>
 
         <div className="relative testimonial-carousel">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {getCurrentTestimonials().map((testimonial, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-xl shadow-lg p-8 transition-all duration-300 hover:-translate-y-2 h-full flex flex-col"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                viewport={{ once: true }}
+          <div className="overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={activeSlide}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                variants={staggerContainer}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
               >
-                <div className="flex text-yellow-400 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="fill-current" size={16} />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6 font-inter flex-grow italic">
-                  "{testimonial.content}"
-                </p>
-                <div className="flex items-center mt-auto">
-                  <div className="w-12 h-12 rounded-full mr-4 border-2 border-[#FF6B00] border-opacity-20 bg-[#FF6B00] bg-opacity-10 flex items-center justify-center">
-                    {testimonial.icon && (
-                      <testimonial.icon size={28} className="text-[#FF6B00]" />
-                    )}
-                  </div>
-                  <div>
-                    <h4 className="font-poppins font-medium text-[#333333]">
-                      {testimonial.author}
-                    </h4>
-                    <p className="text-sm text-gray-500">{testimonial.title}</p>
-                    <p className="text-xs text-[#FF6B00] font-medium">
-                      {testimonial.industry}
-                    </p>
-                  </div>
-                </div>
+                {getCurrentTestimonials().map((testimonial, index) => (
+                  <motion.div
+                    key={`${activeSlide}-${index}`}
+                    className="bg-white rounded-xl shadow-lg p-8 h-full flex flex-col cursor-default"
+                    variants={fadeUp}
+                    whileHover="hover"
+                    initial="hidden"
+                    animate="visible"
+                    custom={index}
+                    // Adding hoverScale effect
+                    onUpdate={(latest) => {}} // Placeholder to satisfy motion
+                  >
+                    <motion.div variants={hoverScale} className="h-full flex flex-col">
+                      <div className="flex text-yellow-400 mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="fill-current" size={16} />
+                        ))}
+                      </div>
+                      <p className="text-gray-600 mb-6 font-inter flex-grow italic">
+                        "{testimonial.content}"
+                      </p>
+                      <div className="flex items-center mt-auto">
+                        <div className="w-12 h-12 rounded-full mr-4 border-2 border-[#FF6B00] border-opacity-20 bg-[#FF6B00] bg-opacity-10 flex items-center justify-center">
+                          {testimonial.icon && (
+                            <testimonial.icon size={28} className="text-[#FF6B00]" />
+                          )}
+                        </div>
+                        <div>
+                          <h4 className="font-poppins font-medium text-[#333333]">
+                            {testimonial.author}
+                          </h4>
+                          <p className="text-sm text-gray-500">{testimonial.title}</p>
+                          <p className="text-xs text-[#FF6B00] font-medium">
+                            {testimonial.industry}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                ))}
               </motion.div>
-            ))}
+            </AnimatePresence>
           </div>
 
           {totalPages > 1 && (
@@ -136,9 +153,9 @@ export default function Testimonials() {
 
         <motion.div
           className="text-center mt-16 max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
         >
           <div className="flex justify-center mb-6">

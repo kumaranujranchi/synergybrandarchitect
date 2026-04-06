@@ -2,29 +2,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Globe, Shield, TrendingUp, Trophy, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import CountUp from "./count-up";
+import { staggerContainer, fadeUp, slideLeft, pulseButton } from "@/lib/animations";
 
 export default function DigitalPresence() {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-  
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
+// Animations are now managed via @/lib/animations
 
   return (
     <section className="overflow-hidden">
@@ -39,28 +20,32 @@ export default function DigitalPresence() {
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
             className="max-w-4xl mx-auto text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#333333] font-poppins">
+            <motion.h2 variants={fadeUp} className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#333333] font-poppins">
               The New Era of Digital Presence
-            </h2>
-            <h3 className="text-xl md:text-2xl font-medium mb-8 text-[#0066CC]">
+            </motion.h2>
+            <motion.h3 variants={fadeUp} className="text-xl md:text-2xl font-medium mb-8 text-[#0066CC]">
               Low Cost, High Quality Web Development
-            </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+            </motion.h3>
+            <motion.p variants={fadeUp} className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
               Helping your business launch in the digital world with the best design, best development, 
               and best results – all at affordable rates.
-            </p>
-            <a href="#contact">
-              <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
-                Get Free Consultation
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </a>
-            <p className="text-gray-500 mt-5 text-sm font-medium">Trusted by 100+ businesses</p>
+            </motion.p>
+            <motion.div variants={fadeUp}>
+              <a href="#contact">
+                <motion.div variants={pulseButton} animate="pulse" whileHover="hover">
+                  <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg transition-all h-auto">
+                    Get Free Consultation
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </motion.div>
+              </a>
+              <p className="text-gray-500 mt-5 text-sm font-medium">Trusted by 100+ businesses</p>
+            </motion.div>
           </motion.div>
         </div>
       </div>
@@ -70,10 +55,10 @@ export default function DigitalPresence() {
         <div className="container mx-auto container-padding">
           <motion.div 
             className="max-w-4xl mx-auto text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl font-bold mb-4 text-[#333333] font-poppins">
               Why a Digital Presence is a Must Today
@@ -86,14 +71,14 @@ export default function DigitalPresence() {
           
           <motion.div 
             className="mobile-scroll-container lg:grid-cols-2"
-            variants={containerVariants}
+            variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
             <motion.div 
               className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <div className="bg-[#FF6B00]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Globe className="h-8 w-8 text-[#FF6B00]" />
@@ -108,7 +93,7 @@ export default function DigitalPresence() {
             
             <motion.div 
               className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <div className="bg-[#0066CC]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-8 w-8 text-[#0066CC]" />
@@ -123,7 +108,7 @@ export default function DigitalPresence() {
             
             <motion.div 
               className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <div className="bg-[#FF6B00]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="h-8 w-8 text-[#FF6B00]" />
@@ -138,7 +123,7 @@ export default function DigitalPresence() {
             
             <motion.div 
               className="mobile-scroll-item bg-gray-50 rounded-xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-              variants={itemVariants}
+              variants={fadeUp}
             >
               <div className="bg-[#0066CC]/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Trophy className="h-8 w-8 text-[#0066CC]" />
@@ -160,10 +145,10 @@ export default function DigitalPresence() {
           <div className="max-w-6xl mx-auto">
             <motion.div 
               className="max-w-4xl mx-auto text-center mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
             >
               <h2 className="text-3xl font-bold mb-4 text-[#333333] font-poppins">
                 Affordable Excellence in Web Development
@@ -173,10 +158,10 @@ export default function DigitalPresence() {
           
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                variants={slideLeft}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.1 }}
               >
                 <h3 className="text-2xl font-bold mb-4 text-[#0066CC]">
                   High-Quality Web Solutions That Don't Break the Bank
@@ -221,10 +206,10 @@ export default function DigitalPresence() {
               
               <motion.div
                 className="relative"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.3 }}
               >
                 <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100">
                   <div className="flex h-full">
@@ -316,10 +301,10 @@ export default function DigitalPresence() {
             {/* Testimonials */}
             <motion.div
               className="bg-gray-50 rounded-xl p-8 border border-gray-100 relative overflow-hidden"
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#FF6B00] to-[#0066CC]"></div>
               
@@ -364,10 +349,10 @@ export default function DigitalPresence() {
             {/* Success Metrics */}
             <motion.div
               className="bg-gray-50 rounded-xl p-8 border border-gray-100 relative flex flex-col justify-center"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0066CC] to-[#FF6B00]"></div>
               
@@ -431,10 +416,12 @@ export default function DigitalPresence() {
               Let's Get Started Today.
             </p>
             <a href="#contact" className="relative z-10 inline-block">
-              <Button size="lg" className="bg-[#0066CC] hover:bg-[#0052a3] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
-                Book a Free Consultation
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <motion.div variants={pulseButton} animate="pulse" whileHover="hover">
+                <Button size="lg" className="bg-[#0066CC] hover:bg-[#0052a3] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg transition-all h-auto">
+                  Book a Free Consultation
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </motion.div>
             </a>
           </motion.div>
         </div>

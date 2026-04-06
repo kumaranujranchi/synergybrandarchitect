@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Check, Star } from "lucide-react";
+import { fadeUp, slideRight, staggerContainer, hoverScale } from "@/lib/animations";
 
 export default function About() {
   const features = [
@@ -39,9 +40,9 @@ export default function About() {
       <div className="container mx-auto container-padding">
         <motion.div
           className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
         >
           <h2 className="font-poppins font-semibold text-3xl md:text-4xl mb-4 text-[#333333]">
@@ -55,9 +56,9 @@ export default function About() {
         <div className="flex flex-col lg:flex-row items-center gap-12 mb-16">
           <motion.div
             className="lg:w-1/2"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={slideRight}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
           >
             <div className="relative">
@@ -73,9 +74,9 @@ export default function About() {
 
           <motion.div
             className="lg:w-1/2"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
           >
             <h2 className="font-poppins font-semibold text-3xl mb-6 text-[#333333]">
@@ -96,15 +97,18 @@ export default function About() {
               fellow businesses here thrive.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
                   className="flex items-start"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  variants={fadeUp}
                 >
                   <div className="mr-3 mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-[#FF6B00] flex items-center justify-center">
                     <Check className="text-white" size={12} />
@@ -112,33 +116,34 @@ export default function About() {
                   <p className="text-gray-700 font-inter">{feature}</p>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
 
         <motion.div
           className="mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
         >
           <h2 className="font-poppins font-semibold text-3xl mb-10 text-[#333333] text-center">
             Our Values
           </h2>
-          <div className="mobile-scroll-container lg:grid-cols-2">
+          <motion.div 
+            className="mobile-scroll-container lg:grid-cols-2"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             {values.map((value, index) => (
               <div key={index} className="mobile-scroll-item">
                 <motion.div
                   className="bg-white p-6 rounded-xl shadow-lg h-full"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{
-                    y: -5,
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
-                  }}
+                  variants={hoverScale}
+                  initial="rest"
+                  whileHover="hover"
                 >
                   <div className="w-12 h-12 rounded-full bg-[#FF6B00] bg-opacity-10 flex items-center justify-center mb-4">
                     <span className="text-[#FF6B00] font-bold text-xl">
@@ -152,14 +157,14 @@ export default function About() {
                 </motion.div>
               </div>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         <motion.div
           className="mt-16 bg-[#F5F7FA] p-8 rounded-xl"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
         >
           <div className="flex flex-col md:flex-row items-center">
