@@ -23,8 +23,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import RichTextEditor from "@/components/admin/rich-text-editor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -197,17 +196,7 @@ export default function AdminBlogEditor() {
     }
   };
 
-  const quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      [{ 'align': [] }],
-      ['link', 'image', 'video'],
-      ['clean'],
-      ['blockquote', 'code-block']
-    ],
-  };
+
 
   return (
     <AdminLayout>
@@ -393,13 +382,11 @@ export default function AdminBlogEditor() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <div style={{ height: heightMap[editorHeight] }} className="blog-editor-wrapper transition-all duration-300 ease-in-out mb-12 sm:mb-16">
-                            <ReactQuill 
-                              theme="snow" 
+                          <div style={{ height: heightMap[editorHeight] }} className="transition-all duration-300 ease-in-out mb-6">
+                            <RichTextEditor 
                               value={field.value} 
                               onChange={field.onChange} 
-                              modules={quillModules} 
-                              className="h-full"
+                              placeholder="Write your article content here..."
                             />
                           </div>
                         </FormControl>
@@ -488,21 +475,6 @@ export default function AdminBlogEditor() {
           </form>
         </Form>
       </div>
-      <style dangerouslySetInnerHTML={{ __html: `
-        .blog-editor-wrapper .quill {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-        }
-        .blog-editor-wrapper .ql-container {
-          flex: 1;
-          overflow-y: auto;
-          background: white;
-        }
-        .blog-editor-wrapper .ql-editor {
-          height: 100%;
-        }
-      `}} />
     </AdminLayout>
   );
 }
