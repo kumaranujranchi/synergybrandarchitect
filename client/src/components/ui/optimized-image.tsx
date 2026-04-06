@@ -21,6 +21,7 @@ export function OptimizedImage({
   alt, 
   className, 
   containerClassName,
+  loading = "lazy",
   ...props 
 }: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -40,7 +41,7 @@ export function OptimizedImage({
         <img
           src={src}
           alt={alt}
-          loading="lazy"
+          loading={loading}
           decoding="async"
           onLoad={() => setIsLoaded(true)}
           onError={() => setHasError(true)}

@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { smoothScrollTo } from "@/lib/scrollHelper";
 import TypingAnimation from "./typing-animation";
+import { OptimizedImage } from "./ui/optimized-image";
 
 export default function Hero() {
   return (
@@ -110,10 +111,11 @@ export default function Hero() {
           <div className="relative">
             <div className="absolute -top-6 -left-6 w-20 h-20 bg-gradient-to-r from-[#0066CC] to-[#4D94FF] rounded-full opacity-30"></div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] rounded-full opacity-20"></div>
-            <img 
+            <OptimizedImage 
               src="/images/hero.png" 
               alt="A professional marketing office, symbolizing Synergy's expertise" 
               className="w-full h-auto rounded-xl shadow-lg relative z-10"
+              loading="eager"
             />
           </div>
         </motion.div>
