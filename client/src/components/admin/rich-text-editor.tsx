@@ -13,6 +13,7 @@ import { Underline } from '@tiptap/extension-underline';
 import { Highlight } from '@tiptap/extension-highlight';
 import { TaskList } from '@tiptap/extension-task-list';
 import { TaskItem } from '@tiptap/extension-task-item';
+import { CharacterCount } from '@tiptap/extension-character-count';
 import { forwardRef, useImperativeHandle, useEffect } from 'react';
 import { 
   Bold, Italic, Underline as UnderlineIcon, 
@@ -57,6 +58,7 @@ const RichTextEditor = forwardRef<any, RichTextEditorProps>(
         TableHeader,
         TableCell,
         Placeholder.configure({ placeholder }),
+        CharacterCount,
       ],
       content: value,
       onUpdate: ({ editor }) => {
