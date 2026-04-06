@@ -5,6 +5,7 @@ import About from "@/components/about";
 import DigitalPresence from "@/components/digital-presence"; 
 import Stats from "@/components/stats";
 import Services from "@/components/services";
+import HomeServiceSections from "@/components/home-service-sections";
 import AdAccountAccess from "@/components/ad-account-access"; // Added new section
 import CaseStudies from "@/components/case-studies";
 import Testimonials from "@/components/testimonials";
@@ -24,6 +25,7 @@ export default function Home() {
       <DigitalPresence />
       <Stats />
       <Services />
+      <HomeServiceSections />
       <AdAccountAccess />
       <CaseStudies />
       <Testimonials />
