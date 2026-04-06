@@ -10,7 +10,10 @@ import {
   Image as ImageIcon, 
   Globe, 
   Settings,
-  X
+  X,
+  Plus,
+  Minus,
+  Maximize2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,6 +59,14 @@ export default function AdminBlogEditor() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [isSlugManuallyEdited, setIsSlugManuallyEdited] = useState(false);
+  const [editorHeight, setEditorHeight] = useState<"sm" | "md" | "lg" | "xl">("md");
+
+  const heightMap = {
+    sm: "300px",
+    md: "500px",
+    lg: "800px",
+    xl: "1200px",
+  };
 
   // Convex Queries & Mutations
   // Note: We use a custom fetcher for the individual blog if needed, but here we'll just filter from the list or add a getById query later if needed
@@ -338,10 +349,24 @@ export default function AdminBlogEditor() {
 
               {/* Category 2: Blog Content */}
               <Card className="shadow-sm overflow-hidden">
-                <CardHeader className="bg-gray-50/50 pb-4 border-b mb-6">
+                <CardHeader className="bg-gray-50/50 pb-4 border-b mb-6 flex flex-row items-center justify-between">
                   <CardTitle className="text-xl flex items-center gap-2 text-gray-800">
                     <Type className="h-5 w-5 text-gray-500" /> Article Body
                   </CardTitle>
+                  <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg border">
+                    {(["sm", "md", "lg", "xl"] as const).map((size) => (
+                      <Button
+                        key={size}
+                        type="button"
+                        variant={editorHeight === size ? "default" : "ghost"}
+                        size="sm"
+                        className={`px-3 h-8 text-xs font-bold uppercase ${editorHeight === size ? 'bg-[#FF6B00] hover:bg-[#FF8533]' : 'text-gray-500'}`}
+                        onClick={() => setEditorHeight(size)}
+                      >
+                        {size}
+                      </Button>
+                    ))}
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <FormField
@@ -350,7 +375,15 @@ export default function AdminBlogEditor() {
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
-                          <ReactQuill theme="snow" value={field.value} onChange={field.onChange} modules={quillModules} className="h-[500px] mb-12 sm:mb-16" />
+                          <div style={{ height: heightMap[editorHeight] }} className="transition-all duration-300 ease-in-out mb-12 sm:mb-16">
+                            <ReactQuill 
+                              theme="snow" 
+                              value={field.value} 
+                              onChange={field.onChange} 
+                              modules={quillModules} 
+                              className="h-full"
+                            />
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
