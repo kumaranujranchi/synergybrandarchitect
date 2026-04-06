@@ -101,13 +101,19 @@ export default function BlogList() {
   const mainFeature = allPosts[0];
   const subFeatures = allPosts.slice(1, 3);
   
-  // 2. Sectioned Groups
-  const remaining = allPosts.slice(3);
+  // 2. Sectioned Groups - No longer slicing so blogs can appear in both Hero and Categories
+  const remaining = allPosts;
   
   // Filter for specific categories (Logic for Magazine sections)
-  const businessPosts = remaining.filter(p => !p.category || p.category.toLowerCase().includes('business')).slice(0, 3);
-  const seoPosts = remaining.filter(p => p.category?.toLowerCase().includes('seo') || p.category?.toLowerCase().includes('performance')).slice(0, 3);
-  const marketingPosts = remaining.filter(p => p.category?.toLowerCase().includes('marketing') || p.category?.toLowerCase().includes('analytics')).slice(0, 3);
+  // Enhanced to match new predefined categories
+  const businessPosts = remaining.filter(p => !p.category || p.category.toLowerCase().includes('business') || p.category.toLowerCase().includes('strategy')).slice(0, 3);
+  const seoPosts = remaining.filter(p => p.category?.toLowerCase().includes('seo') || p.category?.toLowerCase().includes('organic')).slice(0, 3);
+  const marketingPosts = remaining.filter(p => 
+    p.category?.toLowerCase().includes('marketing') || 
+    p.category?.toLowerCase().includes('social') ||
+    p.category?.toLowerCase().includes('content') ||
+    p.category?.toLowerCase().includes('brand')
+  ).slice(0, 3);
 
   // Everything else for the "General archive" at the bottom
   const featuredIds = new Set([

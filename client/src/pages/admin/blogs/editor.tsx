@@ -36,6 +36,13 @@ import {
   FormLabel, 
   FormMessage 
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Id } from "../../../../../convex/_generated/dataModel";
 import { optimizeImage } from "@/lib/imageOptimization";
 
@@ -61,7 +68,20 @@ export default function AdminBlogEditor() {
   const [isSlugManuallyEdited, setIsSlugManuallyEdited] = useState(false);
   const [editorHeightPx, setEditorHeightPx] = useState(500);
   const [isResizing, setIsResizing] = useState(false);
+  const [showCustomCategory, setShowCustomCategory] = useState(false);
   const editorContainerRef = useRef<HTMLDivElement>(null);
+  const customCategoryRef = useRef<HTMLInputElement>(null);
+
+  const PREDEFINED_CATEGORIES = [
+    "Business & Strategy",
+    "Digital Marketing",
+    "SEO & Organic Growth",
+    "Social Media Marketing",
+    "Content Strategy",
+    "Case Studies",
+    "News & Updates",
+    "Others"
+  ];
 
   // Drag-to-resize logic
   useEffect(() => {
@@ -137,6 +157,13 @@ export default function AdminBlogEditor() {
         category: blogData.category || "",
       });
       setIsSlugManuallyEdited(true);
+      // Check if current category is in predefined list
+      if (blogData.category && !PREDEFINED_CATEGORIES.includes(blogData.category)) {
+        setShowCustomCategory(true);
+        form.setValue("category", "Others");
+        // We'll handle customCategory text separately via local state if needed, 
+        // but for now let's just ensure the select reflects the reality
+      }
     }
   }, [blogData, form]);
 
@@ -201,14 +228,19 @@ export default function AdminBlogEditor() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      const finalValues = { ...values };
+      if (values.category === "Others" && customCategoryRef.current?.value) {
+        finalValues.category = customCategoryRef.current.value;
+      }
+
       if (isEdit) {
         await updateMutation({
           id: id as Id<"blogs">,
-          ...values,
+          ...finalValues,
         });
         toast({ title: "Blog updated" });
       } else {
-        await createMutation(values);
+        await createMutation(finalValues);
         toast({ title: "Blog created" });
       }
       setLocation("/admin/blogs");
@@ -286,9 +318,36 @@ export default function AdminBlogEditor() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel className="text-sm font-semibold text-gray-700">Category Tag</FormLabel>
-                        <FormControl>
-                          <Input {...field} className="bg-gray-50 focus:bg-white" placeholder="e.g. Business, Design, Technology" />
-                        </FormControl>
+                        <Select 
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                            setShowCustomCategory(value === "Others");
+                          }} 
+                          defaultValue={field.value}
+                          value={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="bg-gray-50 focus:bg-white h-12">
+                              <SelectValue placeholder="Select a category" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {PREDEFINED_CATEGORIES.map(cat => (
+                              <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        
+                        {showCustomCategory && (
+                          <div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                            <Label className="text-xs font-bold text-[#FF6B00] mb-2 block uppercase tracking-wider">Specify Manual Category</Label>
+                            <Input 
+                              placeholder="Type your custom category..." 
+                              className="bg-orange-50/30 border-orange-100 focus:border-orange-300 h-11"
+                              ref={customCategoryRef}
+                            />
+                          </div>
+                        )}
                         <p className="text-xs text-gray-500 mt-2">Used to group posts on the main blog page.</p>
                         <FormMessage />
                       </FormItem>
