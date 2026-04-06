@@ -18,7 +18,7 @@ import { forwardRef, useImperativeHandle, useEffect } from 'react';
 import { 
   Bold, Italic, Underline as UnderlineIcon, 
   List, ListOrdered, AlignLeft, AlignCenter, 
-  AlignRight, Link as LinkIcon, Image as ImageIcon,
+  AlignRight, AlignJustify, Link as LinkIcon, Image as ImageIcon,
   Table as TableIcon, Trash2, Plus, 
   Heading1, Heading2, Heading3, Code,
   Quote, Redo, Undo, Eraser, Youtube as YoutubeIcon,
@@ -144,6 +144,7 @@ const RichTextEditor = forwardRef<any, RichTextEditorProps>(
             <MenuButton onClick={() => editor.chain().focus().setTextAlign('left').run()} isActive={editor.isActive({ textAlign: 'left' })} tooltip="Align Left"><AlignLeft size={16} /></MenuButton>
             <MenuButton onClick={() => editor.chain().focus().setTextAlign('center').run()} isActive={editor.isActive({ textAlign: 'center' })} tooltip="Align Center"><AlignCenter size={16} /></MenuButton>
             <MenuButton onClick={() => editor.chain().focus().setTextAlign('right').run()} isActive={editor.isActive({ textAlign: 'right' })} tooltip="Align Right"><AlignRight size={16} /></MenuButton>
+            <MenuButton onClick={() => editor.chain().focus().setTextAlign('justify').run()} isActive={editor.isActive({ textAlign: 'justify' })} tooltip="Justify"><AlignJustify size={16} /></MenuButton>
           </div>
 
           <div className="flex items-center gap-1 px-2 border-r border-gray-200">
