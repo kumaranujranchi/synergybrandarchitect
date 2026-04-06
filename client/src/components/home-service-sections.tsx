@@ -7,10 +7,7 @@ import {
   Zap, 
   Search, 
   CheckCircle,
-  TrendingUp,
-  BarChart3,
-  Globe,
-  MousePointer2
+  TrendingUp
 } from "lucide-react";
 
 interface ServiceSectionProps {
@@ -75,7 +72,7 @@ const ServiceSection = ({
           </div>
 
           {/* Visual Side */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 w-full">
             <motion.div
               className="relative"
               initial={{ opacity: 0, scale: 0.9 }}
@@ -85,11 +82,13 @@ const ServiceSection = ({
             >
               <div className={`absolute -inset-4 bg-gradient-to-tr ${reversed ? "from-emerald-500/10 to-indigo-500/10" : "from-orange-500/10 to-blue-500/10"} rounded-3xl blur-2xl -z-10`} />
               <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-100 p-2">
-                <img 
-                  src={imagePath} 
-                  alt={title} 
-                  className="w-full h-auto rounded-2xl transition-transform duration-700 hover:scale-105"
-                />
+                <div className="aspect-video w-full overflow-hidden rounded-2xl bg-gray-100">
+                  <img 
+                    src={imagePath} 
+                    alt={title} 
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                </div>
               </div>
               
               {/* Decorative Floating Element */}
@@ -127,7 +126,7 @@ export default function HomeServiceSections() {
       ],
       color: "bg-[#0066CC]",
       accentColor: "text-[#0066CC]",
-      imagePath: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=1074",
+      imagePath: "/images/services/social-media-hero.png",
       url: "/services/social-media-marketing",
       reversed: false
     },
@@ -144,7 +143,7 @@ export default function HomeServiceSections() {
       ],
       color: "bg-amber-500",
       accentColor: "text-amber-500",
-      imagePath: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1170",
+      imagePath: "/images/services/performance-hero.png",
       url: "/services/performance-marketing",
       reversed: true
     },
@@ -161,7 +160,7 @@ export default function HomeServiceSections() {
       ],
       color: "bg-emerald-500",
       accentColor: "text-emerald-500",
-      imagePath: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=1170",
+      imagePath: "/images/services/automation-hero.png",
       url: "/services/automation",
       reversed: false
     },
@@ -176,9 +175,9 @@ export default function HomeServiceSections() {
         "Semantic Keyword Research",
         "Local Domination"
       ],
-      color: "bg-amber-400 font-bold",
+      color: "bg-amber-400",
       accentColor: "text-amber-500",
-      imagePath: "https://images.unsplash.com/photo-1572177222106-d568b04eb5f9?auto=format&fit=crop&q=80&w=1170",
+      imagePath: "/images/services/seo-hero.png",
       url: "/services/seo",
       reversed: true
     }
