@@ -42,6 +42,19 @@ export default function Footer() {
               Danapur Nizamat, Patna 801503<br />
               Phone: +91 9525 230232
             </address>
+
+            <div className="mb-6 font-inter">
+              <p className="text-[#FF6B00] text-sm font-semibold mb-1">Coming Soon</p>
+              <p className="text-gray-300 text-sm mb-2">We are coming soon to London as well</p>
+              <a 
+                href="https://synergybrandarchitect.co.uk" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-white hover:text-[#FF6B00] transition-colors text-sm font-medium border-b border-gray-600 hover:border-[#FF6B00]"
+              >
+                Synergy Brand Architect London — synergybrandarchitect.co.uk
+              </a>
+            </div>
             <div className="flex space-x-4">
               <a 
                 href="https://www.facebook.com/synergybrandarchitect"
