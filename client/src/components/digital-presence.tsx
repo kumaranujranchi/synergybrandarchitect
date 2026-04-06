@@ -29,9 +29,12 @@ export default function DigitalPresence() {
   return (
     <section className="overflow-hidden">
       {/* Hero Banner */}
-      <div className="relative py-20 lg:py-24 bg-gradient-to-r from-[#0066CC]/90 to-[#004080]/90 overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTh2MmgtMnYtMmg5em0tMTAgMGgyek0zNiAxMHYtMmgtMnYyaC00di0yaC0ydjJoLTJ2LTRoMTB2NHptMCA4di00aC0ydjRoLTR2LTRoLTJ2NGgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHptMCA4di00aC0ydjRoLTR2LTRoLTJ2NGgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHptMCA4di0yaC0ydjJoLTR2LTJoLTJ2MmgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
+      <div className="relative py-20 lg:py-24 bg-gradient-to-br from-blue-50 via-white to-orange-50 overflow-hidden border-b border-gray-100">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0066CC] to-[#FF6B00]"></div>
+        
+        {/* Subtle decorative elements */}
+        <div className="absolute top-10 left-10 w-32 h-32 bg-[#0066CC] rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-[#FF6B00] rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
         
         <div className="container mx-auto px-4 relative z-10">
           <motion.div 
@@ -41,23 +44,23 @@ export default function DigitalPresence() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white font-poppins">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#333333] font-poppins">
               The New Era of Digital Presence
             </h2>
-            <h3 className="text-xl md:text-2xl font-medium mb-8 text-white/90">
+            <h3 className="text-xl md:text-2xl font-medium mb-8 text-[#0066CC]">
               Low Cost, High Quality Web Development
             </h3>
-            <p className="text-lg text-white/80 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
               Helping your business launch in the digital world with the best design, best development, 
               and best results – all at affordable rates.
             </p>
             <a href="#contact">
-              <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium">
+              <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 Get Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </a>
-            <p className="text-white/70 mt-4 text-sm">Trusted by 100+ businesses</p>
+            <p className="text-gray-500 mt-5 text-sm font-medium">Trusted by 100+ businesses</p>
           </motion.div>
         </div>
       </div>
@@ -408,26 +411,27 @@ export default function DigitalPresence() {
       </div>
       
       {/* Final CTA */}
-      <div className="section-padding bg-gradient-to-r from-[#0066CC]/90 to-[#004080]/90 relative overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTh2MmgtMnYtMmg5em0tMTAgMGgyek0zNiAxMHYtMmgtMnYyaC00di0yaC0ydjJoLTJ2LTRoMTB2NHptMCA4di00aC0ydjRoLTR2LTRoLTJ2NGgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHptMCA4di00aC0ydjRoLTR2LTRoLTJ2NGgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHptMCA4di0yaC0ydjJoLTR2LTJoLTJ2MmgtMnYtMmgtMnYyaC00di0yaC0ydjJIMTB2LTRoMTB2NHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20"></div>
-        
+      <div className="section-padding bg-gray-50 relative overflow-hidden">
         <div className="container mx-auto container-padding relative z-10">
           <motion.div 
-            className="max-w-4xl mx-auto text-center text-white"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-10 md:p-16 text-center border border-gray-100 relative overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            {/* Abstract glowing orbs in background */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#FF6B00] rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-[#0066CC] rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
+            
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#333333] relative z-10">
               Ready to Transform Your Business Digitally?
             </h2>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-xl mb-8 text-gray-600 relative z-10">
               Let's Get Started Today.
             </p>
-            <a href="#contact">
-              <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium">
+            <a href="#contact" className="relative z-10 inline-block">
+              <Button size="lg" className="bg-[#0066CC] hover:bg-[#0052a3] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 Book a Free Consultation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
