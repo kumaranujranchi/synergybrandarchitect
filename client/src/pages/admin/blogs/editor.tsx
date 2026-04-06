@@ -51,6 +51,7 @@ const formSchema = z.object({
   seoTitle: z.string().optional(),
   seoDescription: z.string().optional(),
   seoKeywords: z.string().optional(),
+  category: z.string().optional(),
 });
 
 export default function AdminBlogEditor() {
@@ -92,6 +93,7 @@ export default function AdminBlogEditor() {
       seoTitle: "",
       seoDescription: "",
       seoKeywords: "",
+      category: "",
     },
   });
 
@@ -108,6 +110,7 @@ export default function AdminBlogEditor() {
         seoTitle: blogData.seoTitle || "",
         seoDescription: blogData.seoDescription || "",
         seoKeywords: blogData.seoKeywords || "",
+        category: blogData.category || "",
       });
       setIsSlugManuallyEdited(true);
     }
@@ -258,6 +261,21 @@ export default function AdminBlogEditor() {
                             <Input {...field} className="bg-gray-50 focus:bg-white" onChange={(e) => { field.onChange(e); setIsSlugManuallyEdited(true); }} />
                           </div>
                         </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-semibold text-gray-700">Category Tag</FormLabel>
+                        <FormControl>
+                          <Input {...field} className="bg-gray-50 focus:bg-white" placeholder="e.g. Business, Design, Technology" />
+                        </FormControl>
+                        <p className="text-xs text-gray-500 mt-2">Used to group posts on the main blog page.</p>
                         <FormMessage />
                       </FormItem>
                     )}

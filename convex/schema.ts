@@ -28,7 +28,7 @@ export default defineSchema({
 
   notes: defineTable({
     submissionId: v.id("submissions"),
-    userId: v.id("users"),
+    userId: v.optional(v.id("users")),
     content: v.string(),
     createdAt: v.number(),
   }),
@@ -49,6 +49,7 @@ export default defineSchema({
     excerpt: v.string(),
     content: v.string(),
     coverImage: v.optional(v.string()),
+    category: v.optional(v.string()),
     authorId: v.optional(v.id("users")),
     status: v.string(), // 'draft', 'published', 'scheduled'
     seoTitle: v.optional(v.string()),

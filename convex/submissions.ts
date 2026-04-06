@@ -58,13 +58,11 @@ export const addSubmissionNote = mutation({
     const submission = await ctx.db.get(args.id);
     if (!submission) throw new Error("Submission not found");
     
-    const notes = submission.notes || [];
-    notes.push({
+    await ctx.db.insert("notes", {
+      submissionId: args.id,
       content: args.content,
       createdAt: Date.now(),
     });
-    
-    await ctx.db.patch(args.id, { notes });
     return true;
   },
 });

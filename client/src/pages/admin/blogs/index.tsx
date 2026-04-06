@@ -37,7 +37,7 @@ export default function AdminBlogList() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Convex Query
-  const blogs = useQuery(api.blogs.listBlogs) || [];
+  const blogs = useQuery(api.blogs.listBlogs, {}) || [];
   
   // Convex Mutation
   const deleteMutation = useMutation(api.blogs.deleteBlog);
