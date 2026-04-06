@@ -165,7 +165,7 @@ export default function BlogList() {
             {/* --- NEWS TICKER --- */}
             <motion.div variants={fadeUp} className="bg-white text-gray-800 flex flex-col md:flex-row items-center rounded-xl mb-14 overflow-hidden shadow-sm border border-gray-100 relative">
                <div className="bg-[#0066CC] text-white font-bold px-6 py-4 whitespace-nowrap z-10 h-full flex items-center uppercase tracking-wide">
-                 Latest News
+                 Latest Blog
                </div>
                <div className="flex-1 overflow-hidden relative h-[52px]">
                  <div className="absolute inset-0 flex items-center animate-marquee whitespace-nowrap px-4 text-sm font-medium">
