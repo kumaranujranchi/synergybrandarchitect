@@ -42,19 +42,6 @@ export default function Footer() {
               Danapur Nizamat, Patna 801503<br />
               Phone: +91 9525 230232
             </address>
-
-            <div className="mb-6 font-inter">
-              <p className="text-[#FF6B00] text-sm font-semibold mb-1">Coming Soon</p>
-              <p className="text-gray-300 text-sm mb-2">We are coming soon to London as well</p>
-              <a 
-                href="https://synergybrandarchitect.co.uk" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-white hover:text-[#FF6B00] transition-colors text-sm font-medium border-b border-gray-600 hover:border-[#FF6B00]"
-              >
-                Synergy Brand Architect London — synergybrandarchitect.co.uk
-              </a>
-            </div>
             <div className="flex space-x-4">
               <a 
                 href="https://www.facebook.com/synergybrandarchitect"
@@ -211,24 +198,43 @@ export default function Footer() {
           </div>
           
           {/* Business Partners Section */}
-          <div>
-            <h4 className="font-poppins font-semibold text-xl mb-6">Trusted Partners</h4>
-            <div className="flex flex-col gap-4">
-              <div className="bg-white p-3 rounded-lg shadow-md flex items-center justify-center">
-                <img 
-                  src="https://imagizer.imageshack.com/img924/9071/tzLDvZ.png" 
-                  alt="Meta Business Partner" 
-                  className="h-10" 
-                  loading="lazy"
-                />
+          <div className="lg:col-span-4">
+            <div className="flex flex-col md:flex-row gap-8 lg:gap-16 items-start">
+              <div>
+                <h4 className="font-poppins font-semibold text-xl mb-6 whitespace-nowrap">Trusted Partners</h4>
+                <div className="flex flex-col gap-4">
+                  <div className="bg-white p-3 rounded-lg shadow-md flex items-center justify-center w-40">
+                    <img 
+                      src="https://imagizer.imageshack.com/img924/9071/tzLDvZ.png" 
+                      alt="Meta Business Partner" 
+                      className="h-10" 
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="bg-white p-3 rounded-lg shadow-md flex items-center justify-center w-40">
+                    <img 
+                      src="https://imagizer.imageshack.com/img922/3699/VXhcrd.png" 
+                      alt="Google Business Partner" 
+                      className="h-10" 
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="bg-white p-3 rounded-lg shadow-md flex items-center justify-center">
-                <img 
-                  src="https://imagizer.imageshack.com/img922/3699/VXhcrd.png" 
-                  alt="Google Business Partner" 
-                  className="h-10" 
-                  loading="lazy"
-                />
+
+              <div className="md:mt-12">
+                <h4 className="text-[#FF6B00] font-poppins font-semibold mb-4 text-xs uppercase tracking-[0.2em]">Global Expansion</h4>
+                <h5 className="text-white font-poppins font-bold text-2xl mb-3">We are coming soon to London as well</h5>
+                <p className="text-gray-400 font-inter text-sm max-w-md mb-4">
+                  Synergy Brand Architect London — and make it accessible via the website <a 
+                    href="https://synergybrandarchitect.co.uk" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-[#FF6B00] transition-colors border-b border-gray-600 hover:border-[#FF6B00] pb-0.5 ml-1"
+                  >
+                    synergybrandarchitect.co.uk
+                  </a>
+                </p>
               </div>
             </div>
           </div>
