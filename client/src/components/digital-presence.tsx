@@ -11,7 +11,6 @@ export default function DigitalPresence() {
     <section className="overflow-hidden">
       {/* Hero Banner */}
       <div className="relative py-20 lg:py-24 bg-gradient-to-br from-blue-50 via-white to-orange-50 overflow-hidden border-b border-gray-100">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0066CC] to-[#FF6B00]"></div>
         
         {/* Subtle decorative elements */}
         <div className="absolute top-10 left-10 w-32 h-32 bg-[#0066CC] rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
@@ -37,12 +36,10 @@ export default function DigitalPresence() {
             </motion.p>
             <motion.div variants={fadeUp}>
               <a href="#contact">
-                <motion.div variants={pulseButton} animate="pulse" whileHover="hover">
-                  <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg transition-all h-auto">
-                    Get Free Consultation
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </motion.div>
+                <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg transition-all h-auto">
+                  Get Free Consultation
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </a>
               <p className="text-gray-500 mt-5 text-sm font-medium">Trusted by 100+ businesses</p>
             </motion.div>
