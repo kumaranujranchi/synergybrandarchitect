@@ -81,36 +81,36 @@ export default function BlogList() {
           <div className="container mx-auto px-4 max-w-[1280px]">
             
             {/* --- HERO MAGAZINE SECTION --- */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 mb-8 bg-white overflow-hidden shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
               
               {/* Main Feature */}
               {mainFeature && (
                 <div 
-                  className="lg:col-span-8 relative h-[400px] lg:h-[500px] group cursor-pointer overflow-hidden"
+                  className="lg:col-span-8 group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col transition-all"
                   onClick={() => setLocation(`/blog/${mainFeature.slug}`)}
                 >
-                  <img 
-                    src={mainFeature.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200"} 
-                    alt={mainFeature.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Purple/Blue Gradient Overlay as per mockup */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#4f2fbf] via-[#4f2fbf]/80 to-transparent opacity-90 transition-opacity" />
-                  
-                  <div className="absolute inset-0 p-8 flex flex-col justify-end text-white z-10">
-                    <span className="bg-blue-600 font-semibold text-xs px-3 py-1 rounded inline-block w-max mb-4 uppercase tracking-wider">
+                  <div className="relative h-[300px] lg:h-[400px] overflow-hidden bg-gray-100">
+                    <img 
+                      src={mainFeature.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200"} 
+                      alt={mainFeature.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <span className="absolute top-4 left-4 bg-[#FF6B00] text-white font-semibold text-xs px-3 py-1 rounded shadow-md uppercase tracking-wider z-10">
                       {mainFeature.category || "Featured"}
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-bold font-poppins mb-4 leading-tight group-hover:text-blue-200 transition-colors">
+                  </div>
+                  
+                  <div className="p-6 md:p-8 flex flex-col justify-center flex-grow">
+                    <h2 className="text-3xl md:text-4xl font-bold font-poppins mb-4 leading-tight group-hover:text-[#0066CC] transition-colors text-gray-900">
                       {mainFeature.title}
                     </h2>
-                    <p className="text-gray-200 line-clamp-2 md:text-lg mb-4 max-w-2xl">
+                    <p className="text-gray-600 md:text-lg mb-6 line-clamp-2 leading-relaxed">
                       {getExcerpt(mainFeature, 150)}
                     </p>
-                    <div className="flex items-center gap-4 text-sm font-medium">
+                    <div className="flex items-center justify-between text-sm font-medium text-gray-500 mt-auto">
                       <span className="flex items-center gap-1.5"><Calendar size={15}/> {format(mainFeature.publishedAt || mainFeature.createdAt, 'MMM dd, yyyy')}</span>
-                      <span className="text-white hover:text-orange-400 font-bold flex items-center gap-1 transition-colors cursor-pointer">
-                        Read More <ArrowRight size={14}/>
+                      <span className="text-[#0066CC] hover:text-[#004080] font-bold flex items-center gap-1 transition-colors">
+                        Read Story <ArrowRight size={14}/>
                       </span>
                     </div>
                   </div>
@@ -118,32 +118,32 @@ export default function BlogList() {
               )}
 
               {/* Side Sub-Features */}
-              <div className="lg:col-span-4 grid grid-rows-2 gap-1">
+              <div className="lg:col-span-4 grid grid-rows-2 gap-6">
                 {subFeatures.map((post, idx) => (
                   <div 
                     key={post._id} 
-                    className="relative h-[200px] lg:h-[248px] group cursor-pointer overflow-hidden bg-gray-900"
+                    className="flex flex-col group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all"
                     onClick={() => setLocation(`/blog/${post.slug}`)}
                   >
-                    <img 
-                      src={post.coverImage || (idx === 0 ? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" : "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800")} 
-                      alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80"
-                    />
-                    {/* Dark purple gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-[#3b1c97]/90 to-[#100938]/60" />
+                    <div className="relative h-40 overflow-hidden bg-gray-100">
+                      <img 
+                        src={post.coverImage || (idx === 0 ? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" : "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800")} 
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
                     
-                    <div className="absolute inset-0 p-6 flex flex-col justify-end text-white z-10">
-                      <div className="flex items-center justify-between mb-3">
-                         <span className="bg-blue-600 font-medium text-[10px] px-2 py-0.5 rounded uppercase tracking-wider">
+                    <div className="p-5 flex flex-col flex-grow">
+                      <div className="flex items-center justify-between mb-3 text-xs text-gray-500 font-medium">
+                         <span className="text-[#0066CC] font-bold uppercase tracking-wider">
                            {post.category || "News"}
                          </span>
-                         <span className="text-xs text-gray-300 flex items-center gap-1"><Clock size={12}/> {format(post.publishedAt || post.createdAt, 'MMM dd')}</span>
+                         <span className="flex items-center gap-1"><Clock size={12}/> {format(post.publishedAt || post.createdAt, 'MMM dd')}</span>
                       </div>
-                      <h3 className="text-lg md:text-xl font-bold font-poppins mb-3 line-clamp-2 leading-snug group-hover:text-blue-200 transition-colors">
+                      <h3 className="text-lg font-bold font-poppins mb-3 line-clamp-2 leading-snug group-hover:text-[#FF6B00] transition-colors text-gray-900">
                         {post.title}
                       </h3>
-                      <span className="text-xs font-bold text-orange-400 flex items-center gap-1 group-hover:gap-2 transition-all">Read More <ArrowRight size={12}/></span>
+                      <span className="text-sm font-bold text-[#333333] flex items-center gap-1 mt-auto group-hover:text-[#FF6B00] transition-colors">Read More <ArrowRight size={14}/></span>
                     </div>
                   </div>
                 ))}
@@ -151,16 +151,16 @@ export default function BlogList() {
             </div>
 
             {/* --- NEWS TICKER --- */}
-            <div className="bg-[#0b1b36] text-white flex flex-col md:flex-row items-center rounded mb-12 overflow-hidden shadow-lg border-l-4 border-[#0066CC]">
-               <div className="bg-[#0066CC] font-bold px-6 py-3 whitespace-nowrap z-10 h-full flex items-center">
-                 LATEST NEWS
+            <div className="bg-white text-gray-800 flex flex-col md:flex-row items-center rounded-xl mb-14 overflow-hidden shadow-sm border border-gray-100 relative">
+               <div className="bg-[#0066CC] text-white font-bold px-6 py-4 whitespace-nowrap z-10 h-full flex items-center uppercase tracking-wide">
+                 Latest News
                </div>
-               <div className="flex-1 overflow-hidden relative h-[48px]">
+               <div className="flex-1 overflow-hidden relative h-[52px]">
                  <div className="absolute inset-0 flex items-center animate-marquee whitespace-nowrap px-4 text-sm font-medium">
                    {allPosts.slice(0,5).map((p, i) => (
-                     <span key={i} className="mx-4 flex items-center">
-                       <span className="text-[#FF6B00] mr-2">♦</span>
-                       <span className="hover:text-orange-400 cursor-pointer transition-colors" onClick={() => setLocation(`/blog/${p.slug}`)}>
+                     <span key={i} className="mx-6 flex items-center group cursor-pointer" onClick={() => setLocation(`/blog/${p.slug}`)}>
+                       <span className="text-[#FF6B00] mr-3">♦</span>
+                       <span className="group-hover:text-[#0066CC] transition-colors text-gray-700">
                          {p.title}
                        </span>
                      </span>
@@ -232,18 +232,23 @@ export default function BlogList() {
 
                  {/* Giant Feature Interstitial */}
                  {giantPost && (
-                    <div className="mb-14 border-t-2 border-dashed border-gray-300 pt-6">
+                    <div className="mb-14 border-t-2 border-dashed border-gray-200 pt-8">
                       <div 
-                        className="relative h-[250px] md:h-[400px] w-full overflow-hidden group cursor-pointer rounded-xl shadow-lg"
+                        className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row overflow-hidden group cursor-pointer transition-shadow hover:shadow-md"
                         onClick={() => setLocation(`/blog/${giantPost?.slug}`)}
                       >
-                        <img src={giantPost.coverImage || "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="Feature"/>
-                        <div className="absolute inset-0 bg-black/50 group-hover:bg-black/60 transition-colors"/>
-                        <div className="absolute inset-0 p-8 flex flex-col items-center justify-center text-center text-white">
-                           <span className="bg-[#FF6B00] text-xs font-bold uppercase rounded px-3 py-1 mb-4">{giantPost.category || "Exclusive"}</span>
-                           <h2 className="text-3xl md:text-5xl font-poppins font-bold max-w-3xl leading-snug drop-shadow-md">
+                        <div className="md:w-1/2 relative overflow-hidden h-64 md:h-auto">
+                          <img src={giantPost.coverImage || "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Feature"/>
+                        </div>
+                        <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-gray-50 to-white">
+                           <span className="bg-[#0066CC] text-white text-[10px] sm:text-xs font-bold uppercase rounded px-3 py-1 mb-4 w-max shadow-sm tracking-wider">{giantPost.category || "Exclusive Spotlight"}</span>
+                           <h2 className="text-2xl md:text-4xl font-poppins font-bold leading-snug mb-4 text-gray-900 group-hover:text-[#FF6B00] transition-colors">
                              {giantPost.title}
                            </h2>
+                           <p className="text-gray-600 mb-6 leading-relaxed">
+                             {getExcerpt(giantPost, 150)}
+                           </p>
+                           <span className="flex items-center text-[#333333] font-bold group-hover:text-[#0066CC] transition-colors">Read Full Article <ArrowRight size={16} className="ml-1"/></span>
                         </div>
                       </div>
                     </div>
@@ -277,23 +282,25 @@ export default function BlogList() {
                <div className="lg:w-4/12 xl:w-3/12 space-y-8">
                  
                  {/* Widget 1: Mock Market/Stats Component */}
-                 <div className="bg-gradient-to-br from-[#3b1c97] to-[#8f4dd9] text-white rounded-xl shadow-lg p-6 relative overflow-hidden">
-                   <div className="absolute top-0 right-0 p-4 opacity-20"><LineChart size={64} /></div>
-                   <h3 className="text-sm font-bold uppercase tracking-wider mb-6 opacity-90 border-b border-white/20 pb-2">Market Data</h3>
-                   <div className="mb-4">
+                 <div className="bg-white text-gray-900 rounded-xl shadow-sm border border-gray-100 p-6 relative overflow-hidden group">
+                   <div className="absolute top-0 right-0 p-4 opacity-10 text-[#0066CC] group-hover:opacity-20 transition-opacity"><LineChart size={80} /></div>
+                   <h3 className="text-sm font-bold uppercase tracking-wider mb-6 opacity-70 border-b border-gray-100 pb-3 flex items-center gap-2">
+                     <BarChart size={16} className="text-[#0066CC]"/> Market Overview
+                   </h3>
+                   <div className="mb-6">
                      <div className="flex items-end gap-2 mb-1">
-                       <span className="text-3xl font-bold font-poppins">$4,291.50</span>
-                       <span className="text-green-400 text-sm font-medium mb-1 flex items-center"><TrendingUp size={14} className="mr-1"/> +2.4%</span>
+                       <span className="text-3xl font-bold font-poppins text-gray-900">$4,291.50</span>
+                       <span className="text-green-500 text-sm font-bold mb-1 flex items-center bg-green-50 px-2 py-0.5 rounded-full"><TrendingUp size={12} className="mr-1"/> +2.4%</span>
                      </div>
-                     <span className="text-xs text-white/70">Nasdaq Composite</span>
+                     <span className="text-xs text-gray-500 font-medium">Nasdaq Composite</span>
                    </div>
-                   {/* Dummy Chart Shape */}
-                   <div className="h-20 w-full flex items-end justify-between gap-1 mt-6 border-b border-white/20 pb-2">
-                     <div className="w-1/6 bg-white/20 h-1/3 rounded-t-sm hover:h-1/2 transition-all cursor-pointer"></div>
-                     <div className="w-1/6 bg-white/30 h-1/2 rounded-t-sm hover:h-2/3 transition-all cursor-pointer"></div>
-                     <div className="w-1/6 bg-white/40 h-1/4 rounded-t-sm hover:h-1/3 transition-all cursor-pointer"></div>
-                     <div className="w-1/6 bg-white/60 h-2/3 rounded-t-sm hover:h-3/4 transition-all cursor-pointer"></div>
-                     <div className="w-1/6 bg-white/80 h-full rounded-t-sm shadow-[0_0_10px_rgba(255,255,255,0.5)] cursor-pointer"></div>
+                   {/* Dummy Chart Shape Styled light */}
+                   <div className="h-24 w-full flex items-end justify-between gap-2 mt-4 pb-2 relative z-10">
+                     <div className="w-full bg-[#0066CC]/10 h-[30%] rounded-t transition-all hover:bg-[#0066CC]/30 cursor-pointer"></div>
+                     <div className="w-full bg-[#0066CC]/15 h-[50%] rounded-t transition-all hover:bg-[#0066CC]/40 cursor-pointer"></div>
+                     <div className="w-full bg-[#0066CC]/20 h-[40%] rounded-t transition-all hover:bg-[#0066CC]/50 cursor-pointer"></div>
+                     <div className="w-full bg-[#FF6B00]/40 h-[70%] rounded-t transition-all hover:bg-[#FF6B00]/60 cursor-pointer"></div>
+                     <div className="w-full bg-[#FF6B00] h-[90%] rounded-t shadow-[0_0_15px_rgba(255,107,0,0.3)] cursor-pointer"></div>
                    </div>
                  </div>
 
