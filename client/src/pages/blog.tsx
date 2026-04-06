@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
-import { Calendar, ArrowRight, TrendingUp, Clock, FileText, ChevronRight, Share2, MessageSquare, LineChart, BarChart } from 'lucide-react';
+import { Calendar, ArrowRight, TrendingUp, Clock, FileText, ChevronRight, Share2, MessageSquare, LineChart, BarChart, LayoutGrid } from 'lucide-react';
 import { useQuery } from 'convex/react';
 import { api } from "../../../convex/_generated/api";
 import { format } from 'date-fns';
@@ -16,6 +16,70 @@ import { fadeUp, staggerContainer, hoverScale } from "@/lib/animations";
 const getExcerpt = (post: any, length = 120) => {
   if (post.excerpt) return post.excerpt;
   return post.content.replace(/<[^>]*>/g, '').substring(0, length) + '...';
+};
+
+// --- Sub-component: Category Section ---
+const CategorySection = ({ title, posts, color, icon: Icon, setLocation }: any) => {
+  if (!posts || posts.length === 0) return null;
+
+  const colorMap: any = {
+    blue: { border: 'border-[#0066CC]', bg: 'bg-[#0066CC]', text: 'text-[#0066CC]', light: 'bg-blue-50' },
+    orange: { border: 'border-[#FF6B00]', bg: 'bg-[#FF6B00]', text: 'text-[#FF6B00]', light: 'bg-orange-50' },
+    green: { border: 'border-green-600', bg: 'bg-green-600', text: 'text-green-600', light: 'bg-green-50' },
+    purple: { border: 'border-purple-600', bg: 'bg-purple-600', text: 'text-purple-600', light: 'bg-purple-50' },
+    gray: { border: 'border-gray-900', bg: 'bg-gray-900', text: 'text-gray-900', light: 'bg-gray-50' }
+  };
+
+  const theme = colorMap[color] || colorMap.blue;
+
+  return (
+    <motion.div variants={fadeUp} className="mb-14">
+      <div className={`flex items-center justify-between mb-8 border-b-2 ${theme.border} pb-4`}>
+        <div className="flex items-center gap-3">
+          <div className={`${theme.bg} p-2 rounded-lg text-white`}>
+            <Icon size={20} />
+          </div>
+          <h3 className="text-2xl font-bold font-poppins text-gray-900 tracking-tight uppercase">
+            {title}
+          </h3>
+        </div>
+        <button className={`text-xs font-bold uppercase tracking-widest ${theme.text} hover:opacity-80 transition-opacity flex items-center gap-1`}>
+          View Category <ChevronRight size={14} />
+        </button>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        {posts.map((post: any) => (
+          <motion.div 
+            key={post._id} 
+            variants={fadeUp}
+            whileHover={{ y: -5 }}
+            className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all flex flex-col group cursor-pointer" 
+            onClick={() => setLocation(`/blog/${post.slug}`)}
+          >
+            <div className="relative aspect-video overflow-hidden bg-gray-100">
+              <img src={post.coverImage || `https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&sig=${post._id}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={post.title} />
+              <span className={`absolute top-3 left-3 ${theme.bg} text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10 shadow-sm`}>{post.category || title}</span>
+            </div>
+            <div className="p-6 flex flex-col flex-grow">
+               <div className="flex items-center text-xs text-gray-400 gap-2 mb-3">
+                 <Calendar size={12}/> {format(post.publishedAt || post.createdAt, 'MMM dd, yyyy')}
+               </div>
+               <h4 className="font-bold text-xl text-gray-900 group-hover:text-[#0066CC] transition-colors line-clamp-2 leading-tight mb-3">
+                 {post.title}
+               </h4>
+               <p className="text-sm text-gray-600 line-clamp-3 mb-6 leading-relaxed">
+                 {getExcerpt(post, 120)}
+               </p>
+               <span className={`${theme.text} text-sm font-bold flex items-center gap-1 mt-auto`}>
+                 Read Story <ArrowRight size={14}/>
+               </span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
 };
 
 export default function BlogList() {
@@ -33,13 +97,26 @@ export default function BlogList() {
   // Derive categories and groups
   const allPosts = blogs || [];
   
-  // 1. Hero Section Posts
+  // 1. Hero Section Posts (Top 3)
   const mainFeature = allPosts[0];
   const subFeatures = allPosts.slice(1, 3);
   
-  // 2. Main Feed (All other posts from index 3 onwards)
-  const blogFeed = allPosts.slice(3);
+  // 2. Sectioned Groups
+  const remaining = allPosts.slice(3);
   
+  // Filter for specific categories (Logic for Magazine sections)
+  const businessPosts = remaining.filter(p => !p.category || p.category.toLowerCase().includes('business')).slice(0, 3);
+  const seoPosts = remaining.filter(p => p.category?.toLowerCase().includes('seo') || p.category?.toLowerCase().includes('performance')).slice(0, 3);
+  const marketingPosts = remaining.filter(p => p.category?.toLowerCase().includes('marketing') || p.category?.toLowerCase().includes('analytics')).slice(0, 3);
+
+  // Everything else for the "General archive" at the bottom
+  const featuredIds = new Set([
+      ...businessPosts.map(p => p._id), 
+      ...seoPosts.map(p => p._id), 
+      ...marketingPosts.map(p => p._id)
+  ]);
+  const generalArchive = remaining.filter(p => !featuredIds.has(p._id));
+
   // 3. Sidebar Widget: Trending / Picks
   const editorsPicks = allPosts.slice(3, 7).length > 0 ? allPosts.slice(3, 7) : allPosts.slice(1, 4);
 
@@ -171,18 +248,43 @@ export default function BlogList() {
                {/* Left Column - Main Flow */}
                <div className="lg:w-8/12 xl:w-9/12">
                  
-                  {/* Unified Blog Feed */}
-                  {blogFeed.length > 0 ? (
+                  {/* Category Sections */}
+                  <CategorySection 
+                    title="Business & Strategy" 
+                    posts={businessPosts} 
+                    color="blue" 
+                    icon={TrendingUp} 
+                    setLocation={setLocation} 
+                  />
+
+                  <CategorySection 
+                    title="SEO & Organic Growth" 
+                    posts={seoPosts} 
+                    color="orange" 
+                    icon={BarChart} 
+                    setLocation={setLocation} 
+                  />
+
+                  <CategorySection 
+                    title="Digital Marketing" 
+                    posts={marketingPosts} 
+                    color="green" 
+                    icon={Share2} 
+                    setLocation={setLocation} 
+                  />
+
+                  {/* General Archive Section */}
+                  {generalArchive.length > 0 && (
                     <motion.div variants={fadeUp} className="mb-14">
-                      <div className="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
+                      <div className="flex items-center justify-between mb-8 border-b border-gray-300 pb-4">
                         <h3 className="text-2xl font-bold font-poppins text-gray-900 flex items-center gap-2">
-                          Latest Insights <FileText className="text-[#0066CC] h-5 w-5" />
+                          More Insights <LayoutGrid className="text-[#333333] h-5 w-5" />
                         </h3>
-                        <p className="text-sm text-gray-500 font-medium">{blogFeed.length} {blogFeed.length === 1 ? 'post' : 'posts'} found</p>
+                        <p className="text-sm text-gray-500 font-medium">{generalArchive.length} posts found</p>
                       </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                        {blogFeed.map((post: any) => (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {generalArchive.map((post: any) => (
                           <motion.div 
                             key={post._id} 
                             variants={fadeUp}
@@ -192,7 +294,7 @@ export default function BlogList() {
                           >
                             <div className="relative aspect-video overflow-hidden bg-gray-100">
                               <img src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={post.title} />
-                              <span className="absolute top-3 left-3 bg-[#0066CC] text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">{post.category || "Insight"}</span>
+                              <span className="absolute top-3 left-3 bg-[#333333] text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">{post.category || "Insight"}</span>
                             </div>
                             <div className="p-6 flex flex-col flex-grow">
                                <div className="flex items-center text-xs text-gray-400 gap-2 mb-3">
@@ -212,7 +314,9 @@ export default function BlogList() {
                         ))}
                       </div>
                     </motion.div>
-                  ) : (
+                  )}
+
+                  {!allPosts.length && !isLoading && (
                     <div className="bg-white p-12 rounded-xl border-2 border-dashed border-gray-200 text-center mb-14">
                       <TrendingUp className="mx-auto mb-4 opacity-20 text-gray-400" size={48} />
                       <h4 className="text-lg font-bold text-gray-600 mb-2">More stories coming soon</h4>
