@@ -190,7 +190,10 @@ const RichTextEditor = forwardRef<any, RichTextEditorProps>(
 
 
         {/* Execution Surface */}
-        <div className="flex-1 overflow-y-auto min-h-0 custom-editor-scrollbar">
+        <div 
+          className="flex-1 overflow-y-auto min-h-0 custom-editor-scrollbar"
+          data-lenis-prevent
+        >
           <EditorContent editor={editor} spellCheck={false} />
         </div>
 
