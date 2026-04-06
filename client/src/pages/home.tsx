@@ -3,7 +3,7 @@ import Hero from "@/components/hero";
 import ClientLogoCarousel from "@/components/client-logo-carousel";
 import About from "@/components/about";
 import DigitalPresence from "@/components/digital-presence"; 
-import Stats from "@/components/stats";
+
 import Services from "@/components/services";
 import HomeServiceSections from "@/components/home-service-sections";
 import AdAccountAccess from "@/components/ad-account-access"; // Added new section
@@ -23,7 +23,7 @@ export default function Home() {
       <ClientLogoCarousel />
       <About />
       <DigitalPresence />
-      <Stats />
+
       <Services />
       <HomeServiceSections />
       <AdAccountAccess />
