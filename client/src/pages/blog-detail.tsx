@@ -255,18 +255,44 @@ export default function BlogDetail() {
                   </Button>
                 </div>
 
-                {/* Newsletter / CTA Placeholder in Sidebar */}
-                <div className="mt-8 bg-gray-900 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#0066CC]/20 to-transparent pointer-events-none" />
-                  <div className="absolute top-0 right-0 -mt-6 -mr-6 h-40 w-40 rounded-full bg-blue-600/10 blur-3xl group-hover:bg-blue-600/20 transition-all" />
-                  <h4 className="text-xl font-bold mb-4 relative z-10 leading-tight">Scale Your Business Faster</h4>
-                  <p className="text-gray-400 text-sm mb-8 relative z-10 leading-relaxed">
-                    Personalized digital strategies for high-growth businesses.
-                  </p>
-                  <Button className="w-full bg-[#FF6B00] hover:bg-[#FF8533] text-white border-none rounded-xl relative z-10 font-bold py-6 group">
-                   Let's Talk <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </div>
+                {/* Custom Promo Card: Website Development */}
+                <div className="mt-8 bg-gradient-to-br from-indigo-900 via-blue-900 to-indigo-950 rounded-2xl shadow-xl p-8 text-center flex flex-col items-center justify-between min-h-[480px] relative overflow-hidden group border border-white/10">
+                   <div className="absolute top-0 right-0 -mt-10 -mr-10 h-32 w-32 rounded-full bg-[#FF6B00]/20 blur-3xl group-hover:bg-[#FF6B00]/30 transition-all duration-700" />
+                   
+                   <div className="relative z-10 w-full h-full flex flex-col">
+                     <div className="bg-[#FF6B00] text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 w-fit mx-auto shadow-lg shadow-orange-950/20">
+                       Limited Time Offer
+                     </div>
+                     <h4 className="text-xl font-bold text-white mb-4 leading-tight font-poppins px-1 italic">Professional Website Development</h4>
+                     
+                     <div className="flex flex-col items-center mb-6 bg-white/5 py-4 rounded-xl border border-white/10 backdrop-blur-sm shadow-inner">
+                       <span className="text-gray-400 text-[10px] font-semibold line-through mb-1 tracking-wider uppercase opacity-60">WAS ₹14,999</span>
+                       <div className="flex items-start justify-center gap-0.5">
+                         <span className="text-xl font-bold text-[#FF6B00] mt-1.5 font-poppins">₹</span>
+                         <span className="text-4xl font-extrabold text-white tracking-tighter font-poppins">7,999</span>
+                         <span className="text-[10px] font-bold text-[#FF6B00] mt-6 px-1">/- Only</span>
+                       </div>
+                     </div>
+                     
+                     <ul className="space-y-3 mb-6 text-left w-full">
+                       {['Fully Customized Design', 'SEO Optimized & High Speed', 'Responsive & Mobile Friendly'].map((text, i) => (
+                         <li key={i} className="flex items-center gap-2.5 text-gray-200 text-xs font-medium group/item hover:text-white transition-colors">
+                           <div className="h-4 w-4 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30 group-hover/item:bg-green-500 group-hover/item:border-green-500 transition-all">
+                             <svg className="h-2.5 w-2.5 text-green-400 group-hover/item:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                           </div>
+                           {text}
+                         </li>
+                       ))}
+                     </ul>
+                     
+                     <button 
+                       className="w-full bg-white hover:bg-orange-50 transition-all text-indigo-950 font-bold py-3.5 rounded-xl relative z-10 flex items-center justify-center gap-2 group/btn shadow-lg shadow-blue-950/40 mt-auto text-sm"
+                       onClick={() => window.open('https://wa.me/919102431713?text=Hi, I am interested in getting a website developed starting at 7999/-', '_blank')}
+                     >
+                       Get Started <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                     </button>
+                   </div>
+                 </div>
               </div>
             </aside>
           </div>

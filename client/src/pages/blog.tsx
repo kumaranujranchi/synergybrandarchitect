@@ -384,11 +384,44 @@ export default function BlogList() {
                    </div>
                  </div>
 
-                 {/* Widget 4: Advertisement/Banner */}
-                 <div className="bg-amber-400 rounded-xl shadow-sm p-8 text-center flex flex-col items-center justify-center h-80 relative overflow-hidden group cursor-pointer border-2 border-dashed border-amber-500">
-                   <div className="absolute inset-0 bg-white/20 -skew-x-12 translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000"></div>
-                   <h3 className="text-4xl font-bold text-gray-900 mb-2">ADS</h3>
-                   <p className="text-gray-800 font-medium">300 x 600</p>
+                 {/* Custom Promo Card: Website Development */}
+                 <div className="bg-gradient-to-br from-indigo-900 via-blue-900 to-indigo-950 rounded-3xl shadow-2xl p-8 text-center flex flex-col items-center justify-between min-h-[500px] relative overflow-hidden group border border-white/10">
+                   <div className="absolute top-0 right-0 -mt-10 -mr-10 h-40 w-40 rounded-full bg-[#FF6B00]/20 blur-3xl group-hover:bg-[#FF6B00]/30 transition-all duration-700" />
+                   <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-40 w-40 rounded-full bg-blue-500/10 blur-3xl group-hover:bg-blue-500/20 transition-all duration-700" />
+                   
+                   <div className="relative z-10 w-full h-full flex flex-col">
+                     <div className="bg-[#FF6B00] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-6 w-fit mx-auto shadow-lg shadow-orange-950/20">
+                       Limited Time Offer
+                     </div>
+                     <h3 className="text-2xl font-bold text-white mb-4 leading-tight font-poppins px-2 italic">Launch Your Professional Website</h3>
+                     
+                     <div className="flex flex-col items-center mb-8 bg-white/5 py-6 rounded-2xl border border-white/10 backdrop-blur-sm shadow-inner">
+                       <span className="text-gray-400 text-xs font-semibold line-through mb-1 tracking-wider uppercase">WAS ₹14,999</span>
+                       <div className="flex items-start justify-center gap-1">
+                         <span className="text-2xl font-bold text-[#FF6B00] mt-2">₹</span>
+                         <span className="text-5xl font-extrabold text-white tracking-tighter">7,999</span>
+                         <span className="text-sm font-bold text-[#FF6B00] mt-8 px-1">/- Only</span>
+                       </div>
+                     </div>
+                     
+                     <ul className="space-y-4 mb-8 text-left w-full px-2">
+                       {['Fully Customized Design', 'SEO Optimized & High Speed', 'Responsive & Mobile Friendly'].map((text, i) => (
+                         <li key={i} className="flex items-center gap-3 text-gray-200 text-sm font-medium group/item hover:text-white transition-colors">
+                           <div className="h-5 w-5 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30 group-hover/item:bg-green-500 group-hover/item:border-green-500 transition-all">
+                             <svg className="h-3 w-3 text-green-400 group-hover/item:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
+                           </div>
+                           {text}
+                         </li>
+                       ))}
+                     </ul>
+                     
+                     <button 
+                       className="w-full bg-white hover:bg-orange-50 transition-all text-indigo-950 font-bold py-4 rounded-xl relative z-10 flex items-center justify-center gap-2 group/btn shadow-xl shadow-blue-950/40 mt-auto"
+                       onClick={() => window.open('https://wa.me/919102431713?text=Hi, I am interested in getting a website developed starting at 7999/-', '_blank')}
+                     >
+                       Build My Website <ArrowRight size={18} className="group-hover/btn:translate-x-1 transition-transform" />
+                     </button>
+                   </div>
                  </div>
 
                  {/* Social Tags */}
