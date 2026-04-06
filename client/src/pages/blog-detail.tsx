@@ -180,7 +180,7 @@ export default function BlogDetail() {
                  {nextPost ? (
                    <div 
                     className="group cursor-pointer p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#0066CC]/30 hover:bg-white transition-all shadow-sm flex flex-col items-end text-right"
-                    onClick={() => setLocation(`/nextPost.slug`)}
+                    onClick={() => setLocation(`/blog/${nextPost.slug}`)}
                    >
                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[2px] mb-3 flex items-center gap-2">
                         Next Post <ArrowRight size={10}/>
@@ -275,7 +275,7 @@ export default function BlogDetail() {
                      </div>
                      
                      <ul className="space-y-3 mb-6 text-left w-full">
-                       {['Fully Customized Design', 'SEO Optimized & High Speed', 'Responsive & Mobile Friendly'].map((text, i) => (
+                       {['Fully Customized Design', 'SEO Ready & High Speed', 'Responsive & Mobile Friendly'].map((text, i) => (
                          <li key={i} className="flex items-center gap-2.5 text-gray-200 text-xs font-medium group/item hover:text-white transition-colors">
                            <div className="h-4 w-4 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30 group-hover/item:bg-green-500 group-hover/item:border-green-500 transition-all">
                              <svg className="h-2.5 w-2.5 text-green-400 group-hover/item:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" /></svg>
