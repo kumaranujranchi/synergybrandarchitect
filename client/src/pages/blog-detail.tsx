@@ -287,7 +287,7 @@ export default function BlogDetail() {
                      
                      <button 
                        className="w-full bg-white hover:bg-orange-50 transition-all text-indigo-950 font-bold py-3.5 rounded-xl relative z-10 flex items-center justify-center gap-2 group/btn shadow-lg shadow-blue-950/40 mt-auto text-sm"
-                       onClick={() => window.open('https://wa.me/919102431713?text=Hi, I am interested in getting a website developed starting at 7999/-', '_blank')}
+                       onClick={() => window.open('https://wa.me/919525230232?text=Hi, I am interested in getting a website developed starting at 7999/-', '_blank')}
                      >
                        Get Started <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                      </button>

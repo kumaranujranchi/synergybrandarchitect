@@ -310,7 +310,7 @@ export default function PerformanceMarketing() {
                   Book Your Audit Now
                 </Link>
                 <a 
-                  href="https://wa.me/917004453530" 
+                  href="https://wa.me/919525230232" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto px-10 py-5 bg-[#25D366] text-white rounded-full font-bold text-lg hover:scale-105 transition-all flex items-center justify-center gap-2"
