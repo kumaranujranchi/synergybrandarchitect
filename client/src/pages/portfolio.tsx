@@ -54,15 +54,15 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* Featured Case Studies */}
+      {/* Featured Website Projects */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-poppins font-bold text-gray-900 mb-4">
-              Featured <span className="text-[#FF6B00]">Case Studies</span>
+              Featured <span className="text-[#FF6B00]">Website Projects</span>
             </h2>
             <p className="text-lg text-gray-600 font-inter max-w-2xl mx-auto">
-              Our latest and most comprehensive web development projects, featuring modern technologies and full-stack solutions.
+              Success stories from our latest and most comprehensive web development projects, featuring modern technologies and full-stack solutions.
             </p>
           </div>
 
@@ -80,7 +80,7 @@ export default function PortfolioPage() {
                ))
             ) : portfolioItems.filter(item => item.featured).length === 0 ? (
                <div className="col-span-full text-center py-10 text-gray-500">
-                  No featured case studies yet.
+                  No featured website projects yet.
                </div>
             ) : (
                 portfolioItems.filter(item => item.featured).map((item) => (

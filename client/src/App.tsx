@@ -192,7 +192,7 @@ function App() {
     } else if (path === '/services/seo') {
       title = 'SEO Optimization | Synergy Brand Architect';
     } else if (path === '/portfolio') {
-      title = 'Portfolio | Our Work & Case Studies - Synergy Brand Architect';
+      title = 'Portfolio | Our Featured Website Projects - Synergy Brand Architect';
     } else if (path.startsWith('/resources')) {
       title = 'Digital Marketing Resources & Tools | Synergy Brand Architect';
     } else if (path.startsWith('/case-studies/')) {
@@ -201,7 +201,7 @@ function App() {
         .split('-')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
-      title = `${readableTitle} Case Study | Synergy Brand Architect`;
+      title = `${readableTitle} Project | Synergy Brand Architect`;
     }
     
     document.title = title;

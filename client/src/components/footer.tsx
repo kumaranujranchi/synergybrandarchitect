@@ -19,7 +19,7 @@ const serviceLinks = [
 ];
 
 const resourceLinks = [
-  { href: "/case-study", label: "Case Studies", isPage: true },
+  { href: "/case-study", label: "Website Portfolio", isPage: true },
   { href: "/case-studies/wishluv-buildcon", label: "Wishluv Buildcon", isPage: true },
   { href: "/case-studies/biryani-mahal", label: "Biryani Mahal", isPage: true },
   { href: "/case-studies/the-helping-hand", label: "The Helping Hand", isPage: true }

@@ -71,7 +71,7 @@ export default function CaseStudies() {
                       variant="outline" 
                       className="w-full text-[#0066CC] border-[#0066CC] hover:bg-[#0066CC] hover:text-white transition-colors"
                     >
-                      Read Case Study
+                      View Project Details
                     </Button>
                   </Link>
                 </CardFooter>
