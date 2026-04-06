@@ -10,6 +10,7 @@ const navLinks = [
   { href: "#home", label: "Home", isHome: true },
   { href: "/services", label: "Services", isPage: true },
   { href: "/portfolio", label: "Portfolio", isPage: true },
+  { href: "/blog", label: "Blog", isPage: true },
   { href: "/resources", label: "Resources", isPage: true },
   { href: "#contact", label: "Contact" },
 ];
@@ -80,8 +81,8 @@ export default function Header() {
           </div>
         </Link>
         
-        {/* Desktop Navigation - only show on xl screens */}
-        <nav className="hidden xl:flex space-x-2 xl:space-x-6 font-inter text-[#333333]">
+        {/* Desktop Navigation - aligned to the right */}
+        <nav className="hidden xl:flex items-center ml-auto mr-8 space-x-2 xl:space-x-6 font-inter text-[#333333]">
           {navLinks.map((link) => (
             link.isPage ? (
               <Link 
