@@ -33,31 +33,15 @@ export default function BlogList() {
   // Derive categories and groups
   const allPosts = blogs || [];
   
-  // 1. Featured Posts (Top 3 latest)
-  const featuredPosts = allPosts.slice(0, 3);
-  const mainFeature = featuredPosts[0];
-  const subFeatures = featuredPosts.slice(1, 3);
+  // 1. Hero Section Posts
+  const mainFeature = allPosts[0];
+  const subFeatures = allPosts.slice(1, 3);
   
-  // 2. Business Posts (or any category logic, falling back to next posts if empty)
-  let businessPosts = allPosts.filter(b => b.category?.toLowerCase() === 'business').slice(0, 3);
-  if (businessPosts.length === 0) businessPosts = allPosts.slice(3, 6);
-
-  // 3. Category Posts (Travel, Fashion, etc. mapped dynamically or just fallback streams)
-  let travelPost = allPosts.filter(b => b.category?.toLowerCase() === 'travel')[0];
-  let techPost = allPosts.filter(b => b.category?.toLowerCase() === 'technology' || b.category?.toLowerCase() === 'tech')[0];
-  let designPost = allPosts.filter(b => b.category?.toLowerCase() === 'design')[0];
+  // 2. Main Feed (All other posts from index 3 onwards)
+  const blogFeed = allPosts.slice(3);
   
-  // Fallbacks if categories don't exist
-  if (!travelPost && allPosts.length > 6) travelPost = allPosts[6];
-  if (!techPost && allPosts.length > 7) techPost = allPosts[7];
-  if (!designPost && allPosts.length > 8) designPost = allPosts[8];
-
-  const recentPostsList = [travelPost, techPost, designPost].filter(Boolean);
-  
-  // Large section post
-  let giantPost = allPosts.find(b => b.category?.toLowerCase() === 'marketing');
-  if (!giantPost && allPosts.length > 9) giantPost = allPosts[9];
-  if (!giantPost) giantPost = allPosts[0]; // fallback
+  // 3. Sidebar Widget: Trending / Picks
+  const editorsPicks = allPosts.slice(3, 7).length > 0 ? allPosts.slice(3, 7) : allPosts.slice(1, 4);
 
   return (
     <div className="min-h-screen bg-[#F5F5F7] font-inter text-gray-900">
@@ -187,124 +171,54 @@ export default function BlogList() {
                {/* Left Column - Main Flow */}
                <div className="lg:w-8/12 xl:w-9/12">
                  
-                 {/* Business Post Block */}
-                 {businessPosts.length > 0 && (
-                   <motion.div variants={fadeUp} className="mb-14 border-t-2 border-dashed border-gray-300 pt-6">
-                     <div className="flex items-center justify-between mb-6">
-                       <h3 className="text-xl font-bold font-poppins uppercase tracking-wide border-b-2 border-blue-600 inline-block pb-1">Business Post</h3>
-                       <span className="text-xs text-gray-500 font-bold uppercase tracking-wider cursor-pointer hover:text-blue-600">View All <ChevronRight size={14} className="inline"/></span>
-                     </div>
-                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                       {businessPosts.map((post) => (
-                         <motion.div 
-                           key={post._id} 
-                           variants={fadeUp}
-                           whileHover={{ y: -5 }}
-                           className="bg-white group cursor-pointer" 
-                           onClick={() => setLocation(`/blog/${post.slug}`)}
-                         >
-                            <div className="relative aspect-video overflow-hidden mb-4 rounded-t">
-                              <img src={post.coverImage || "https://images.unsplash.com/photo-1664575602276-acd073f104c1?w=600"} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt={post.title} />
-                              <span className="absolute top-2 left-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase z-10">{post.category || "Business"}</span>
+                  {/* Unified Blog Feed */}
+                  {blogFeed.length > 0 ? (
+                    <motion.div variants={fadeUp} className="mb-14">
+                      <div className="flex items-center justify-between mb-8 border-b border-gray-200 pb-4">
+                        <h3 className="text-2xl font-bold font-poppins text-gray-900 flex items-center gap-2">
+                          Latest Insights <FileText className="text-[#0066CC] h-5 w-5" />
+                        </h3>
+                        <p className="text-sm text-gray-500 font-medium">{blogFeed.length} {blogFeed.length === 1 ? 'post' : 'posts'} found</p>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {blogFeed.map((post: any) => (
+                          <motion.div 
+                            key={post._id} 
+                            variants={fadeUp}
+                            whileHover={{ y: -5 }}
+                            className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all flex flex-col group cursor-pointer" 
+                            onClick={() => setLocation(`/blog/${post.slug}`)}
+                          >
+                            <div className="relative aspect-video overflow-hidden bg-gray-100">
+                              <img src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={post.title} />
+                              <span className="absolute top-3 left-3 bg-[#0066CC] text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">{post.category || "Insight"}</span>
                             </div>
-                            <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug mb-2">{post.title}</h4>
-                            <div className="flex items-center text-xs text-gray-500 gap-2 mb-3">
-                              <Calendar size={12}/> {format(post.publishedAt || post.createdAt, 'MMM dd, yyyy')}
+                            <div className="p-6 flex flex-col flex-grow">
+                               <div className="flex items-center text-xs text-gray-400 gap-2 mb-3">
+                                 <Calendar size={12}/> {format(post.publishedAt || post.createdAt, 'MMM dd, yyyy')}
+                               </div>
+                               <h4 className="font-bold text-xl text-gray-900 group-hover:text-[#0066CC] transition-colors line-clamp-2 leading-tight mb-3">
+                                 {post.title}
+                               </h4>
+                               <p className="text-sm text-gray-600 line-clamp-3 mb-6 leading-relaxed">
+                                 {getExcerpt(post, 120)}
+                               </p>
+                               <span className="text-[#0066CC] text-sm font-bold flex items-center gap-1 mt-auto">
+                                 Read Story <ArrowRight size={14}/>
+                               </span>
                             </div>
-                            <p className="text-sm text-gray-600 line-clamp-2 mb-4">{getExcerpt(post, 80)}</p>
-                            <span className="text-blue-600 text-xs font-bold bg-blue-50 px-3 py-1 rounded-full group-hover:bg-blue-600 group-hover:text-white transition-colors inline-block">Read Post</span>
-                         </motion.div>
-                       ))}
-                     </div>
-                   </motion.div>
-                 )}
-
-                 {/* Mixed Recent Posts List */}
-                 {recentPostsList.length > 0 && (
-                   <motion.div variants={fadeUp} className="mb-14 border-t-2 border-dashed border-gray-300 pt-6">
-                     <h3 className="text-xl font-bold font-poppins uppercase tracking-wide border-b-2 border-orange-500 inline-block pb-1 mb-6">Recent Posts</h3>
-                     <div className="space-y-6">
-                       {recentPostsList.map((post) => (
-                         <motion.div 
-                           key={post._id} 
-                           variants={fadeUp}
-                           whileHover={{ scale: 1.01 }}
-                           className="flex flex-col sm:flex-row items-center bg-white overflow-hidden shadow-sm group hover:shadow-md transition-shadow cursor-pointer border" 
-                           onClick={() => setLocation(`/blog/${post.slug}`)}
-                         >
-                           <div className="w-full sm:w-2/5 aspect-video relative overflow-hidden flex-shrink-0">
-                             <img src={post.coverImage || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt={post.title}/>
-                           </div>
-                           <div className="sm:w-3/5 p-6 flex flex-col justify-center">
-                             <div className="flex items-center gap-3 mb-2">
-                               <span className="text-xs text-blue-600 font-bold uppercase">{post.category || "Article"}</span>
-                               <span className="text-gray-300">|</span>
-                               <span className="text-xs text-gray-500 flex items-center gap-1"><Clock size={12} /> {format(post.publishedAt || post.createdAt, 'MMM dd, yyyy')}</span>
-                             </div>
-                             <h4 className="text-xl font-bold font-poppins text-gray-900 group-hover:text-orange-600 transition-colors mb-3 leading-tight">
-                               {post.title}
-                             </h4>
-                             <p className="text-sm text-gray-600 line-clamp-2 mb-4 leading-relaxed">
-                               {getExcerpt(post, 140)}
-                             </p>
-                           </div>
-                         </motion.div>
-                       ))}
-                     </div>
-                   </motion.div>
-                 )}
-
-                 {/* Giant Feature Interstitial */}
-                 {giantPost && (
-                    <motion.div variants={fadeUp} className="mb-14 border-t-2 border-dashed border-gray-200 pt-8">
-                      <div 
-                        className="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row items-center overflow-hidden group cursor-pointer transition-shadow hover:shadow-md"
-                        onClick={() => setLocation(`/blog/${giantPost?.slug}`)}
-                      >
-                        <div className="w-full md:w-1/2 aspect-video relative overflow-hidden flex-shrink-0">
-                          <img src={giantPost.coverImage || "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Feature"/>
-                        </div>
-                        <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-gray-50 to-white">
-                           <span className="bg-[#0066CC] text-white text-[10px] sm:text-xs font-bold uppercase rounded px-3 py-1 mb-4 w-max shadow-sm tracking-wider">{giantPost.category || "Exclusive Spotlight"}</span>
-                           <h2 className="text-2xl md:text-4xl font-poppins font-bold leading-snug mb-4 text-gray-900 group-hover:text-[#FF6B00] transition-colors">
-                             {giantPost.title}
-                           </h2>
-                           <p className="text-gray-600 mb-6 leading-relaxed">
-                             {getExcerpt(giantPost, 150)}
-                           </p>
-                           <span className="flex items-center text-[#333333] font-bold group-hover:text-[#0066CC] transition-colors">Read Full Article <ArrowRight size={16} className="ml-1"/></span>
-                        </div>
+                          </motion.div>
+                        ))}
                       </div>
                     </motion.div>
-                 )}
-
-                 {/* Minimal text-heavy posts */}
-                 <motion.div variants={fadeUp} className="mb-14">
-                    <h2 className="text-2xl font-bold font-poppins leading-tight mb-4">
-                      Exploring the Digital Landscape: Insights from the Edge
-                    </h2>
-                    <p className="text-gray-600 mb-8 max-w-3xl leading-relaxed">
-                      Stay updated with our analytical takes on brand architecture, performance marketing shifts, and the integration of automation into everyday business models to scale efficiently.
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {allPosts.slice(4, 6).map(post => (
-                        <motion.div 
-                          key={post._id} 
-                          variants={fadeUp}
-                          whileHover={{ x: 5 }}
-                          className="border-t border-gray-200 pt-4 group cursor-pointer" 
-                          onClick={() => setLocation(`/blog/${post.slug}`)}
-                        >
-                           <div className="text-xs text-orange-500 font-bold mb-2 uppercase">{post.category || "Analysis"}</div>
-                           <h4 className="font-bold text-lg mb-2 group-hover:text-blue-600">{post.title}</h4>
-                           <p className="text-sm text-gray-500 line-clamp-3 mb-3">{getExcerpt(post, 120)}</p>
-                           <div className="flex items-center text-xs text-gray-400 font-medium">
-                             <Calendar size={12} className="mr-1"/> {format(post.publishedAt || post.createdAt, 'MMM dd, yyyy')}
-                           </div>
-                        </motion.div>
-                      ))}
+                  ) : (
+                    <div className="bg-white p-12 rounded-xl border-2 border-dashed border-gray-200 text-center mb-14">
+                      <TrendingUp className="mx-auto mb-4 opacity-20 text-gray-400" size={48} />
+                      <h4 className="text-lg font-bold text-gray-600 mb-2">More stories coming soon</h4>
+                      <p className="text-sm text-gray-500">We are currently crafting more insights for you. Stay tuned!</p>
                     </div>
-                 </motion.div>
+                  )}
 
                </div>
 
@@ -338,11 +252,11 @@ export default function BlogList() {
                  <div className="bg-white rounded-xl shadow-sm border p-6">
                    <h3 className="text-lg font-bold font-poppins border-b-2 border-gray-900 inline-block pb-1 mb-6">Editor's Pick</h3>
                    <div className="space-y-5">
-                     {allPosts.slice(1, 4).map((post, idx) => (
+                     {editorsPicks.map((post: any, idx: number) => (
                        <div key={post._id} className="flex gap-4 group cursor-pointer" onClick={() => setLocation(`/blog/${post.slug}`)}>
                          <img src={post.coverImage || `https://images.unsplash.com/photo-1542435503-956c469947f6?w=200&q=80&random=${idx}`} className="w-20 h-20 object-cover rounded shadow-sm" alt="Thumbnail" />
                          <div>
-                           <h4 className="text-sm font-bold text-gray-900 group-hover:text-blue-600 line-clamp-2 leading-tight mb-2">{post.title}</h4>
+                           <h4 className="text-sm font-bold text-gray-900 group-hover:text-[#0066CC] line-clamp-2 leading-tight mb-2">{post.title}</h4>
                            <span className="text-xs text-gray-400 flex items-center"><Clock size={12} className="mr-1"/>{format(post.publishedAt || post.createdAt, 'MMM dd')}</span>
                          </div>
                        </div>

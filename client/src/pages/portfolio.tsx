@@ -59,7 +59,7 @@ export default function PortfolioPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-poppins font-bold text-gray-900 mb-4">
-              Featured <span className="text-[#FF6B00]">Website Projects</span>
+              Our Internal <span className="text-[#FF6B00]">Digital Ecosystem</span>
             </h2>
             <p className="text-lg text-gray-600 font-inter max-w-2xl mx-auto">
               Success stories from our latest and most comprehensive web development projects, featuring modern technologies and full-stack solutions.
