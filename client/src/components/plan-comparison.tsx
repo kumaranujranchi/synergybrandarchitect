@@ -1,6 +1,7 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 // Define plan data
 const plans = [
@@ -172,6 +173,7 @@ const plans = [
 
 // Helper component for plan card
 const PlanCard = ({ plan }: { plan: typeof plans[0] }) => {
+  const { openModal } = useContactModal();
   return (
     <div className="flex flex-col h-full bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100">
       {/* Plan header */}
@@ -198,10 +200,7 @@ const PlanCard = ({ plan }: { plan: typeof plans[0] }) => {
         <Button
           className="w-full py-4 text-white font-semibold text-lg"
           style={{ backgroundColor: '#FF6B00' }}
-          onClick={() => {
-            // Always redirect to home page contact section since we might be on a different page
-            window.location.href = '/#contact';
-          }}
+          onClick={openModal}
         >
           Get Quote
         </Button>
@@ -211,6 +210,7 @@ const PlanCard = ({ plan }: { plan: typeof plans[0] }) => {
 };
 
 export default function PlanComparison() {
+  const { openModal } = useContactModal();
   return (
     <section className="py-16 bg-gray-100">
       <div className="container mx-auto px-4">
@@ -237,10 +237,7 @@ export default function PlanComparison() {
           <Button 
             variant="outline"
             className="border-[#0066CC] text-[#0066CC] hover:bg-[#0066CC] hover:text-white transition-all"
-            onClick={() => {
-              // Always redirect to home page contact section since we might be on a different page
-              window.location.href = '/#contact';
-            }}
+            onClick={openModal}
           >
             Request Custom Plan
           </Button>

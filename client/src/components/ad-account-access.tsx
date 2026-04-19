@@ -1,8 +1,10 @@
 import { ArrowRight, Ban, CheckCircle, LucideDollarSign, ShieldCheck, LayoutGrid, MousePointer } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useContactModal } from "@/hooks/use-contact-modal";
 import { motion } from "framer-motion";
 
 export default function AdAccountAccess() {
+  const { openModal } = useContactModal();
   return (
     <section className="py-16 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -99,12 +101,13 @@ export default function AdAccountAccess() {
               <div className="bg-gradient-to-r from-[#0066CC] to-[#0055AA] rounded-xl p-6 text-white">
                 <h4 className="text-xl font-semibold mb-4">Don't Let Bans Stop Your Growth!</h4>
                 <p className="mb-6">Get in touch today and let your ads run non-stop — no bans, no limits, no stress.</p>
-                <a href="#contact">
-                  <Button className="bg-[#FF6B00] hover:bg-[#FF8533] py-5 px-6 text-white font-medium rounded-lg w-full">
-                    Get Access Now
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </a>
+                <Button 
+                  onClick={openModal}
+                  className="bg-[#FF6B00] hover:bg-[#FF8533] py-8 px-6 text-white font-medium rounded-full w-full h-auto text-lg shadow-lg hover:scale-105 transition-transform"
+                >
+                  Get Access Now
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
                 <div className="flex flex-wrap items-center justify-center mt-4 text-sm gap-4">
                   <div className="flex items-center gap-1">
                     <CheckCircle className="h-4 w-4" />

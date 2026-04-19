@@ -5,12 +5,14 @@ import WhatsappButton from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ExternalLink, Star, Users, Calendar, Target } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 
 export default function PortfolioPage() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     document.title = "Portfolio | Our Work & Case Studies - Synergy Brand Architect";
   }, []);
@@ -235,12 +237,13 @@ export default function PortfolioPage() {
 
           {/* View More CTA Button */}
           <div className="text-center mt-12">
-            <Link href="/#contact">
-              <Button className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-semibold py-4 px-8 rounded-full text-lg transition-all hover:shadow-lg hover:scale-105">
-                View More Projects & Get Started
-                <ArrowRight size={20} className="ml-2" />
-              </Button>
-            </Link>
+            <Button 
+              onClick={openModal}
+              className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-semibold py-8 px-8 rounded-full text-lg transition-all hover:shadow-lg hover:scale-105 h-auto"
+            >
+              View More Projects & Get Started
+              <ArrowRight size={20} className="ml-2" />
+            </Button>
             <p className="text-gray-600 font-inter mt-4 text-sm">
               Ready to create your next success story? Let's discuss your project!
             </p>
@@ -259,12 +262,13 @@ export default function PortfolioPage() {
               Let's discuss how we can help transform your business with our proven strategies and expertise.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/#contact">
-                <Button className="bg-white text-[#FF6B00] hover:bg-gray-100 font-semibold py-3 px-8 rounded-full text-lg transition-all hover:shadow-lg">
-                  Get Free Consultation
-                  <ArrowRight size={20} className="ml-2" />
-                </Button>
-              </Link>
+              <Button 
+                onClick={openModal}
+                className="bg-white text-[#FF6B00] hover:bg-gray-100 font-semibold py-8 px-8 rounded-full text-lg transition-all hover:shadow-lg h-auto"
+              >
+                Get Free Consultation
+                <ArrowRight size={20} className="ml-2" />
+              </Button>
               <Link href="/services">
                 <Button variant="outline" className="border-white text-white bg-transparent hover:bg-white hover:text-[#FF6B00] font-semibold py-3 px-8 rounded-full text-lg transition-all">
                   View Our Services

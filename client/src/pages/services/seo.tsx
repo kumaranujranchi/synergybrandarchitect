@@ -23,8 +23,11 @@ import {
   Award
 } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
+import { Button } from "@/components/ui/button";
 
 export default function SEO() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -97,9 +100,12 @@ export default function SEO() {
                   If you aren't on Page 1, you don't exist. We don't just 'rank' pages; we build digital authority that survives algorithm updates and outperforms your competition.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Link href="/#contact" className="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-full font-bold shadow-xl shadow-indigo-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                  <Button 
+                    onClick={openModal}
+                    className="w-full sm:w-auto px-10 py-8 bg-indigo-600 text-white rounded-full font-bold shadow-xl shadow-indigo-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2 h-auto text-lg"
+                  >
                     Request Your SEO Roadmap <ArrowRight size={20} />
-                  </Link>
+                  </Button>
                 </div>
               </motion.div>
             </div>
@@ -314,9 +320,12 @@ export default function SEO() {
                 Get a comprehensive deep-dive SEO audit and a roadmap to bypass your competitors on page one.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link href="/#contact" className="w-full sm:w-auto px-12 py-6 bg-indigo-600 text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/30">
+                <Button 
+                  onClick={openModal}
+                  className="w-full sm:w-auto px-12 py-8 bg-indigo-600 text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-600/30 h-auto"
+                >
                   Book Your SEO Strategy Call
-                </Link>
+                </Button>
                 <a 
                   href="https://wa.me/919525230232" 
                   target="_blank" 

@@ -4,6 +4,8 @@ import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 import { Building2, Utensils, ShoppingBag, ArrowRight, Target, TrendingUp, Users } from 'lucide-react';
 import { Link } from 'wouter';
+import { useContactModal } from '@/hooks/use-contact-modal';
+import { Button } from '@/components/ui/button';
 
 interface CaseStudy {
   id: string;
@@ -58,6 +60,7 @@ const caseStudies: CaseStudy[] = [
 ];
 
 export default function CaseStudyPage() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -202,13 +205,13 @@ export default function CaseStudyPage() {
               Let's work together to transform your business with proven digital marketing strategies.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a 
-                href="/#contact" 
-                className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-semibold px-8 py-4 rounded-lg transition-all inline-flex items-center gap-2"
+              <Button 
+                onClick={openModal}
+                className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-semibold px-8 py-8 rounded-full transition-all inline-flex items-center gap-2 h-auto text-lg"
               >
                 Get Your Free Consultation
                 <ArrowRight size={20} />
-              </a>
+              </Button>
               <a 
                 href="/services" 
                 className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-lg transition-all border border-white/30"

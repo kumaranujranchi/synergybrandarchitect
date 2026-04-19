@@ -16,6 +16,8 @@ import {
   Check
 } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 interface ServiceCategory {
@@ -166,6 +168,7 @@ const itemVariants = {
 };
 
 export default function ServicesPage() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     document.title = "Services | Synergy Brand Architect - Digital Marketing & Branding Solutions";
   }, []);
@@ -194,12 +197,18 @@ export default function ServicesPage() {
               to transform your business into a market leader.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/#contact" className="px-8 py-4 bg-[#FF6B00] text-white rounded-full font-bold shadow-lg shadow-orange-500/20 hover:scale-105 transition-transform">
+              <Button 
+                onClick={openModal}
+                className="px-8 py-8 bg-[#FF6B00] text-white rounded-full font-bold shadow-lg shadow-orange-500/20 hover:scale-105 transition-transform h-auto text-lg"
+              >
                 Book a Strategy Call
-              </Link>
-              <Link href="/#contact" className="px-8 py-4 bg-white text-gray-900 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-colors">
+              </Button>
+              <Button 
+                onClick={openModal}
+                className="px-8 py-8 bg-white text-gray-900 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-colors h-auto text-lg"
+              >
                 Get a Custom Quote
-              </Link>
+              </Button>
             </div>
           </motion.div>
         </div>

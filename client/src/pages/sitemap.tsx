@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 const services = [
   { title: "Brand Strategy & Positioning", url: "/services?tab=brand" },
@@ -55,6 +56,7 @@ const pageCategories = [
 ];
 
 export default function Sitemap() {
+  const { openModal } = useContactModal();
   // Set the document title
   useEffect(() => {
     document.title = "Website Sitemap - Synergy Brand Architect";
@@ -109,7 +111,10 @@ export default function Sitemap() {
                         href={page.url} 
                         className="block py-2 px-3 text-[#333333] hover:text-[#FF6B00] transition-colors"
                         onClick={(e) => {
-                          if (page.url.startsWith("/#")) {
+                          if (page.url === "/#contact") {
+                            e.preventDefault();
+                            openModal();
+                          } else if (page.url.startsWith("/#")) {
                             e.preventDefault();
                             const elementId = page.url.substring(2); // Remove the "/#" to get just the ID
                             const element = document.getElementById(elementId);
@@ -144,7 +149,7 @@ export default function Sitemap() {
         
         <div className="mt-12 pt-8 border-t border-gray-200 text-center text-gray-500 text-sm">
           <p>
-            Can't find what you're looking for? <Link href="/#contact"><a className="text-[#0066CC] hover:text-[#FF6B00]">Contact us</a></Link> and we'll be happy to help!
+            Can't find what you're looking for? <button onClick={openModal} className="text-[#0066CC] hover:text-[#FF6B00]">Contact us</button> and we'll be happy to help!
           </p>
         </div>
       </div>

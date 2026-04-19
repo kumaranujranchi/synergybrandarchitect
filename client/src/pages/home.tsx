@@ -3,6 +3,7 @@ import Hero from "@/components/hero";
 import ClientLogoCarousel from "@/components/client-logo-carousel";
 import About from "@/components/about";
 import DigitalPresence from "@/components/digital-presence"; 
+import CtaSection from "@/components/cta-section";
 
 import Services from "@/components/services";
 import HomeServiceSections from "@/components/home-service-sections";
@@ -23,6 +24,7 @@ export default function Home() {
       <ClientLogoCarousel />
       <About />
       <DigitalPresence />
+      <CtaSection />
 
       <Services />
       <HomeServiceSections />

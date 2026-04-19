@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { smoothScrollTo } from "@/lib/scrollHelper";
 import { Link } from "wouter";
 import { staggerContainer, fadeUp, hoverScale } from "@/lib/animations";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 const brandBuildingServices = [
   {
@@ -100,6 +101,7 @@ const ServiceCard = ({ service, theme }: {
   theme: string 
 }) => {
   const isOrange = theme === 'orange';
+  const { openModal } = useContactModal();
   
   return (
     <motion.div 
@@ -115,24 +117,21 @@ const ServiceCard = ({ service, theme }: {
       <p className="text-gray-600 mb-4 font-inter text-sm sm:text-base">
         {service.description}
       </p>
-      <a 
-        href="#contact" 
-        className={`${isOrange ? 'text-[#FF6B00]' : 'text-[#0066CC]'} font-medium flex items-center text-sm sm:text-base`}
-        onClick={(e) => {
-          e.preventDefault();
-          smoothScrollTo('#contact');
-        }}
+      <button 
+        onClick={openModal}
+        className={`${isOrange ? 'text-[#FF6B00]' : 'text-[#0066CC]'} font-medium flex items-center text-sm sm:text-base hover:underline`}
       >
         Learn More 
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
-      </a>
+      </button>
     </motion.div>
   );
 };
 
 export default function Services() {
+  const { openModal } = useContactModal();
 // The parent stagger animation is now imported from @/lib/animations
 
   return (
@@ -233,17 +232,12 @@ export default function Services() {
             Whether you need a complete brand makeover or targeted digital marketing campaigns, we're here to help your business thrive in today's competitive landscape.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a 
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                smoothScrollTo('#contact');
-              }}
+            <Button 
+              onClick={openModal}
+              className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-2 sm:py-3 px-6 sm:px-8 rounded-full transition-all hover:shadow-md hover:-translate-y-1 h-auto text-sm sm:text-base"
             >
-              <Button className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-2 sm:py-3 px-6 sm:px-8 rounded-full transition-all hover:shadow-md hover:-translate-y-1 h-auto text-sm sm:text-base">
-                Get Free Consultation
-              </Button>
-            </a>
+              Get Free Consultation
+            </Button>
             <Link href="/services">
               <Button variant="outline" className="border-[#0066CC] text-[#0066CC] font-medium py-2 sm:py-3 px-6 sm:px-8 rounded-full transition-all hover:shadow-md hover:-translate-y-1 h-auto text-sm sm:text-base flex items-center">
                 View All Services <ArrowRight className="ml-2 h-4 w-4" />

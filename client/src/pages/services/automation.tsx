@@ -22,8 +22,11 @@ import {
   Clock
 } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
+import { Button } from "@/components/ui/button";
 
 export default function Automation() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -96,9 +99,12 @@ export default function Automation() {
                   Stop wasting human talent on manual tasks. We build intelligent, AI-driven architectures that automate your growth and free your team for high-impact strategy.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Link href="/#contact" className="w-full sm:w-auto px-10 py-5 bg-emerald-600 text-white rounded-full font-bold shadow-xl shadow-emerald-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                  <Button 
+                    onClick={openModal}
+                    className="w-full sm:w-auto px-10 py-8 bg-emerald-600 text-white rounded-full font-bold shadow-xl shadow-emerald-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2 h-auto text-lg"
+                  >
                     Build Your Automation Roadmap <ArrowRight size={20} />
-                  </Link>
+                  </Button>
                 </div>
               </motion.div>
             </div>
@@ -299,9 +305,12 @@ export default function Automation() {
                 Schedule a consultation and let's map out exactly how much time and money you're leaving on the table.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link href="/#contact" className="w-full sm:w-auto px-12 py-6 bg-emerald-600 text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-emerald-700 transition-all shadow-2xl shadow-emerald-500/30">
+                <Button 
+                  onClick={openModal}
+                  className="w-full sm:w-auto px-12 py-8 bg-emerald-600 text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-emerald-700 transition-all shadow-2xl shadow-emerald-500/30 h-auto"
+                >
                   Book Automation Call
-                </Link>
+                </Button>
                 <a 
                   href="https://wa.me/919525230232" 
                   target="_blank" 

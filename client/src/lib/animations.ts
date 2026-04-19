@@ -53,19 +53,11 @@ export const hoverScale: Variants = {
   }
 };
 
-// Animate a subtle pulse ring over main Call To Action buttons
+// Standardized hover animation for CTA buttons (replaces pulse animation)
 export const pulseButton: Variants = {
-  rest: { },
-  hover: { scale: 1.02 },
-  pulse: {
-    boxShadow: [
-      "0px 0px 0px 0px rgba(255, 107, 0, 0.3)",
-      "0px 0px 0px 12px rgba(255, 107, 0, 0)"
-    ],
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      ease: "easeInOut"
-    }
+  rest: { scale: 1 },
+  hover: { 
+    scale: 1.05,
+    transition: { type: "spring", stiffness: 400, damping: 10 }
   }
 };

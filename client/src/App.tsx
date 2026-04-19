@@ -49,6 +49,8 @@ import { AuthProvider } from "@/hooks/use-auth";
 import { updateSchemaMarkup } from "@/utils/schemaMarkup";
 
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { ContactModalProvider } from "@/hooks/use-contact-modal";
+import ContactModal from "@/components/contact-modal";
 
 
 function Router() {
@@ -211,9 +213,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <SmoothScroll>
-          <Router />
-          {/* Popup removed */}
-          <Toaster />
+          <ContactModalProvider>
+            <Router />
+            <ContactModal />
+            {/* Popup removed */}
+            <Toaster />
+          </ContactModalProvider>
         </SmoothScroll>
       </AuthProvider>
     </QueryClientProvider>

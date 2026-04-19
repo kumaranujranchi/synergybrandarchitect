@@ -2,8 +2,10 @@ import { Building2, Utensils, ShoppingBag } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 export default function CaseStudies() {
+  const { openModal } = useContactModal();
   const caseStudies = [
     {
       id: "wishluv-buildcon",
@@ -81,11 +83,12 @@ export default function CaseStudies() {
         </div>
 
         <div className="text-center mt-12">
-          <Link to="/#contact">
-            <Button className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white">
-              Want Similar Results? Contact Us Today
-            </Button>
-          </Link>
+          <Button 
+            onClick={openModal}
+            className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white py-8 px-10 rounded-full font-bold shadow-xl shadow-orange-500/20 hover:scale-105 transition-transform h-auto text-lg"
+          >
+            Want Similar Results? Contact Us Today
+          </Button>
         </div>
       </div>
     </section>

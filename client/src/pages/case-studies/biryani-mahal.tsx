@@ -2,10 +2,12 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
+import { useContactModal } from "@/hooks/use-contact-modal";
 import { BarChart4, ArrowRight, CheckCircle2, Users, Camera, Target, LayoutGrid, MessageCircle } from "lucide-react";
 import { Link } from "wouter";
 
 export default function BiryaniMahalCaseStudy() {
+  const { openModal } = useContactModal();
   return (
     <div className="flex flex-col min-h-screen font-inter text-[#333333] bg-gray-50">
       <Header />
@@ -269,12 +271,13 @@ export default function BiryaniMahalCaseStudy() {
               Get a customized social media and branding strategy designed for your restaurant
             </p>
             <div>
-              <a href="/#contact">
-                <Button className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium py-6 px-8 rounded-lg transition-all hover:shadow-lg text-lg">
-                  Book a Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
+              <Button 
+                onClick={openModal}
+                className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium py-8 px-8 rounded-full transition-all hover:shadow-lg text-lg h-auto"
+              >
+                Book a Free Consultation
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
             </div>
           </div>
         </div>

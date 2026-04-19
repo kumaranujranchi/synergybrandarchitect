@@ -17,8 +17,10 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 export default function BrandBuilding() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -124,9 +126,12 @@ export default function BrandBuilding() {
                     <p className="text-gray-600 font-inter leading-relaxed mb-8 text-lg">
                       {service.description}
                     </p>
-                    <Link href="/#contact" className="inline-flex items-center gap-3 text-[#FF6B00] font-black text-lg group-hover:gap-5 transition-all uppercase tracking-wider">
+                    <button 
+                      onClick={openModal}
+                      className="inline-flex items-center gap-3 text-[#FF6B00] font-black text-lg group-hover:gap-5 transition-all uppercase tracking-wider hover:underline"
+                    >
                       Get Started <ArrowRight size={22} strokeWidth={3} />
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </motion.div>
@@ -145,9 +150,12 @@ export default function BrandBuilding() {
             <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto relative z-10">
               Our experts are ready to architecture a unique strategy for your specific business needs. Let's create something extraordinary together.
             </p>
-            <Link href="/#contact" className="inline-block relative z-10 px-14 py-6 bg-[#FF6B00] text-white rounded-full font-black text-2xl shadow-2xl shadow-orange-500/40 hover:scale-110 active:scale-95 transition-all">
+            <button 
+              onClick={openModal}
+              className="inline-block relative z-10 px-14 py-6 bg-[#FF6B00] text-white rounded-full font-black text-2xl shadow-2xl shadow-orange-500/40 hover:scale-110 active:scale-95 transition-all"
+            >
               Launch Your Project
-            </Link>
+            </button>
           </motion.div>
         </section>
       </main>

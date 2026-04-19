@@ -1,12 +1,13 @@
 import { Link } from "wouter";
 import { Facebook, Instagram, Linkedin, MessageCircle, FileText } from "lucide-react";
 import { smoothScrollTo } from "@/lib/scrollHelper";
+import { useContactModal } from "@/hooks/use-contact-modal";
 import VisitorCounter from "./visitor-counter";
 
 const quickLinks = [
   { href: "/", label: "Home", isPage: true },
   { href: "/services", label: "Services", isPage: true },
-  { href: "/contact", label: "Contact", isPage: true }
+  { href: "#contact", label: "Contact", isPage: false }
 ];
 
 const serviceLinks = [
@@ -25,6 +26,7 @@ const resourceLinks = [
 ];
 
 export default function Footer() {
+  const { openModal } = useContactModal();
   return (
     <footer className="bg-[#333333] text-white py-12 pb-24">
       <div className="container mx-auto px-4">
@@ -99,7 +101,11 @@ export default function Footer() {
                       className="text-gray-400 hover:text-[#FF6B00] transition-colors"
                       onClick={(e) => {
                         e.preventDefault();
-                        smoothScrollTo(link.href);
+                        if (link.href === "#contact") {
+                          openModal();
+                        } else {
+                          smoothScrollTo(link.href);
+                        }
                       }}
                     >
                       {link.label}

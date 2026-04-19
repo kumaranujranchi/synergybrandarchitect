@@ -5,8 +5,10 @@ import { smoothScrollTo } from "@/lib/scrollHelper";
 import TypingAnimation from "./typing-animation";
 import { OptimizedImage } from "./ui/optimized-image";
 import { staggerContainer, fadeUp, slideLeft, pulseButton } from "@/lib/animations";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 export default function Hero() {
+  const { openModal } = useContactModal();
   return (
     <section id="home" className="pt-28 pb-16 md:pt-32 md:pb-20">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center">
@@ -49,22 +51,12 @@ export default function Hero() {
             Welcome to Synergy Brand Architect, the best digital marketing service in Patna for businesses aiming to make a mark online. We're your dedicated partner in branding and digital growth, helping you stand out in the Bihar market with a powerful online presence.
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
-            <a href="#contact" onClick={(e) => {
-              e.preventDefault();
-              smoothScrollTo('#contact');
-            }}>
-              <motion.div
-                variants={pulseButton}
-                animate="pulse"
-                whileHover="hover"
-              >
-                <Button 
-                  className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-3 px-8 rounded-full transition-all hover:shadow-md h-auto"
-                >
-                  Get Free Consultation
-                </Button>
-              </motion.div>
-            </a>
+            <Button 
+              onClick={openModal}
+              className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-3 px-8 rounded-full transition-all hover:shadow-md h-auto"
+            >
+              Get Free Consultation
+            </Button>
             <a href="#services" onClick={(e) => {
               e.preventDefault();
               smoothScrollTo('#services');

@@ -11,8 +11,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ChevronRight, ArrowRight, CheckCheck, BarChart4, Calculator, Lightbulb, Trophy, Calendar, Target, Settings } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 export default function Resources() {
+  const { openModal } = useContactModal();
   return (
     <div className="flex flex-col min-h-screen font-inter text-[#333333] bg-gray-50">
       <Header />
@@ -163,12 +165,13 @@ export default function Resources() {
               Get a custom strategy designed for your business goals and budget
             </p>
             <div>
-              <a href="/#contact">
-                <Button className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium py-6 px-8 rounded-lg transition-all hover:shadow-lg text-lg">
-                  Book a Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
+              <Button 
+                onClick={openModal}
+                className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium py-8 px-8 rounded-full transition-all hover:shadow-lg text-lg h-auto shadow-lg hover:scale-105 transition-transform"
+              >
+                Book a Free Consultation
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
             </div>
           </div>
         </div>
@@ -182,6 +185,7 @@ export default function Resources() {
 
 // ROI Calculator Component
 function ROICalculator() {
+  const { openModal } = useContactModal();
   const [marketingSpend, setMarketingSpend] = useState<number>(50000);
   const [conversionRate, setConversionRate] = useState<number>(2);
   const [avgOrderValue, setAvgOrderValue] = useState<number>(2000);
@@ -339,12 +343,14 @@ function ROICalculator() {
                   <p className="text-sm text-gray-600">
                     Want a customized marketing strategy to achieve these results or better?
                   </p>
-                  <a href="/#contact">
-                    <Button variant="outline" className="mt-2 border-[#0066CC] text-[#0066CC] hover:bg-[#0066CC]/5 w-full">
-                      Book a Free Consultation
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
+                  <Button 
+                    onClick={openModal}
+                    variant="outline" 
+                    className="mt-2 border-[#0066CC] text-[#0066CC] hover:bg-[#0066CC]/5 w-full"
+                  >
+                    Book a Free Consultation
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             </div>
@@ -367,6 +373,7 @@ function ROICalculator() {
 
 // Marketing Budget Planner Component
 function MarketingBudgetPlanner() {
+  const { openModal } = useContactModal();
   const [monthlyRevenue, setMonthlyRevenue] = useState<number>(500000);
   const [industryType, setIndustryType] = useState<string>("retail");
   const [growthGoal, setGrowthGoal] = useState<string>("moderate");
@@ -597,12 +604,14 @@ function MarketingBudgetPlanner() {
                   <p className="text-sm text-gray-600">
                     Want expert help to optimize your marketing budget allocation?
                   </p>
-                  <a href="/#contact">
-                    <Button variant="outline" className="mt-2 border-[#0066CC] text-[#0066CC] hover:bg-[#0066CC]/5 w-full">
-                      Get a Custom Strategy
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
+                  <Button 
+                    onClick={openModal}
+                    variant="outline" 
+                    className="mt-2 border-[#0066CC] text-[#0066CC] hover:bg-[#0066CC]/5 w-full"
+                  >
+                    Get a Custom Strategy
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             </div>
@@ -625,6 +634,7 @@ function MarketingBudgetPlanner() {
 
 // Campaign Planner Component
 function CampaignPlanner() {
+  const { openModal } = useContactModal();
   const [businessType, setBusinessType] = useState<string>("retail");
   const [campaignGoal, setCampaignGoal] = useState<string>("awareness");
   const [targetAudience, setTargetAudience] = useState<string>("general");
@@ -1040,12 +1050,14 @@ function CampaignPlanner() {
                   <p className="text-sm text-gray-600">
                     Want help implementing these campaign ideas with professional execution?
                   </p>
-                  <a href="/#contact">
-                    <Button variant="outline" className="mt-2 border-[#0066CC] text-[#0066CC] hover:bg-[#0066CC]/5 w-full">
-                      Discuss Your Campaign
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </a>
+                  <Button 
+                    onClick={openModal}
+                    variant="outline" 
+                    className="mt-2 border-[#0066CC] text-[#0066CC] hover:bg-[#0066CC]/5 w-full"
+                  >
+                    Discuss Your Campaign
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             </div>

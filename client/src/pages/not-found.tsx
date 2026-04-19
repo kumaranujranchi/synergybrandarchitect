@@ -1,10 +1,11 @@
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { useContactModal } from "@/hooks/use-contact-modal";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 
 export default function NotFound() {
+  const { openModal } = useContactModal();
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -30,11 +31,13 @@ export default function NotFound() {
                 </Button>
               </Link>
               
-              <Link href="/#contact">
-                <Button variant="outline" className="w-full">
-                  Contact Us
-                </Button>
-              </Link>
+              <Button 
+                onClick={openModal}
+                variant="outline" 
+                className="w-full"
+              >
+                Contact Us
+              </Button>
             </div>
           </div>
         </div>

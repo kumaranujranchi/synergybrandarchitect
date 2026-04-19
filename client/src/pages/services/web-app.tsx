@@ -27,8 +27,11 @@ import {
   Database
 } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
+import { Button } from "@/components/ui/button";
 
 export default function WebApp() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -68,9 +71,12 @@ export default function WebApp() {
                   We don’t just build websites and apps — we create scalable digital products that drive growth, automate processes, and engage your customers.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Link href="/#contact" className="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-full font-bold shadow-xl shadow-indigo-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                  <Button 
+                    onClick={openModal}
+                    className="w-full sm:w-auto px-10 py-8 bg-indigo-600 text-white rounded-full font-bold shadow-xl shadow-indigo-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2 h-auto text-lg"
+                  >
                     Get Free Consultation <ArrowRight size={20} />
-                  </Link>
+                  </Button>
                   <Link href="/portfolio" className="w-full sm:w-auto px-10 py-5 bg-white text-gray-900 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-colors">
                     Start Your Project
                   </Link>
@@ -373,9 +379,12 @@ export default function WebApp() {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-poppins font-bold text-gray-900 mb-6">Flexible pricing based on your requirements</h2>
             <p className="text-lg text-gray-600 mb-10 font-inter">No hidden costs. We provide a transparent scope of work with flexible options.</p>
-            <Link href="/#contact" className="inline-flex items-center gap-2 px-10 py-5 bg-gray-900 text-white rounded-full font-bold text-lg hover:scale-105 transition-transform">
+            <Button 
+              onClick={openModal}
+              className="inline-flex items-center gap-2 px-10 py-8 bg-gray-900 text-white rounded-full font-bold text-lg hover:scale-105 transition-transform h-auto"
+            >
               Get a Quote <ArrowRight size={20} />
-            </Link>
+            </Button>
           </div>
         </section>
 
@@ -388,9 +397,12 @@ export default function WebApp() {
                 Let’s discuss your project and start your digital growth journey today.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link href="/#contact" className="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-600/20">
+                <Button 
+                  onClick={openModal}
+                  className="w-full sm:w-auto px-10 py-8 bg-indigo-600 text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-600/20 h-auto"
+                >
                   Book Free Call
-                </Link>
+                </Button>
                 <a 
                   href="https://wa.me/919525230232" 
                   target="_blank" 

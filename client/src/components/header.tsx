@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { smoothScrollTo, scrollToTop } from "@/lib/scrollHelper";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 const navLinks = [
   { href: "#home", label: "Home", isHome: true },
@@ -20,6 +21,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const isMobile = useIsMobile();
   const [location] = useLocation();
+  const { openModal } = useContactModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +46,13 @@ export default function Header() {
       return;
     }
     
+    // If it's the contact link, open the modal
+    if (link.href === '#contact') {
+      openModal();
+      closeMenu();
+      return;
+    }
+
     // Otherwise use smooth scroll for hash links
     if (!link.isPage) {
       smoothScrollTo(link.href);
@@ -123,31 +132,23 @@ export default function Header() {
         {/* Buttons for Desktop */}
         <div className="hidden xl:flex items-center space-x-2 xl:space-x-4">
           {/* CTA Button (Desktop only) */}
-          <a 
-            href="#contact" 
-            onClick={(e) => handleNavigation(e, { href: '#contact' })}
+          <Button 
+            onClick={openModal}
+            className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium text-xs xl:text-sm py-1 px-3 xl:py-2 xl:px-5 rounded-full transition-all hover:shadow-md hover:-translate-y-1 h-auto"
           >
-            <Button 
-              className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium text-xs xl:text-sm py-1 px-3 xl:py-2 xl:px-5 rounded-full transition-all hover:shadow-md hover:-translate-y-1 h-auto"
-            >
-              Get Free Consultation
-            </Button>
-          </a>
+            Get Free Consultation
+          </Button>
         </div>
         
         {/* Tablet-only buttons - show in medium to large screens but hide in extra-large */}
         <div className="hidden md:flex xl:hidden items-center space-x-2">
-          <a 
-            href="#contact" 
-            onClick={(e) => handleNavigation(e, { href: '#contact' })}
+          <Button 
+            onClick={openModal}
+            className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium text-xs py-1 px-2 rounded-full transition-all hover:shadow-md h-auto"
+            size="sm"
           >
-            <Button 
-              className="bg-[#FF6B00] hover:bg-[#FF8533] text-white font-medium text-xs py-1 px-2 rounded-full transition-all hover:shadow-md h-auto"
-              size="sm"
-            >
-              Consult
-            </Button>
-          </a>
+            Consult
+          </Button>
         </div>
       </div>
       
@@ -193,16 +194,12 @@ export default function Header() {
           ))}
           
           <div className="flex pt-2">
-            <a 
-              href="#contact" 
-              className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-2 sm:py-3 px-4 sm:px-5 rounded-full text-center w-full"
-              onClick={(e) => {
-                closeMenu();
-                handleNavigation(e, { href: '#contact' });
-              }}
+            <Button 
+              onClick={openModal}
+              className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-2 sm:py-3 px-4 sm:px-5 rounded-full text-center w-full h-auto"
             >
               Get Free Consultation
-            </a>
+            </Button>
           </div>
         </div>
       </div>

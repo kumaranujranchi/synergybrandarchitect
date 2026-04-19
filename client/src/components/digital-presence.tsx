@@ -3,8 +3,10 @@ import { ArrowRight, Globe, Shield, TrendingUp, Trophy, Users } from "lucide-rea
 import { motion } from "framer-motion";
 import CountUp from "./count-up";
 import { staggerContainer, fadeUp, slideLeft, pulseButton } from "@/lib/animations";
+import { useContactModal } from "@/hooks/use-contact-modal";
 
 export default function DigitalPresence() {
+  const { openModal } = useContactModal();
 // Animations are now managed via @/lib/animations
 
   return (
@@ -35,12 +37,14 @@ export default function DigitalPresence() {
               and best results – all at affordable rates.
             </motion.p>
             <motion.div variants={fadeUp}>
-              <a href="#contact">
-                <Button size="lg" className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg transition-all h-auto">
-                  Get Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
+              <Button 
+                onClick={openModal}
+                size="lg" 
+                className="bg-[#FF6B00] hover:bg-[#FF8533] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg transition-all h-auto"
+              >
+                Get Free Consultation
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
               <p className="text-gray-500 mt-5 text-sm font-medium">Trusted by 100+ businesses</p>
             </motion.div>
           </motion.div>
@@ -392,37 +396,6 @@ export default function DigitalPresence() {
         </div>
       </div>
       
-      {/* Final CTA */}
-      <div className="section-padding bg-gray-50 relative overflow-hidden">
-        <div className="container mx-auto container-padding relative z-10">
-          <motion.div 
-            className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-10 md:p-16 text-center border border-gray-100 relative overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Abstract glowing orbs in background */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#FF6B00] rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-[#0066CC] rounded-full mix-blend-multiply filter blur-3xl opacity-10"></div>
-            
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#333333] relative z-10">
-              Ready to Transform Your Business Digitally?
-            </h2>
-            <p className="text-xl mb-8 text-gray-600 relative z-10">
-              Let's Get Started Today.
-            </p>
-            <a href="#contact" className="relative z-10 inline-block">
-              <motion.div variants={pulseButton} animate="pulse" whileHover="hover">
-                <Button size="lg" className="bg-[#0066CC] hover:bg-[#0052a3] text-white px-8 py-6 rounded-lg text-lg font-medium shadow-lg transition-all h-auto">
-                  Book a Free Consultation
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </motion.div>
-            </a>
-          </motion.div>
-        </div>
-      </div>
     </section>
   );
 }

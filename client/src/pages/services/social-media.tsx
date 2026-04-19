@@ -21,8 +21,11 @@ import {
   MousePointer2
 } from "lucide-react";
 import { Link } from "wouter";
+import { useContactModal } from "@/hooks/use-contact-modal";
+import { Button } from "@/components/ui/button";
 
 export default function SocialMedia() {
+  const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -95,9 +98,12 @@ export default function SocialMedia() {
                   While others fight for attention, we build resonance. We turn your social footprint into a high-converting ecosystem that drives real revenue, not just vanity metrics.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Link href="/#contact" className="w-full sm:w-auto px-10 py-5 bg-[#0066CC] text-white rounded-full font-bold shadow-xl shadow-blue-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2">
+                  <Button 
+                    onClick={openModal}
+                    className="w-full sm:w-auto px-10 py-8 bg-[#0066CC] text-white rounded-full font-bold shadow-xl shadow-blue-500/20 hover:scale-105 transition-transform flex items-center justify-center gap-2 h-auto text-lg"
+                  >
                     Claim Your Social Growth Audit <ArrowRight size={20} />
-                  </Link>
+                  </Button>
                 </div>
               </motion.div>
             </div>
@@ -309,9 +315,12 @@ export default function SocialMedia() {
                 Stop guessing and start scaling with a data-driven, 2026-ready social ecosystem.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link href="/#contact" className="w-full sm:w-auto px-12 py-6 bg-[#0066CC] text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/30">
+                <Button 
+                  onClick={openModal}
+                  className="w-full sm:w-auto px-12 py-8 bg-[#0066CC] text-white rounded-full font-bold text-lg hover:scale-105 hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/30 h-auto"
+                >
                   Book Your Strategy Call
-                </Link>
+                </Button>
                 <a 
                   href="https://wa.me/919525230232" 
                   target="_blank" 
