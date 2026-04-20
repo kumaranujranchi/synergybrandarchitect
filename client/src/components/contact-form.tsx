@@ -88,16 +88,16 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#333333] font-medium">Your Name</FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">Your Name</FormLabel>
                 <FormControl>
                   <Input 
                     placeholder="John Doe" 
                     {...field} 
-                    className="px-4 py-2 md:py-3 h-auto border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B00]" 
+                    className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300 placeholder:text-gray-400" 
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs ml-1" />
               </FormItem>
             )}
           />
@@ -107,17 +107,17 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[#333333] font-medium">Email Address</FormLabel>
+                <FormItem className="space-y-1.5">
+                  <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">Email Address</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="john@example.com" 
                       type="email" 
                       {...field} 
-                      className="px-4 py-2 md:py-3 h-auto border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B00]" 
+                      className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300 placeholder:text-gray-400" 
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs ml-1" />
                 </FormItem>
               )}
             />
@@ -126,17 +126,17 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
               control={form.control}
               name="phone"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[#333333] font-medium">Phone Number</FormLabel>
+                <FormItem className="space-y-1.5">
+                  <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">Phone Number</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="+91 98765 43210" 
                       type="tel" 
                       {...field} 
-                      className="px-4 py-2 md:py-3 h-auto border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B00]" 
+                      className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300 placeholder:text-gray-400" 
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs ml-1" />
                 </FormItem>
               )}
             />
@@ -147,16 +147,16 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
               control={form.control}
               name="city"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[#333333] font-medium">City</FormLabel>
+                <FormItem className="space-y-1.5">
+                  <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">City</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Your City" 
                       {...field} 
-                      className="px-4 py-2 md:py-3 h-auto border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B00]" 
+                      className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300 placeholder:text-gray-400" 
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs ml-1" />
                 </FormItem>
               )}
             />
@@ -165,15 +165,15 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
               control={form.control}
               name="service"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[#333333] font-medium">Service Interested In</FormLabel>
+                <FormItem className="space-y-1.5">
+                  <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">Service Interested In</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="px-4 py-2 md:py-3 h-auto border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B00]">
+                      <SelectTrigger className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300">
                         <SelectValue placeholder="Select a service" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent className="rounded-xl border-gray-100 shadow-xl">
                       <SelectItem value="brand_strategy">Brand Strategy</SelectItem>
                       <SelectItem value="logo_design">Logo & Identity Design</SelectItem>
                       <SelectItem value="seo">SEO Optimization</SelectItem>
@@ -184,7 +184,7 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
                       <SelectItem value="other">Other Services</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage className="text-xs ml-1" />
                 </FormItem>
               )}
             />
@@ -194,17 +194,17 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
             control={form.control}
             name="message"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#333333] font-medium">Your Message</FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">Your Message</FormLabel>
                 <FormControl>
                   <Textarea 
                     placeholder="Tell us about your project..." 
                     {...field} 
                     rows={4}
-                    className="px-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF6B00]" 
+                    className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300 placeholder:text-gray-400 resize-none" 
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs ml-1" />
               </FormItem>
             )}
           />
@@ -212,9 +212,10 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
           <Button 
             type="submit" 
             disabled={isSubmitting}
-            className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium py-3 px-8 rounded-full transition-all shadow-md w-full h-auto"
+            className="group relative bg-[#FF6B00] hover:bg-[#FF8533] text-white font-bold py-5 px-10 rounded-2xl transition-all shadow-xl shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-1 active:translate-y-0 w-full h-auto text-lg overflow-hidden"
           >
-            {isSubmitting ? "Sending..." : "Send Message"}
+            <span className="relative z-10">{isSubmitting ? "Sending..." : "Launch Your Project"}</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
           </Button>
         </form>
       </Form>
