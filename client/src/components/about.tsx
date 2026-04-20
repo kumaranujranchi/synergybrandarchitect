@@ -102,9 +102,10 @@ export default function About() {
           >
             <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
               <OptimizedImage
-                src="//images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"
+                src="//images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=cover&q=80&w=800"
                 alt="Synergy agency workspace showing collaborative environment"
-                className="w-full aspect-[4/3] object-cover"
+                className="w-full h-full object-cover"
+                containerClassName="w-full h-full"
               />
             </div>
             
@@ -114,9 +115,10 @@ export default function About() {
               variants={fadeUp}
             >
               <OptimizedImage
-                src="//images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&q=80&w=600"
+                src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=cover&q=80&w=800"
                 alt="Golghar, Patna Landmark - synergy local roots"
                 className="w-full h-full object-cover"
+                containerClassName="w-full h-full bg-white"
               />
             </motion.div>
 
