@@ -13,8 +13,8 @@ export default function ContactModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
-      <DialogContent className="sm:max-w-[650px] max-h-[92vh] overflow-y-visible bg-white/95 backdrop-blur-xl border border-gray-100 rounded-[2rem] shadow-2xl p-0 overflow-hidden">
-        <div className="relative">
+      <DialogContent className="sm:max-w-[650px] max-h-[92vh] overflow-y-visible bg-white/95 backdrop-blur-xl border border-gray-100 rounded-[2rem] shadow-2xl p-0 overflow-visible">
+        <div className="relative overflow-visible">
           {/* Floating Character Image */}
           <div className="absolute -top-28 -right-8 w-48 md:w-64 z-20 pointer-events-none transition-transform hover:scale-105 duration-500">
             <img 
