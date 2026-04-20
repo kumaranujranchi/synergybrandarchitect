@@ -200,35 +200,35 @@ export default function About() {
         </div>
 
         <motion.div
-          className="mt-32 relative overflow-hidden group"
+          className="mt-20 relative overflow-hidden group"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-600 rounded-[3rem] transform -skew-y-1 transition-transform group-hover:skew-y-0 duration-700" />
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-600 rounded-[2.5rem]" />
           
-          <div className="relative p-10 md:p-20 flex flex-col items-center text-center max-w-4xl mx-auto">
+          <div className="relative p-8 md:p-12 flex flex-col items-center text-center max-w-3xl mx-auto">
             <div className="text-white">
-              <div className="flex justify-center gap-1 mb-8">
+              <div className="flex justify-center gap-1 mb-6">
                 {[1, 2, 3, 4, 5].map((_, i) => (
-                  <Star key={i} size={24} className="fill-white/20 text-transparent group-hover:fill-yellow-400 transition-colors duration-300" style={{ transitionDelay: `${i * 100}ms` }} />
+                  <Star key={i} size={20} className="fill-white/20 text-transparent group-hover:fill-yellow-400 transition-colors duration-300" style={{ transitionDelay: `${i * 100}ms` }} />
                 ))}
               </div>
               
-              <blockquote className="text-2xl md:text-4xl font-poppins italic font-medium mb-10 leading-tight">
+              <blockquote className="text-xl md:text-2xl font-poppins italic font-medium mb-8 leading-relaxed">
                 "Synergy helped us increase our online leads by <span className="text-orange-200 font-black">300%</span> in just 6
                 months! Their team truly delivers on their promises. We went
                 from virtually invisible online to becoming a go-to name in our
                 industry."
               </blockquote>
               
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-2">
-                  <Star className="text-yellow-400 fill-yellow-400" size={20} />
+              <div className="flex flex-col items-center gap-1">
+                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center mb-2">
+                  <Star className="text-yellow-400 fill-yellow-400" size={16} />
                 </div>
-                <p className="text-2xl font-bold">Lavkush Sharma</p>
-                <p className="text-orange-100/80 font-inter text-lg">
+                <p className="text-xl font-bold">Lavkush Sharma</p>
+                <p className="text-orange-100/80 font-inter text-base">
                   Director at Wishluv Buildcon Pvt. Ltd. (Real Estate)
                 </p>
               </div>
