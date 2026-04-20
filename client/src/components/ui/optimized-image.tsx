@@ -22,13 +22,14 @@ export function OptimizedImage({
   className, 
   containerClassName,
   loading = "lazy",
+  disableOverlay = false,
   ...props 
-}: OptimizedImageProps) {
+}: OptimizedImageProps & { disableOverlay?: boolean }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   return (
-    <div className={cn("relative overflow-hidden", containerClassName)}>
+    <div className={cn("relative overflow-hidden group", containerClassName)}>
       {!isLoaded && !hasError && (
         <Skeleton className="absolute inset-0 z-0 h-full w-full" />
       )}
@@ -38,20 +39,33 @@ export function OptimizedImage({
           Image failed to load
         </div>
       ) : (
-        <img
-          src={src}
-          alt={alt}
-          loading={loading}
-          decoding="async"
-          onLoad={() => setIsLoaded(true)}
-          onError={() => setHasError(true)}
-          className={cn(
-            "transition-opacity duration-500",
-            !isLoaded ? "opacity-0" : "opacity-100",
-            className
+        <>
+          <img
+            src={src}
+            alt={alt}
+            loading={loading}
+            decoding="async"
+            onLoad={() => setIsLoaded(true)}
+            onError={() => setHasError(true)}
+            className={cn(
+              "transition-all duration-700",
+              !isLoaded ? "opacity-0" : "opacity-100",
+              "group-hover:scale-105",
+              className
+            )}
+            {...props}
+          />
+          
+          {/* Global Brand Overlay - Orange Gradient */}
+          {!disableOverlay && isLoaded && (
+            <div 
+              className={cn(
+                "absolute inset-0 bg-gradient-to-t from-[#FF6B00]/40 via-transparent to-transparent pointer-events-none transition-opacity duration-1000",
+                isLoaded ? "opacity-100" : "opacity-0"
+              )} 
+            />
           )}
-          {...props}
-        />
+        </>
       )}
     </div>
   );

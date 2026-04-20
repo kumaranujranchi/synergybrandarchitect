@@ -106,7 +106,6 @@ export default function About() {
                 alt="Synergy agency workspace showing collaborative environment"
                 className="w-full aspect-[4/3] object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             
             {/* Overlapping small image/accent */}
@@ -115,8 +114,8 @@ export default function About() {
               variants={fadeUp}
             >
               <OptimizedImage
-                src="//images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&q=80&w=400"
-                alt="Patna City Aerial"
+                src="//images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&q=80&w=600"
+                alt="Golghar, Patna Landmark - synergy local roots"
                 className="w-full h-full object-cover"
               />
             </motion.div>
