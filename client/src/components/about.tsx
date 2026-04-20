@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { Check, Star } from "lucide-react";
-import { fadeUp, slideRight, staggerContainer, hoverScale } from "@/lib/animations";
+import { Check, Star, ShieldCheck, TrendingUp, Lightbulb, MapPin, Calendar, Users, CheckCircle, Briefcase } from "lucide-react";
+import { fadeUp, slideRight, staggerContainer, hoverScale, slideLeft } from "@/lib/animations";
+import { OptimizedImage } from "./ui/optimized-image";
 
 export default function About() {
   const features = [
@@ -12,24 +12,35 @@ export default function About() {
     "Personalized client-focused approach",
   ];
 
+  const stats = [
+    { label: "Years of Excellence", value: "4+", icon: Calendar },
+    { label: "Satisfied Clients", value: "150+", icon: Users },
+    { label: "Projects Delivered", value: "500+", icon: CheckCircle },
+    { label: "Industries Served", value: "15+", icon: Briefcase },
+  ];
+
   const values = [
     {
       title: "Integrity",
+      icon: ShieldCheck,
       description:
         "Honest advice, transparent processes, and keeping our promises. If something isn't right for you, we'll tell you – even if it means less business for us.",
     },
     {
       title: "Growth-Focus",
+      icon: TrendingUp,
       description:
         "We're obsessed with measuring and improving results. Every strategy we develop aims at one thing: growing your brand and business.",
     },
     {
       title: "Innovation",
+      icon: Lightbulb,
       description:
         "Digital marketing evolves rapidly, and so do we. We're constantly learning and implementing the latest effective techniques to keep you ahead.",
     },
     {
       title: "Local Insight",
+      icon: MapPin,
       description:
         "We understand Bihar's unique business ecosystem and cultural nuances, allowing us to create marketing that resonates with your local audience.",
     },
@@ -38,167 +49,197 @@ export default function About() {
   return (
     <section id="about" className="section-padding">
       <div className="container mx-auto container-padding">
-        <motion.div
-          className="text-center mb-12"
-          variants={fadeUp}
+        <div className="text-center mb-16">
+          <motion.span 
+            variants={fadeUp}
+            className="text-orange-500 font-bold tracking-[0.2em] uppercase text-sm block mb-4"
+          >
+            Our Story & Values
+          </motion.span>
+          <motion.h2 
+            variants={fadeUp}
+            className="font-poppins font-black text-4xl md:text-5xl lg:text-6xl text-[#333333] mb-6 leading-tight"
+          >
+            Leading <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0066CC] to-[#4D94FF]">Brand Building</span> <br className="hidden md:block" /> Agency in Patna
+          </motion.h2>
+          <motion.div 
+            variants={fadeUp}
+            className="w-24 h-1.5 bg-[#FF6B00] mx-auto rounded-full"
+          />
+        </div>
+
+        {/* Stats Section */}
+        <motion.div 
+          className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-24"
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className="font-poppins font-semibold text-3xl md:text-4xl mb-4 text-[#333333]">
-            About Us
-          </h2>
-          <p className="text-gray-600 max-w-3xl mx-auto font-inter">
-            Leading Brand Building Agency in Patna
-          </p>
+          {stats.map((stat, index) => (
+            <motion.div 
+              key={index} 
+              variants={fadeUp}
+              className="text-center group"
+            >
+              <div className="w-16 h-16 mx-auto mb-4 bg-orange-50 rounded-2xl flex items-center justify-center group-hover:bg-orange-500 transition-colors duration-500">
+                <stat.icon className="text-[#FF6B00] group-hover:text-white transition-colors duration-500" size={32} />
+              </div>
+              <div className="text-3xl md:text-4xl font-black text-[#333333] mb-1">{stat.value}</div>
+              <div className="text-gray-500 font-inter text-sm md:text-base">{stat.label}</div>
+            </motion.div>
+          ))}
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row items-center gap-12 mb-16">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 mb-24">
           <motion.div
-            className="lg:w-1/2"
+            className="lg:w-1/2 relative group"
             variants={slideRight}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-r from-[#0066CC] to-[#4D94FF] rounded-full opacity-20"></div>
-              <div className="absolute -bottom-4 -right-4 w-40 h-40 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] rounded-full opacity-10"></div>
-              <img
-                src="//images.unsplash.com/photo-1536599018102-9f803c140fc1"
-                alt="Aerial view of Patna city and Ganges river, highlighting Synergy's local roots in Bihar"
-                className="w-full h-auto rounded-xl shadow-lg relative z-10"
+            <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
+              <OptimizedImage
+                src="//images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800"
+                alt="Synergy agency workspace showing collaborative environment"
+                className="w-full aspect-[4/3] object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
+            
+            {/* Overlapping small image/accent */}
+            <motion.div 
+              className="absolute -bottom-10 -left-10 w-48 h-48 md:w-64 md:h-64 z-20 rounded-[2rem] overflow-hidden border-8 border-white shadow-2xl hidden md:block"
+              variants={fadeUp}
+            >
+              <OptimizedImage
+                src="//images.unsplash.com/photo-1536599018102-9f803c140fc1?auto=format&fit=crop&q=80&w=400"
+                alt="Patna City Aerial"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#0066CC]/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#FF6B00]/10 rounded-full blur-3xl" />
           </motion.div>
 
           <motion.div
             className="lg:w-1/2"
+            variants={slideLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <h3 className="font-poppins font-black text-3xl md:text-4xl mb-8 text-[#333333]">
+              Who We <span className="text-[#FF6B00]">Are</span>
+            </h3>
+            <div className="space-y-6 text-gray-600 font-inter text-lg leading-relaxed">
+              <p>
+                Synergy Brand Architect is a results-driven B2B brand building
+                agency based in Patna. Founded in 2020, our mission is simple: to
+                empower small and medium businesses in Bihar with big-brand
+                strategies.
+              </p>
+              <p>
+                We noticed that many local businesses have amazing
+                products and services but struggle to shine in the market. That's where Synergy comes in – we bridge the gap between where you are now and where you aspire to be.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 mt-10">
+              {features.map((feature, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                    <Check className="text-[#FF6B00]" size={14} strokeWidth={3} />
+                  </div>
+                  <span className="text-gray-700 font-medium">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="mt-32">
+          <motion.h3 
+            className="font-poppins font-black text-3xl md:text-4xl mb-16 text-[#333333] text-center"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <h2 className="font-poppins font-semibold text-3xl mb-6 text-[#333333]">
-              Who We Are
-            </h2>
-            <p className="text-gray-600 mb-6 font-inter">
-              Synergy Brand Architect is a results-driven B2B brand building
-              agency based in Patna. Founded in 2020, our mission is simple: to
-              empower small and medium businesses in Bihar with big-brand
-              strategies. We noticed that many local businesses have amazing
-              products and services but struggle to shine in the market.
-            </p>
-            <p className="text-gray-600 mb-8 font-inter">
-              That's where Synergy comes in – we bridge the gap between where
-              you are now and where you aspire to be, through smart branding and
-              cutting-edge digital marketing. We take pride in being a homegrown
-              agency. Patna is our home, and we're passionate about helping
-              fellow businesses here thrive.
-            </p>
-
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  className="flex items-start"
-                  variants={fadeUp}
-                >
-                  <div className="mr-3 mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-[#FF6B00] flex items-center justify-center">
-                    <Check className="text-white" size={12} />
-                  </div>
-                  <p className="text-gray-700 font-inter">{feature}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        </div>
-
-        <motion.div
-          className="mt-16"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <h2 className="font-poppins font-semibold text-3xl mb-10 text-[#333333] text-center">
-            Our Values
-          </h2>
+            Driving Progress through Our <span className="text-[#FF6B00]">Values</span>
+          </motion.h3>
           <motion.div 
-            className="mobile-scroll-container lg:grid-cols-2"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
             {values.map((value, index) => (
-              <div key={index} className="mobile-scroll-item">
-                <motion.div
-                  className="bg-white p-6 rounded-xl shadow-lg h-full"
-                  variants={hoverScale}
-                  initial="rest"
-                  whileHover="hover"
-                >
-                  <div className="w-12 h-12 rounded-full bg-[#FF6B00] bg-opacity-10 flex items-center justify-center mb-4">
-                    <span className="text-[#FF6B00] font-bold text-xl">
-                      {index + 1}
-                    </span>
-                  </div>
-                  <h3 className="font-poppins font-medium text-xl mb-3 text-[#333333]">
-                    {value.title}
-                  </h3>
-                  <p className="text-gray-600 font-inter">{value.description}</p>
-                </motion.div>
-              </div>
+              <motion.div
+                key={index}
+                className="bg-white p-8 md:p-10 rounded-[2rem] border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500 group"
+                variants={fadeUp}
+              >
+                <div className="w-16 h-16 rounded-2xl bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-[#FF6B00] transition-all duration-500 transform group-hover:rotate-6">
+                  <value.icon className="text-[#FF6B00] group-hover:text-white transition-colors duration-500" size={32} />
+                </div>
+                <h4 className="font-poppins font-bold text-2xl mb-4 text-[#333333]">
+                  {value.title}
+                </h4>
+                <p className="text-gray-600 font-inter text-lg leading-relaxed">
+                  {value.description}
+                </p>
+              </motion.div>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
 
         <motion.div
-          className="mt-16 bg-[#F5F7FA] p-8 rounded-xl"
+          className="mt-32 relative overflow-hidden group"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <div className="flex flex-col md:flex-row items-center">
-            <div className="md:w-1/4 mb-6 md:mb-0 flex justify-center">
-              <img
-                src="//randomuser.me/api/portraits/men/32.jpg"
-                alt="Client Testimonial"
-                className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
-              />
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-600 rounded-[3rem] transform -skew-y-1 transition-transform group-hover:skew-y-0 duration-700" />
+          
+          <div className="relative p-10 md:p-16 flex flex-col md:flex-row items-center gap-10">
+            <div className="md:w-1/4 relative">
+              <div className="w-32 h-32 md:w-48 md:h-48 rounded-[2rem] overflow-hidden border-4 border-white/20 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                <OptimizedImage
+                  src="//randomuser.me/api/portraits/men/32.jpg"
+                  alt="Lavkush Sharma"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-4 -right-4 bg-white p-3 rounded-2xl shadow-xl">
+                <Star className="text-yellow-400 fill-yellow-400" size={24} />
+              </div>
             </div>
-            <div className="md:w-3/4 md:pl-8">
-              <div className="flex text-yellow-400 mb-4">
+            
+            <div className="md:w-3/4 text-white">
+              <div className="flex gap-1 mb-6">
                 {[1, 2, 3, 4, 5].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 fill-current"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
+                  <Star key={i} size={20} className="fill-white/20 text-transparent group-hover:fill-yellow-400 transition-colors duration-300" style={{ transitionDelay: `${i * 100}ms` }} />
                 ))}
               </div>
-              <p className="text-gray-600 italic mb-4 font-inter">
-                "Synergy helped us increase our online leads by 300% in just 6
+              
+              <blockquote className="text-2xl md:text-3xl font-poppins italic font-medium mb-8 leading-tight">
+                "Synergy helped us increase our online leads by <span className="text-orange-200 font-black">300%</span> in just 6
                 months! Their team truly delivers on their promises. We went
                 from virtually invisible online to becoming a go-to name in our
                 industry."
-              </p>
-              <p className="font-medium text-[#333333]">Lavkush Sharma</p>
-              <p className="text-sm text-gray-500">
-                Director at Wishluv Buildcon Pvt. Ltd. (Real Estate)
-              </p>
+              </blockquote>
+              
+              <div className="flex flex-col gap-1">
+                <p className="text-xl font-bold">Lavkush Sharma</p>
+                <p className="text-orange-100/80 font-inter">
+                  Director at Wishluv Buildcon Pvt. Ltd. (Real Estate)
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
