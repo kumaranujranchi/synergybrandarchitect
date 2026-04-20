@@ -20,7 +20,7 @@ export default function Resources() {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-r from-[#FF6B00]/5 to-[#0066CC]/5">
+      <section className="pt-44 pb-16 bg-gradient-to-r from-[#FF6B00]/5 to-[#0066CC]/5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">

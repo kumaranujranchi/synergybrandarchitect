@@ -10,7 +10,7 @@ import { useContactModal } from "@/hooks/use-contact-modal";
 export default function Hero() {
   const { openModal } = useContactModal();
   return (
-    <section id="home" className="pt-28 pb-16 md:pt-32 md:pb-20">
+    <section id="home" className="pt-36 pb-16 md:pt-44 md:pb-20">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center">
         <motion.div 
           className="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10"

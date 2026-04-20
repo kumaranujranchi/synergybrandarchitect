@@ -132,7 +132,7 @@ export default function BlogList() {
       <WhatsappButton />
       
       {isLoading ? (
-        <div className="pt-32 pb-20 px-4 container mx-auto text-center">
+        <div className="pt-44 pb-20 px-4 container mx-auto text-center">
           <div className="animate-pulse space-y-8">
             <div className="h-[400px] bg-gray-200 rounded-xl" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -141,13 +141,13 @@ export default function BlogList() {
           </div>
         </div>
       ) : !allPosts.length ? (
-        <div className="text-center py-40 text-gray-500 pt-52">
+        <div className="text-center py-40 text-gray-500 pt-64">
            <TrendingUp className="mx-auto mb-4 opacity-20" size={48} />
            <p className="text-xl">No blog posts found. Stay tuned for updates!</p>
         </div>
       ) : (
         <motion.main 
-          className="pt-28 pb-20"
+          className="pt-40 pb-20"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}

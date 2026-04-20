@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { smoothScrollTo, scrollToTop } from "@/lib/scrollHelper";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useContactModal } from "@/hooks/use-contact-modal";
+import SaleBanner from "./sale-banner";
 
 const navLinks = [
   { href: "#home", label: "Home", isHome: true },
@@ -81,6 +82,7 @@ export default function Header() {
       "fixed w-full bg-white z-50 transition-shadow duration-300",
       isScrolled ? "shadow-md" : "shadow-sm"
     )}>
+      <SaleBanner />
       <div className="container mx-auto px-4 py-2 sm:py-3 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
           <img src="/logo.png" alt="Synergy Brand Architect Logo" className="h-12 sm:h-14 md:h-16 w-auto" />

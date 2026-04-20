@@ -29,7 +29,7 @@ export default function BlogDetail() {
     return (
       <div className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 pt-32 pb-20">
+        <div className="container mx-auto px-4 pt-44 pb-20">
           <div className="max-w-3xl mx-auto space-y-8 animate-pulse">
             <div className="h-10 bg-gray-200 rounded w-3/4" />
             <div className="h-6 bg-gray-100 rounded w-1/4" />
@@ -103,7 +103,7 @@ export default function BlogDetail() {
       <Header />
       <WhatsappButton />
       
-      <article className="pt-32 pb-20">
+      <article className="pt-44 pb-20">
         <div className="container mx-auto px-4 max-w-[1280px]">
           
           {/* SEO BREADCRUMBS */}

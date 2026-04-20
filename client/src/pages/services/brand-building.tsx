@@ -82,7 +82,7 @@ export default function BrandBuilding() {
     <div className="min-h-screen bg-slate-50/30">
       <Header />
       
-      <main className="pt-24 pb-20">
+      <main className="pt-36 pb-20">
         {/* Header Section */}
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4 text-center">

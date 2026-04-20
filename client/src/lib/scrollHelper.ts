@@ -1,5 +1,5 @@
 // Helper function for smooth scrolling to an element
-export function smoothScrollTo(elementId: string, offset: number = 80): void {
+export function smoothScrollTo(elementId: string, offset: number = 130): void {
   const targetElement = document.querySelector(elementId);
   if (targetElement) {
     const top = targetElement.getBoundingClientRect().top + window.pageYOffset;

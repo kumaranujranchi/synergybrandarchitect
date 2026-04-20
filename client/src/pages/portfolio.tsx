@@ -26,7 +26,7 @@ export default function PortfolioPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-to-r from-[#0066CC]/10 to-[#FF6B00]/10">
+      <section className="pt-44 pb-20 bg-gradient-to-r from-[#0066CC]/10 to-[#FF6B00]/10">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto mb-16">
             <h1 className="text-4xl md:text-5xl font-poppins font-bold text-gray-900 mb-6">

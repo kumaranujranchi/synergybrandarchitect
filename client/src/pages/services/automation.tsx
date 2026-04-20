@@ -75,7 +75,7 @@ export default function Automation() {
     <div className="min-h-screen bg-white selection:bg-emerald-100 selection:text-emerald-600">
       <Header />
       
-      <main className="pt-24 overflow-x-hidden">
+      <main className="pt-36 overflow-x-hidden">
         {/* 1. HERO SECTION - Hook-Driven */}
         <section className="relative py-24 lg:py-32 bg-slate-50 overflow-hidden">
           <div className="absolute inset-0 opacity-10 pointer-events-none">

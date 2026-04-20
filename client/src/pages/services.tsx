@@ -178,7 +178,7 @@ export default function ServicesPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-white">
+      <section className="relative pt-44 pb-20 overflow-hidden bg-white">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#FF6B00]/5 to-transparent pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-1/2 h-full bg-gradient-to-r from-[#0066CC]/5 to-transparent pointer-events-none" />
         
