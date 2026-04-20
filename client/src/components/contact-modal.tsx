@@ -13,9 +13,10 @@ export default function ContactModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
-      <DialogContent className="sm:max-w-[650px] max-h-[92vh] overflow-y-auto bg-white/95 backdrop-blur-xl border border-gray-100 rounded-[2rem] shadow-2xl p-0">
-        <div className="relative">
-          <div className="p-8 md:p-10">
+      <DialogContent className="sm:max-w-[650px] w-[95vw] bg-white border border-gray-100 rounded-[2rem] shadow-2xl p-0 overflow-hidden">
+        {/* Scrollable Container */}
+        <div className="max-h-[90vh] overflow-y-auto relative custom-scrollbar">
+          <div className="p-8 md:p-12">
             <DialogHeader className="mb-8">
               <DialogTitle className="text-3xl md:text-4xl font-poppins font-bold text-gray-900 tracking-tight">
                 Elevate Your <span className="text-[#FF6B00]">Brand</span> Today
@@ -30,7 +31,7 @@ export default function ContactModal() {
             </div>
           </div>
 
-          {/* Decorative Background Elements */}
+          {/* Decorative Background Elements - moved inside scrollable to avoid overlapping fixed positioning issues */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -ml-32 -mb-32 pointer-events-none" />
         </div>
