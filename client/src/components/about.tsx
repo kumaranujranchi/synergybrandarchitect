@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Check, Star, ShieldCheck, TrendingUp, Lightbulb, MapPin, Calendar, Users, CheckCircle, Briefcase } from "lucide-react";
 import { fadeUp, slideRight, staggerContainer, hoverScale, slideLeft } from "@/lib/animations";
 import { OptimizedImage } from "./ui/optimized-image";
