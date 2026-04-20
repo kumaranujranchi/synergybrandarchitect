@@ -8,36 +8,36 @@ export default function SaleBanner() {
       className="bg-[#007bff] text-white overflow-hidden py-2 px-4 relative group cursor-pointer border-b border-blue-400/30" 
       onClick={openModal}
     >
-      <div className="container mx-auto flex items-center justify-between gap-4">
-        {/* Left/Main Section: 3D Text */}
-        <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-4 select-none">
-          <div 
-            className="text-lg sm:text-2xl md:text-3xl font-black italic tracking-tighter uppercase flex items-baseline gap-1"
-            style={{
-              textShadow: "1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000"
-            }}
-          >
-            <span className="text-white">Summer</span>
-            <span className="text-[#facc15]">Start</span>
-            <span className="text-white">Sale</span>
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+        {/* Left Section: SERVICE SUMMER SALE */}
+        <div 
+          className="text-2xl sm:text-3xl md:text-4xl font-black italic tracking-tighter uppercase flex items-baseline gap-2 select-none"
+          style={{
+            textShadow: "3px 3px 0 #000"
+          }}
+        >
+          <span className="text-[#ceff00]">SERVICE</span>
+          <span className="text-[#ceff00]">SUMMER</span>
+          <span className="text-white">SALE</span>
+        </div>
+
+        {/* Middle Section: ON CUSTOM DEVELOPMENT stacked */}
+        <div className="flex flex-col items-center md:items-start text-center md:text-left leading-tight text-white select-none">
+          <div className="text-sm md:text-lg font-black italic tracking-tight">
+            ON CUSTOM DEVELOPMENT
           </div>
-          
-          <div className="hidden lg:flex flex-col leading-none uppercase font-bold italic tracking-tight opacity-90 border-l border-white/20 pl-4">
-            <span className="text-[10px]">On Selected Branding & Development Services</span>
-            <span className="text-sm">Ends on 30th May 2026</span>
+          <div className="text-xs md:text-sm font-bold italic tracking-wide opacity-90">
+            ENDS ON 27<sup>th</sup> April, 2026
           </div>
         </div>
 
-        {/* Right Section: CTA & Date for Mobile */}
-        <div className="flex items-center gap-2 sm:gap-4">
-          <div className="flex flex-col items-end leading-none uppercase font-bold italic mr-1 sm:mr-3">
-            <span className="text-[8px] sm:text-[10px] text-white/80">Offer Ends</span>
-            <span className="text-[10px] sm:text-sm">30 May 2026</span>
-          </div>
-
-          <div className="bg-[#facc15] text-black px-2 py-1 sm:px-4 sm:py-2 rounded-lg font-black text-xs sm:text-base uppercase flex flex-col items-center justify-center leading-none shadow-[0_4px_0_rgb(161,98,7)] active:shadow-none active:translate-y-[2px] transition-all hover:scale-105">
-             <span className="text-[8px] sm:text-[10px] opacity-70">Flat</span>
-             <span className="text-sm sm:text-xl">50% OFF</span>
+        {/* Right Section: Yellow CTA Box */}
+        <div className="bg-[#faff00] text-black px-4 py-2 rounded-lg font-black uppercase flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+          <span className="text-[10px] md:text-xs leading-none">FLAT</span>
+          <span className="text-2xl md:text-4xl leading-none tracking-tighter">50</span>
+          <div className="flex flex-col items-start leading-none">
+            <span className="text-xs md:text-sm">%</span>
+            <span className="text-[8px] md:text-[10px]">OFF</span>
           </div>
         </div>
       </div>
