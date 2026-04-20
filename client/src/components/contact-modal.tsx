@@ -13,17 +13,8 @@ export default function ContactModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
-      <DialogContent className="sm:max-w-[650px] max-h-[92vh] overflow-y-visible bg-white/95 backdrop-blur-xl border border-gray-100 rounded-[2rem] shadow-2xl p-0 overflow-visible">
-        <div className="relative overflow-visible">
-          {/* Floating Character Image */}
-          <div className="absolute -top-28 -right-8 w-48 md:w-64 z-20 pointer-events-none transition-transform hover:scale-105 duration-500">
-            <img 
-              src="/images/Anuj_CTA.png" 
-              alt="Synergy Expert" 
-              className="drop-shadow-[0_20px_30px_rgba(0,0,0,0.15)]"
-            />
-          </div>
-
+      <DialogContent className="sm:max-w-[650px] max-h-[92vh] overflow-y-auto bg-white/95 backdrop-blur-xl border border-gray-100 rounded-[2rem] shadow-2xl p-0">
+        <div className="relative">
           <div className="p-8 md:p-10">
             <DialogHeader className="mb-8">
               <DialogTitle className="text-3xl md:text-4xl font-poppins font-bold text-gray-900 tracking-tight">
