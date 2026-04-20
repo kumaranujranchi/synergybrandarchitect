@@ -1,257 +1,241 @@
-import { ArrowRight, Ban, CheckCircle, LucideDollarSign, ShieldCheck, LayoutGrid, MousePointer } from "lucide-react";
+import { ArrowRight, Ban, CheckCircle, LucideDollarSign, ShieldCheck, LayoutGrid, MousePointer, Shield, Zap, TrendingUp, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
 
 export default function AdAccountAccess() {
   const { openModal } = useContactModal();
+
   return (
-    <section className="py-16 bg-gray-50 overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Column: Content */}
+    <section className="py-24 bg-[#0a0a0f] relative overflow-hidden text-white font-inter">
+      {/* Background Glows */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px] translate-x-1/3 translate-y-1/3 pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          {/* Header Section */}
+          <motion.div 
+            className="text-center mb-20"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-500/30 bg-orange-500/10 mb-6">
+              <Shield className="w-4 h-4 text-orange-500" />
+              <span className="text-orange-400 font-bold text-sm tracking-wider uppercase">Ban-Proof Advertising</span>
+            </div>
+            <h2 className="text-4xl md:text-7xl font-poppins font-black mb-6 leading-tight">
+              Tired of <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 italic">Ad Account Bans?</span><br />
+              <span className="text-white">We've Got You Covered.</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Run your campaigns through our <span className="text-blue-400 font-semibold underline decoration-blue-400/30 underline-offset-4">Verified Premium Agency Accounts</span>. 
+              No more limits. No more stress. Just pure scaling.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-24">
+            {/* Left: Benefits Grid */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
-              <div className="bg-[#FF6B00]/10 px-4 py-1 rounded-full inline-block mb-6">
-                <span className="text-[#FF6B00] font-medium text-sm">Agency Ad Account Access</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#333333] font-poppins">
-                Tired of Ad Account Bans? We've Got You Covered!
-              </h2>
-              <h3 className="text-xl md:text-2xl font-medium mb-6 text-[#0066CC]">
-                No Ban. No Limits. Just Results.
-              </h3>
-              <p className="text-lg text-gray-700 mb-8">
-                If your Meta or Google ad account got banned or has low spending limits, don't worry – we've got the ultimate solution. 
-                Run your ads via our trusted agency accounts and focus only on what matters: sales and growth.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                  <div className="bg-[#FF6B00]/10 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-4">
-                    <MousePointer className="text-[#FF6B00] h-5 w-5" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2">Run Ads From Day 1</h4>
-                  <p className="text-gray-600">No need to wait — start scaling immediately.</p>
-                </div>
-                
-                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                  <div className="bg-[#0066CC]/10 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-4">
-                    <LucideDollarSign className="text-[#0066CC] h-5 w-5" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2">No Spend Limits</h4>
-                  <p className="text-gray-600">Enjoy high daily ad budgets from the beginning.</p>
-                </div>
-                
-                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                  <div className="bg-[#FF6B00]/10 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-4">
-                    <ShieldCheck className="text-[#FF6B00] h-5 w-5" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2">No Ban Worries</h4>
-                  <p className="text-gray-600">We manage ad compliance for you — no fear of sudden bans.</p>
-                </div>
-                
-                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
-                  <div className="bg-[#0066CC]/10 p-2 rounded-full w-10 h-10 flex items-center justify-center mb-4">
-                    <LayoutGrid className="text-[#0066CC] h-5 w-5" />
-                  </div>
-                  <h4 className="text-lg font-semibold mb-2">Meta & Google Both Covered</h4>
-                  <p className="text-gray-600">Use our agency ad accounts across both major platforms.</p>
-                </div>
-              </div>
-              
-              <h4 className="text-xl font-semibold mb-6">How It Works</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm relative">
-                  <div className="bg-[#FF6B00] text-white rounded-full w-8 h-8 flex items-center justify-center absolute -top-3 -left-3">
-                    1
-                  </div>
-                  <h5 className="font-semibold text-lg mb-2">Contact Us</h5>
-                  <p className="text-gray-600">
-                    Tell us your ad goals and business type.
-                  </p>
-                </div>
-                
-                <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm relative">
-                  <div className="bg-[#0066CC] text-white rounded-full w-8 h-8 flex items-center justify-center absolute -top-3 -left-3">
-                    2
-                  </div>
-                  <h5 className="font-semibold text-lg mb-2">We Assign Account Access</h5>
-                  <p className="text-gray-600">
-                    Use our verified ad accounts for Meta or Google.
-                  </p>
-                </div>
-                
-                <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm relative">
-                  <div className="bg-[#FF6B00] text-white rounded-full w-8 h-8 flex items-center justify-center absolute -top-3 -left-3">
-                    3
-                  </div>
-                  <h5 className="font-semibold text-lg mb-2">You Launch & Grow</h5>
-                  <p className="text-gray-600">
-                    Focus on results while we handle the backend.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-r from-[#0066CC] to-[#0055AA] rounded-xl p-6 text-white">
-                <h4 className="text-xl font-semibold mb-4">Don't Let Bans Stop Your Growth!</h4>
-                <p className="mb-6">Get in touch today and let your ads run non-stop — no bans, no limits, no stress.</p>
-                <Button 
-                  onClick={openModal}
-                  className="bg-[#FF6B00] hover:bg-[#FF8533] py-8 px-6 text-white font-medium rounded-full w-full h-auto text-lg shadow-lg hover:scale-105 transition-transform"
+              {[
+                {
+                  icon: <Zap className="text-orange-500" />,
+                  title: "Run Ads Day 1",
+                  desc: "Zero warming period. Launch your heavy-spend campaigns immediately.",
+                  color: "orange"
+                },
+                {
+                  icon: <TrendingUp className="text-blue-500" />,
+                  title: "Uncapped Limits",
+                  desc: "Enjoy high daily budgets from the start. Perfect for fast-scaling brands.",
+                  color: "blue"
+                },
+                {
+                  icon: <ShieldCheck className="text-green-500" />,
+                  title: "Compliance Managed",
+                  desc: "Our team handles ad-policy audits to keep your accounts healthy.",
+                  color: "green"
+                },
+                {
+                  icon: <Globe className="text-purple-500" />,
+                  title: "Global Reach",
+                  desc: "Unified access to Meta & Google Agency accounts worldwide.",
+                  color: "purple"
+                }
+              ].map((benefit, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={fadeUp}
+                  className="bg-white/[0.03] backdrop-blur-md border border-white/10 p-8 rounded-[2rem] hover:bg-white/[0.05] transition-all group"
                 >
-                  Get Access Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <div className="flex flex-wrap items-center justify-center mt-4 text-sm gap-4">
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="h-4 w-4" />
-                    <span>100% Safe</span>
+                  <div className={cn(
+                    "w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 group-hover:rotate-3",
+                    benefit.color === "orange" ? "bg-orange-500/20" : 
+                    benefit.color === "blue" ? "bg-blue-500/20" : 
+                    benefit.color === "green" ? "bg-green-500/20" : "bg-purple-500/20"
+                  )}>
+                    {benefit.icon}
                   </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="h-4 w-4" />
-                    <span>Quick Approval</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <CheckCircle className="h-4 w-4" />
-                    <span>Real Support</span>
-                  </div>
-                </div>
-              </div>
+                  <h4 className="text-xl font-bold mb-3">{benefit.title}</h4>
+                  <p className="text-gray-400 leading-relaxed">{benefit.desc}</p>
+                </motion.div>
+              ))}
             </motion.div>
-            
-            {/* Right Column: Visual */}
+
+            {/* Right: Modern Comparison */}
             <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.3 }}
+              transition={{ duration: 0.8 }}
+              className="relative p-1 rounded-[3rem] bg-gradient-to-br from-white/10 to-transparent border border-white/5 shadow-2xl overflow-hidden"
             >
-              {/* Main Image */}
-              <div className="mb-8 relative">
-                <img 
-                  src="https://imagizer.imageshack.com/img924/7219/B4nN70.jpg" 
-                  alt="Ad Account Access Services" 
-                  className="rounded-xl shadow-lg w-full"
-                  loading="lazy"
-                />
-                <div className="absolute -bottom-4 -right-4 bg-[#FF6B00] text-white px-4 py-2 rounded-lg font-medium shadow-md">
-                  Trusted by 100+ Advertisers
-                </div>
-              </div>
-              
-              <div className="relative">
-                {/* Before/After Comparison */}
-                <div className="grid grid-cols-2 gap-4">
-                  {/* Before */}
-                  <div className="bg-red-50 p-6 rounded-xl border border-red-100 text-center">
-                    <div className="bg-white p-4 rounded-lg shadow-sm mb-6 mx-auto w-16 h-16 flex items-center justify-center">
-                      <Ban className="h-10 w-10 text-red-500" />
+              <div className="bg-[#11111a] p-10 rounded-[2.8rem]">
+                <h3 className="text-2xl font-bold mb-8 text-center">The <span className="text-blue-400">Synergy</span> Edge</h3>
+                <div className="space-y-4">
+                  {[
+                    { label: "Account Stability", synergi: "Permanent", status: "Risky", icon: <Shield size={18} /> },
+                    { label: "Daily Spend", synergi: "Unlimited", status: "Capped", icon: <LucideDollarSign size={18} /> },
+                    { label: "Support Speed", synergi: "Instant", status: "Delayed", icon: <Zap size={18} /> },
+                    { label: "Ban Risk", synergi: "Minimal", status: "Critical", icon: <Ban size={18} /> },
+                  ].map((row, idx) => (
+                    <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05]">
+                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-blue-400">
+                        {row.icon}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-500 font-medium uppercase tracking-wider">{row.label}</p>
+                        <div className="flex justify-between items-center mt-1">
+                          <span className="text-green-400 font-bold">Synergy: {row.synergi}</span>
+                          <span className="text-red-500/50 text-sm italic">Standard: {row.status}</span>
+                        </div>
+                      </div>
                     </div>
-                    <h4 className="text-lg font-semibold mb-2 text-red-600">Without Us</h4>
-                    <ul className="text-left text-sm space-y-3">
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>Ad account bans</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>Low spending limits</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>Ad disapprovals</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>Wasted time & money</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold">✕</span>
-                        <span>Limited targeting</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  {/* After */}
-                  <div className="bg-green-50 p-6 rounded-xl border border-green-100 text-center">
-                    <div className="bg-white p-4 rounded-lg shadow-sm mb-6 mx-auto w-16 h-16 flex items-center justify-center">
-                      <CheckCircle className="h-10 w-10 text-green-500" />
-                    </div>
-                    <h4 className="text-lg font-semibold mb-2 text-green-600">With Our Solution</h4>
-                    <ul className="text-left text-sm space-y-3">
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-500 font-bold">✓</span>
-                        <span>Immediate ad launch</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-500 font-bold">✓</span>
-                        <span>Unlimited daily spend</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-500 font-bold">✓</span>
-                        <span>Smooth approval process</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-500 font-bold">✓</span>
-                        <span>Focus on ROI & results</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-green-500 font-bold">✓</span>
-                        <span>Full targeting options</span>
-                      </li>
-                    </ul>
-                  </div>
+                  ))}
                 </div>
-                
-                {/* Active Platforms Showcase */}
-                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 mt-10">
-                  <h3 className="text-lg font-semibold mb-6 text-center">Supported Ad Platforms</h3>
-                  <div className="grid grid-cols-2 gap-6 mb-4">
-                    <div className="border border-gray-100 rounded-lg p-5 text-center">
-                      <div className="flex items-center justify-center mb-3">
-                        <svg className="w-10 h-10" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M36 18C36 8.059 27.941 0 18 0C8.059 0 0 8.059 0 18C0 26.99 6.582 34.479 15.188 35.809V23.344H10.723V18H15.188V14.062C15.188 9.615 17.775 7.172 21.823 7.172C23.76 7.172 25.719 7.5 25.719 7.5V11.719H23.531C21.375 11.719 20.625 13.078 20.625 14.469V18H25.488L24.668 23.344H20.625V35.809C29.231 34.479 36 26.99 36 18Z" fill="#1877F2"/>
-                          <path d="M24.668 23.344L25.488 18H20.625V14.469C20.625 13.078 21.375 11.719 23.531 11.719H25.719V7.5C25.719 7.5 23.76 7.172 21.823 7.172C17.775 7.172 15.188 9.615 15.188 14.062V18H10.723V23.344H15.188V35.809C16.104 35.931 17.055 36 18 36C18.945 36 19.896 35.931 20.812 35.809V23.344H24.668Z" fill="white"/>
+
+                <div className="mt-10 p-6 rounded-3xl bg-blue-500/10 border border-blue-500/20 text-center">
+                  <p className="text-blue-400 font-medium text-sm mb-4 tracking-widest uppercase">Supported Platforms</p>
+                  <div className="flex justify-center gap-8">
+                    <div className="flex flex-col items-center gap-2 group">
+                      <div className="bg-[#1877F2]/10 p-4 rounded-2xl group-hover:bg-[#1877F2]/20 transition-colors">
+                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="#1877F2">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                         </svg>
                       </div>
-                      <p className="font-semibold text-base">Meta Ads</p>
-                      <p className="text-sm text-green-600 mt-2 font-medium flex items-center justify-center gap-1">
-                        <CheckCircle className="h-4 w-4" /> Active
-                      </p>
+                      <span className="text-xs font-bold text-gray-500">META</span>
                     </div>
-                    
-                    <div className="border border-gray-100 rounded-lg p-5 text-center">
-                      <div className="flex items-center justify-center mb-3">
-                        <svg className="w-10 h-10" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M113.47 309.408L95.648 375.94L30.059 377.318C10.9096 341.211 0 299.9 0 256C0 213.549 10.1392 173.517 27.9921 138.354H28.0072L86.0288 148.932L111.419 204.074C106.113 220.047 103.226 237.56 103.226 256C103.226 276.087 106.758 295.081 113.47 309.408Z" fill="#FBBB00"/>
-                          <path d="M507.527 208.176C510.467 223.662 512 239.656 512 256C512 274.328 510.073 292.119 506.402 309.08C495.579 362.387 468.319 409.575 430.24 445.215L430.225 445.2L356.596 440.793L346.03 376.894C376.818 359.637 400.116 332.344 412.069 309.08H270.923V208.176H413.417H507.527Z" fill="#518EF8"/>
-                          <path d="M430.225 445.201L430.24 445.216C393.161 479.94 345.256 502.89 291.982 508.848C237.111 514.976 183.694 503.722 138.858 477.827C106.024 459.172 78.856 431.933 60.254 399.075L143.858 330.654C153.824 359.866 175.152 383.961 203.109 397.67C231.923 411.77 266.208 415.43 297.954 407.506C320.616 401.847 340.925 389.932 356.596 373.217" fill="#28B446"/>
-                          <path d="M440.691 67.7718C440.957 68.1325 441.219 68.4956 441.48 68.8587C404.781 33.4369 356.58 9.93243 302.915 3.44646C248.831 -3.11107 195.038 8.08239 149.897 34.0457C118.797 52.0324 93.004 77.9602 75.1254 109.206L156.164 175.191C166.274 147.099 186.784 124.326 213.357 111.232C250.635 93.2958 295.694 92.6255 333.462 109.391C355.737 119.44 374.712 135.297 388.44 155.028L440.691 67.7718Z" fill="#F14336"/>
+                    <div className="flex flex-col items-center gap-2 group">
+                      <div className="bg-white/5 p-4 rounded-2xl group-hover:bg-white/10 transition-colors">
+                        <svg className="w-8 h-8" viewBox="0 0 24 24">
+                          <path d="M12.48 10.92v3.28h7.84c-.24 1.84-2.12 5.36-7.84 5.36-4.96 0-9-4.08-9-9s4.04-9 9-9c2.8 0 4.68 1.16 5.76 2.2l2.6-2.6C18.84 1.96 15.84.48 12.48.48 6 .48.48 6.04.48 12.48s5.52 12 12 12c6.8 0 11.28-4.76 11.28-11.44 0-.76-.08-1.32-.2-1.92h-11.08z" fill="#fff"/>
                         </svg>
                       </div>
-                      <p className="font-semibold text-base">Google Ads</p>
-                      <p className="text-sm text-green-600 mt-2 font-medium flex items-center justify-center gap-1">
-                        <CheckCircle className="h-4 w-4" /> Active
-                      </p>
+                      <span className="text-xs font-bold text-gray-500">GOOGLE</span>
                     </div>
-                  </div>
-                  
-                  <div className="mt-4 pt-4 pb-2 border-t border-gray-100 text-center">
-                    <p className="text-sm text-gray-600">Fully compliant with platform policies</p>
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
+
+          {/* New Age Timeline */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="mb-24"
+          >
+            <h3 className="text-3xl font-bold text-center mb-16 underline decoration-orange-500/30 decoration-8 underline-offset-8">Account Deployment Flow</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+              {/* Connector Lines (Desktop) */}
+              <div className="hidden md:block absolute top-[40%] left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-white/10 to-transparent z-0" />
+              
+              {[
+                { step: "01", title: "Strategy Audit", desc: "Brief us on your business niche and ad history." },
+                { step: "02", title: "Instant Linkage", desc: "We map your pixels and assets to our premium accounts." },
+                { step: "03", title: "Zero-Ban Scale", desc: "Start spending with confidence and 24/7 account health monitoring." }
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={fadeUp}
+                  className="relative z-10 p-8 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-orange-500/30 transition-all text-center group"
+                >
+                  <div className="text-6xl font-black text-white/5 absolute -top-4 left-1/2 -translate-x-1/2 group-hover:text-orange-500/10 transition-colors">{item.step}</div>
+                  <h5 className="text-xl font-bold mb-4 relative z-10">{item.title}</h5>
+                  <p className="text-gray-500 relative z-10 leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Final CTA Action */}
+          <motion.div 
+            className="relative"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+          >
+            <div className="p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-blue-600 to-blue-800 text-center relative overflow-hidden group shadow-[0_0_50px_-12px_rgba(37,99,235,0.5)]">
+              {/* Internal Glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[80px] group-hover:scale-150 transition-transform duration-1000" />
+              
+              <div className="relative z-10 max-w-2xl mx-auto">
+                <h3 className="text-3xl md:text-5xl font-black mb-8 leading-tight">Stop Getting Banned.<br />Start Getting Results.</h3>
+                <p className="text-xl text-blue-100 mb-10 opacity-90">
+                  Join 100+ global advertisers who scale without limits. Approval takes less than 12 hours.
+                </p>
+                <Button 
+                  onClick={openModal}
+                  className="bg-[#FF6B00] hover:bg-orange-600 py-8 px-12 text-white font-black rounded-3xl text-xl shadow-2xl hover:scale-105 active:scale-95 transition-all group border-b-4 border-orange-800"
+                >
+                  GET INSTANT ACCESS
+                  <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                </Button>
+                
+                <div className="flex flex-wrap items-center justify-center mt-10 gap-x-8 gap-y-4 text-sm font-bold text-blue-200">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span>SECURE DIRECT ACCESS</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span>24/7 EXPERT SUPPORT</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    <span>100% COMPLIANT</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
-  );
-}
