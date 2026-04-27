@@ -3,6 +3,7 @@ import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 import About from "@/components/about";
 import { useEffect } from "react";
+import SEO from "@/components/seo";
 
 export default function AboutPage() {
   useEffect(() => {
@@ -11,6 +12,11 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="About Us | Our Story & Mission - Synergy Brand Architect"
+        description="Learn more about Synergy Brand Architect, our mission to transform brands through innovative digital strategies and our commitment to client success."
+        canonicalPath="/about"
+      />
       <Header />
       
       {/* Hero Section */}

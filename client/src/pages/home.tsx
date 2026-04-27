@@ -4,6 +4,7 @@ import ClientLogoCarousel from "@/components/client-logo-carousel";
 import About from "@/components/about";
 import DigitalPresence from "@/components/digital-presence"; 
 import CtaSection from "@/components/cta-section";
+import SEO from "@/components/seo";
 
 import Services from "@/components/services";
 import HomeServiceSections from "@/components/home-service-sections";
@@ -19,6 +20,11 @@ import WhatsappButton from "@/components/whatsapp-button";
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="Synergy Brand Architect | Digital Marketing & Brand Building Agency in Patna"
+        description="Top-rated digital marketing agency in Patna. We specialize in SEO, Social Media Marketing, Web Development, and Brand Building strategies for business growth."
+        canonicalPath="/"
+      />
       <Header />
       <Hero />
       <ClientLogoCarousel />

@@ -10,12 +10,10 @@ import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { OptimizedImage } from "@/components/ui/optimized-image";
+import SEO from "@/components/seo";
 
 export default function PortfolioPage() {
   const { openModal } = useContactModal();
-  useEffect(() => {
-    document.title = "Portfolio | Our Work & Case Studies - Synergy Brand Architect";
-  }, []);
 
   const data = useQuery(api.portfolio.listPortfolio, {});
   const portfolioItems = data ?? [];
@@ -23,6 +21,11 @@ export default function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="Portfolio | Our Featured Website Projects - Synergy Brand Architect"
+        description="Explore our diverse portfolio of digital marketing and web development success stories. From SEO results to full-stack applications."
+        canonicalPath="/portfolio"
+      />
       <Header />
 
       {/* Hero Section */}

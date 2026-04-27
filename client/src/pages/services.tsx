@@ -19,6 +19,7 @@ import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import SEO from "@/components/seo";
 
 interface ServiceCategory {
   id: string;
@@ -169,12 +170,14 @@ const itemVariants = {
 
 export default function ServicesPage() {
   const { openModal } = useContactModal();
-  useEffect(() => {
-    document.title = "Services | Synergy Brand Architect - Digital Marketing & Branding Solutions";
-  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <SEO 
+        title="Our Services | Digital Marketing & Brand Building - Synergy Brand Architect"
+        description="Comprehensive services including SEO, Social Media Marketing, Web Development, Automation, and Brand Building to scale your business impact."
+        canonicalPath="/services"
+      />
       <Header />
       
       {/* Hero Section */}

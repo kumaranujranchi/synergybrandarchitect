@@ -11,6 +11,7 @@ import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { fadeUp, staggerContainer, hoverScale } from "@/lib/animations";
+import SEO from "@/components/seo";
 
 // Helper for generic excerpt
 const getExcerpt = (post: any, length = 120) => {
@@ -87,7 +88,6 @@ export default function BlogList() {
   
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Insights & News | Synergy Brand Architect";
   }, []);
 
   // Convex Query - Fetch only published blogs
@@ -128,6 +128,11 @@ export default function BlogList() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F7] font-inter text-gray-900">
+      <SEO 
+        title="Insights & News | Digital Marketing Blog - Synergy Brand Architect"
+        description="Stay updated with the latest trends in digital marketing, SEO, and brand building. Expert insights from Synergy Brand Architect."
+        canonicalPath="/blog"
+      />
       <Header />
       <WhatsappButton />
       

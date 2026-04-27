@@ -5,11 +5,17 @@ import { Button } from "@/components/ui/button";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Target, ArrowRight, CheckCircle2, Users, Heart, MonitorSmartphone, Share2, DollarSign } from "lucide-react";
 import { Link } from "wouter";
+import SEO from "@/components/seo";
 
 export default function TheHelpingHandCaseStudy() {
   const { openModal } = useContactModal();
   return (
     <div className="flex flex-col min-h-screen font-inter text-[#333333] bg-gray-50">
+      <SEO 
+        title="The Helping Hand Case Study | 150% Donation Increase - Synergy Brand Architect"
+        description="How we helped The Helping Hand NGO increase donations by 150% and grow their volunteer base by 200% through digital transformation."
+        canonicalPath="/case-studies/the-helping-hand"
+      />
       <Header />
       
       {/* Hero Section */}

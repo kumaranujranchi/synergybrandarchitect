@@ -5,11 +5,17 @@ import { Button } from "@/components/ui/button";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Trophy, ArrowRight, CheckCircle2, Users, Calendar, Target, BarChart, Phone } from "lucide-react";
 import { Link } from "wouter";
+import SEO from "@/components/seo";
 
 export default function WishluvBuildconCaseStudy() {
   const { openModal } = useContactModal();
   return (
     <div className="flex flex-col min-h-screen font-inter text-[#333333] bg-gray-50">
+      <SEO 
+        title="Wishluv Buildcon Case Study | 120+ Real Estate Leads - Synergy Brand Architect"
+        description="Discover how we generated over 120 qualified leads for Wishluv Buildcon in just 45 days through targeted digital marketing and real estate SEO."
+        canonicalPath="/case-studies/wishluv-buildcon"
+      />
       <Header />
       
       {/* Hero Section */}

@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 import Contact from "@/components/contact";
+import SEO from "@/components/seo";
 
 export default function ContactPage() {
   useEffect(() => {
@@ -11,6 +12,11 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="Contact Us | Get a Free Consultation - Synergy Brand Architect"
+        description="Ready to grow your business? Contact Synergy Brand Architect today for a free consultation on digital marketing, SEO, and brand building."
+        canonicalPath="/contact"
+      />
       <Header />
       <WhatsappButton />
       
