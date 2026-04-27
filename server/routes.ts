@@ -37,24 +37,21 @@ export function registerRoutes(app: Express): void {
       return next();
     }
     
-    // Check for HTTPS to ensure consistent protocol
-    if (process.env.NODE_ENV === 'production' && protocol !== 'https') {
-      const secureUrl = `https://${host}${req.originalUrl || req.url}`;
-      console.log(`Redirecting to HTTPS: ${secureUrl}`);
-      return res.redirect(301, secureUrl);
-    }
-    
-    // Canonical domain handling - handle both www and non-www consistently
-    if (host && host.match(/^www\./i)) {
-      const newHost = host.replace(/^www\./i, '');
-      const redirectUrl = `${protocol}://${newHost}${req.originalUrl || req.url}`;
-      console.log(`Redirecting from www to non-www: ${redirectUrl}`);
+    // Canonical domain and HTTPS handling - prevent redirect chains
+    const isWww = host && host.match(/^www\./i);
+    const isHttp = protocol !== 'https';
+
+    if (process.env.NODE_ENV === 'production' && (isWww || isHttp)) {
+      const newHost = isWww ? host.replace(/^www\./i, '') : host;
+      // Always redirect to HTTPS and non-WWW in one go
+      const redirectUrl = `https://${newHost}${req.originalUrl || req.url}`;
+      console.log(`SEO Redirect (HTTPS/non-WWW): ${redirectUrl}`);
       return res.redirect(301, redirectUrl);
     }
     
     // Redirect old URLs to new paths with consistent handling
     if (path === '/contact-brand-building-services') {
-      return res.redirect(301, '/#contact');
+      return res.redirect(301, '/contact');
     }
     
     // Remove trailing slashes from URLs for consistency

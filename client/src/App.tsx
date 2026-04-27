@@ -137,10 +137,15 @@ function App() {
     // Don't include hash in canonical URL
     const path = location.split('#')[0];
     
-    // Handle trailing slashes consistently in the UI for canonicalization
-    const normalizedPath = path.endsWith('/') && path.length > 1 
+    // Handle trailing slashes and singular vs plural case-study paths for canonical consistency
+    let normalizedPath = path.endsWith('/') && path.length > 1 
       ? path.slice(0, -1)  // Remove trailing slash for canonical URLs
       : path;
+    
+    // Canonicalize old singular paths to new plural ones
+    if (normalizedPath.startsWith('/case-study/')) {
+      normalizedPath = normalizedPath.replace('/case-study/', '/case-studies/');
+    }
     
     // Update canonical URL for SEO
     const canonicalLink = document.getElementById('canonical-link') as HTMLLinkElement;
