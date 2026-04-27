@@ -11,9 +11,10 @@ export default function SaleBanner() {
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
         {/* Left Section: SERVICE SUMMER SALE */}
         <div 
-          className="text-2xl sm:text-3xl md:text-4xl font-black italic tracking-tighter uppercase flex items-baseline gap-2 select-none"
+          className="text-2xl sm:text-3xl md:text-4xl font-black italic tracking-tighter uppercase flex items-baseline gap-2 select-none transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-105"
           style={{
-            textShadow: "3px 3px 0 #000"
+            textShadow: "1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000, 4px 4px 0 #000, 5px 5px 0 #000",
+            transform: "perspective(1000px) rotateX(10deg) skewX(-5deg)"
           }}
         >
           <span className="text-[#ceff00]">SERVICE</span>
@@ -27,7 +28,7 @@ export default function SaleBanner() {
             ON CUSTOM DEVELOPMENT
           </div>
           <div className="text-xs md:text-sm font-bold italic tracking-wide opacity-90">
-            ENDS ON 27<sup>th</sup> April, 2026
+            ENDS ON 31<sup>st</sup> May, 2026
           </div>
         </div>
 
