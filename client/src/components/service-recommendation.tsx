@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Briefcase } from "lucide-react";
+import { X, Send, Briefcase, Maximize2, Minimize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAction } from "convex/react";
 import { api } from "../../../convex/_generated/api";
@@ -12,8 +12,49 @@ interface Message {
   role?: 'user' | 'assistant';
 }
 
+// Simple Markdown Parser to handle basic formatting
+const MarkdownText = ({ text, isUser }: { text: string, isUser: boolean }) => {
+  // Convert basic markdown to HTML elements
+  const lines = text.split('\n');
+  return (
+    <div className={`space-y-1 ${isUser ? 'text-white' : 'text-gray-800'}`}>
+      {lines.map((line, i) => {
+        // Handle headings
+        if (line.startsWith('### ')) return <h3 key={i} className="font-bold text-base mt-2">{line.replace('### ', '')}</h3>;
+        if (line.startsWith('## ')) return <h2 key={i} className="font-bold text-lg mt-2">{line.replace('## ', '')}</h2>;
+        
+        // Handle lists
+        if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
+          return <li key={i} className="ml-4 list-disc">{renderInline(line.trim().substring(2))}</li>;
+        }
+
+        return <p key={i} className="text-sm">{renderInline(line)}</p>;
+      })}
+    </div>
+  );
+};
+
+const renderInline = (text: string) => {
+  // Handle Bold **text**
+  let parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={i} className="font-bold">{part.substring(2, part.length - 2)}</strong>;
+    }
+    // Handle Italic *text*
+    let italicParts = part.split(/(\*.*?\*)/g);
+    return italicParts.map((iPart, j) => {
+      if (iPart.startsWith('*') && iPart.endsWith('*')) {
+        return <em key={j} className="italic">{iPart.substring(1, iPart.length - 1)}</em>;
+      }
+      return iPart;
+    });
+  });
+};
+
 export default function ServiceRecommendation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [showInitially, setShowInitially] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -49,6 +90,11 @@ export default function ServiceRecommendation() {
     if (showInitially) {
       setShowInitially(false);
     }
+  };
+
+  const toggleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsExpanded(!isExpanded);
   };
 
   const handleChat = async (text: string) => {
@@ -100,7 +146,7 @@ export default function ServiceRecommendation() {
 
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-[9999]">
         <AnimatePresence>
           {showInitially && !isOpen && (
             <motion.div
@@ -143,9 +189,16 @@ export default function ServiceRecommendation() {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1,
+              width: isExpanded ? '90vw' : '384px',
+              height: isExpanded ? '85vh' : '500px',
+              maxWidth: isExpanded ? '1000px' : '384px'
+            }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
-            className="fixed bottom-24 right-6 w-80 md:w-96 bg-white rounded-2xl shadow-2xl z-50 overflow-hidden border border-gray-100 flex flex-col h-[500px]"
+            className={`fixed bottom-24 right-6 bg-white rounded-2xl shadow-2xl z-[9999] overflow-hidden border border-gray-100 flex flex-col transition-all duration-300`}
           >
             <div className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white p-4 flex justify-between items-center shadow-md">
               <div className="flex items-center space-x-3">
@@ -160,12 +213,21 @@ export default function ServiceRecommendation() {
                   </div>
                 </div>
               </div>
-              <button 
-                onClick={togglePopup}
-                className="hover:bg-white/20 p-2 rounded-full transition-colors"
-              >
-                <X size={20} />
-              </button>
+              <div className="flex items-center space-x-1">
+                <button 
+                  onClick={toggleExpand}
+                  className="hover:bg-white/20 p-2 rounded-full transition-colors hidden md:block"
+                  title={isExpanded ? "Collapse" : "Expand"}
+                >
+                  {isExpanded ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+                </button>
+                <button 
+                  onClick={togglePopup}
+                  className="hover:bg-white/20 p-2 rounded-full transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
 
             <div 
@@ -181,7 +243,7 @@ export default function ServiceRecommendation() {
                         : "bg-white text-gray-800 rounded-tl-none border border-gray-100"
                     }`}
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                    <MarkdownText text={message.text} isUser={message.isUser} />
                   </div>
                 </div>
               ))}
