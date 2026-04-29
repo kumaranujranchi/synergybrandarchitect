@@ -98,6 +98,23 @@ export default function Contact() {
                   </p>
                 </div>
               </div>
+
+              <div className="flex items-start mt-6">
+                <div className="w-12 h-12 rounded-full bg-[#25D366] flex items-center justify-center mr-4 flex-shrink-0 shadow-lg">
+                  <Phone className="text-white" />
+                </div>
+                <div>
+                  <h4 className="font-medium text-[#333333] mb-1">WhatsApp Us</h4>
+                  <a 
+                    href="https://wa.me/919525230232" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[#25D366] font-bold hover:underline"
+                  >
+                    Chat on WhatsApp
+                  </a>
+                </div>
+              </div>
             </div>
             
             <div className="bg-white rounded-xl shadow-lg p-8">
