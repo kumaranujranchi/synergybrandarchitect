@@ -9,7 +9,7 @@ export default function RefundPolicy() {
     <div className="min-h-screen bg-white">
       <Header />
       
-      <main className="container mx-auto px-4 py-12 md:py-24">
+      <main className="container mx-auto px-4 pt-44 md:pt-56 pb-12 md:pb-24">
         <Link href="/" className="inline-flex items-center text-[#FF6B00] hover:text-[#0066CC] mb-8 transition-colors">
           <ArrowLeft className="mr-2" size={18} />
           Back to Home

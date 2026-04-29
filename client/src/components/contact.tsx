@@ -7,7 +7,7 @@ import { ClientOnly } from "./ClientOnly";
 export default function Contact() {
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-[#F5F7FA]">
+    <section id="contact" className="py-16 md:py-24 bg-[#F5F7FA] overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div 
           className="text-center mb-16"

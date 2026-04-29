@@ -7,7 +7,7 @@ import { useContactModal } from "@/hooks/use-contact-modal";
 export default function CtaSection() {
   const { openModal } = useContactModal();
   return (
-    <section className="py-12 md:py-20 bg-white">
+    <section className="py-12 md:py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div 
           className="relative max-w-6xl mx-auto"

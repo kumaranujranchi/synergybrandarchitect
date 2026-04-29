@@ -48,7 +48,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="section-padding">
+    <section id="about" className="section-padding overflow-hidden">
       <div className="container mx-auto container-padding">
         <div className="text-center mb-16">
           <motion.span 

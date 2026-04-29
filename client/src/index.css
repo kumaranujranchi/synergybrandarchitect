@@ -41,6 +41,12 @@
 }
 
 /* Lenis Smooth Scroll Styles */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
 html.lenis, html.lenis body {
   height: auto;
 }

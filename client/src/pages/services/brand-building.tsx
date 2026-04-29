@@ -82,9 +82,9 @@ export default function BrandBuilding() {
     <div className="min-h-screen bg-slate-50/30">
       <Header />
       
-      <main className="pt-64 pb-20">
+      <main className="pt-44 md:pt-56 pb-20 overflow-x-hidden">
         {/* Header Section */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 overflow-hidden">
           <div className="container mx-auto px-4 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -104,7 +104,7 @@ export default function BrandBuilding() {
 
 
         {/* Services Grid */}
-        <section className="container mx-auto px-4">
+        <section className="container mx-auto px-4 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {services.map((service, index) => (
               <motion.div

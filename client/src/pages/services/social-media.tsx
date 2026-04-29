@@ -74,7 +74,7 @@ export default function SocialMedia() {
     <div className="min-h-screen bg-white selection:bg-blue-100 selection:text-blue-600">
       <Header />
       
-      <main className="pt-64 overflow-x-hidden">
+      <main className="pt-44 md:pt-56 overflow-x-hidden">
         {/* 1. HERO SECTION - Hook-Driven */}
         <section className="relative py-24 lg:py-32 bg-slate-50 overflow-hidden">
           <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -111,7 +111,7 @@ export default function SocialMedia() {
         </section>
 
         {/* 2. PAS SECTION - Problem / Agitation / Solution */}
-        <section className="section-padding bg-white">
+        <section className="section-padding bg-white overflow-hidden">
           <div className="container mx-auto container-padding">
             <div className="flex flex-col lg:flex-row items-center gap-16">
               <div className="lg:w-1/2">
@@ -186,7 +186,7 @@ export default function SocialMedia() {
         </section>
 
         {/* 4. TRENDS SECTION - 2026 Digital Strategy */}
-        <section className="section-padding bg-white">
+        <section className="section-padding bg-white overflow-hidden">
           <div className="container mx-auto container-padding">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-poppins font-bold text-gray-900 mb-4">2026 Ready Strategies</h2>
@@ -243,7 +243,7 @@ export default function SocialMedia() {
           </div>
         </section>
 
-        <section className="section-padding bg-slate-50">
+        <section className="section-padding bg-slate-50 overflow-hidden">
           <div className="container mx-auto container-padding text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-poppins font-bold text-gray-900 mb-4">Our Social Arsenal</h2>
             <p className="text-gray-600">Comprehensive solutions for every stage of your social growth.</p>

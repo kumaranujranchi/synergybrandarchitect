@@ -135,7 +135,7 @@ export default function Services() {
 // The parent stagger animation is now imported from @/lib/animations
 
   return (
-    <section id="services" className="section-padding">
+    <section id="services" className="section-padding overflow-hidden">
       <div className="container mx-auto container-padding">
         <motion.div 
           className="text-center mb-12 md:mb-16"

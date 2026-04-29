@@ -40,7 +40,7 @@ export default function CaseStudies() {
   ];
 
   return (
-    <section id="case-studies" className="section-padding bg-gray-50">
+    <section id="case-studies" className="section-padding bg-gray-50 overflow-hidden">
       <div className="container mx-auto container-padding">
         <div className="text-center mb-14">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Success Stories</h2>

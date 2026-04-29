@@ -52,7 +52,7 @@ export default function ClientLogoCarousel() {
   }, []);
 
   return (
-    <section id="clients" className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
+    <section id="clients" className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div 
           className="text-center mb-12"

@@ -153,7 +153,7 @@ export default function BlogList() {
         </div>
       ) : (
         <motion.main 
-          className="pt-60 pb-20"
+          className="pt-44 md:pt-56 pb-20"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
