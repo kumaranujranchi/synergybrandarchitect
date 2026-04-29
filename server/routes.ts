@@ -21,10 +21,7 @@ import { z } from 'zod';
 import { incrementVisitorCount, getVisitorCount } from './visitorCount';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.DEEPSEEK_API_KEY,
-  baseURL: 'https://api.deepseek.com',
-});
+const baseURL = 'https://api.deepseek.com';
 
 export function registerRoutes(app: Express): void {
   // Middleware
@@ -114,7 +111,18 @@ export function registerRoutes(app: Express): void {
         return res.status(400).json({ error: 'Message is required' });
       }
 
-      const response = await openai.chat.completions.create({
+      if (!process.env.DEEPSEEK_API_KEY) {
+        console.error('DEEPSEEK_API_KEY is missing in environment variables');
+        return res.status(500).json({ error: 'AI Configuration missing' });
+      }
+
+      // Re-initialize to ensure latest env var is used
+      const chatClient = new OpenAI({
+        apiKey: process.env.DEEPSEEK_API_KEY,
+        baseURL: 'https://api.deepseek.com',
+      });
+
+      const response = await chatClient.chat.completions.create({
         model: 'deepseek-chat',
         messages: [
           { 
@@ -134,8 +142,16 @@ export function registerRoutes(app: Express): void {
       const reply = response.choices[0].message.content;
       res.json({ reply });
     } catch (error: any) {
-      console.error('DeepSeek API Error:', error);
-      res.status(500).json({ error: 'Failed to get response from AI' });
+      console.error('DeepSeek API Error Details:', {
+        message: error.message,
+        stack: error.stack,
+        status: error.status,
+        data: error.data
+      });
+      res.status(500).json({ 
+        error: 'Failed to get response from AI',
+        details: error.message 
+      });
     }
   });
   
