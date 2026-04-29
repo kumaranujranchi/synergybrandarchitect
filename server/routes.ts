@@ -100,6 +100,9 @@ export function registerRoutes(app: Express): void {
         message: 'Form submitted successfully',
         id: submission.id
       });
+    } catch (error) {
+      console.error('Error creating submission:', error);
+      res.status(400).json({ error: 'Invalid form data' });
     }
   });
 
