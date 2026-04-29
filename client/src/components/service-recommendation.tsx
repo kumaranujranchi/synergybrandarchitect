@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Briefcase, Maximize2, Minimize2 } from "lucide-react";
+import { X, Send, Briefcase, Maximize2, Minimize2, User, Mail, Phone, MapPin, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useAction } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
 interface Message {
@@ -14,20 +14,15 @@ interface Message {
 
 // Simple Markdown Parser to handle basic formatting
 const MarkdownText = ({ text, isUser }: { text: string, isUser: boolean }) => {
-  // Convert basic markdown to HTML elements
   const lines = text.split('\n');
   return (
     <div className={`space-y-1 ${isUser ? 'text-white' : 'text-gray-800'}`}>
       {lines.map((line, i) => {
-        // Handle headings
         if (line.startsWith('### ')) return <h3 key={i} className="font-bold text-base mt-2">{line.replace('### ', '')}</h3>;
         if (line.startsWith('## ')) return <h2 key={i} className="font-bold text-lg mt-2">{line.replace('## ', '')}</h2>;
-        
-        // Handle lists
         if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
           return <li key={i} className="ml-4 list-disc">{renderInline(line.trim().substring(2))}</li>;
         }
-
         return <p key={i} className="text-sm">{renderInline(line)}</p>;
       })}
     </div>
@@ -35,13 +30,11 @@ const MarkdownText = ({ text, isUser }: { text: string, isUser: boolean }) => {
 };
 
 const renderInline = (text: string) => {
-  // Handle Bold **text**
   let parts = text.split(/(\*\*.*?\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       return <strong key={i} className="font-bold">{part.substring(2, part.length - 2)}</strong>;
     }
-    // Handle Italic *text*
     let italicParts = part.split(/(\*.*?\*)/g);
     return italicParts.map((iPart, j) => {
       if (iPart.startsWith('*') && iPart.endsWith('*')) {
@@ -56,6 +49,9 @@ export default function ServiceRecommendation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showInitially, setShowInitially] = useState(false);
+  const [showLeadForm, setShowLeadForm] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
@@ -64,11 +60,22 @@ export default function ServiceRecommendation() {
       role: 'assistant'
     }
   ]);
+  
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
+    service: "Digital Marketing",
+    message: ""
+  });
+
   const [inputValue, setInputValue] = useState("");
   const [isBotTyping, setIsBotTyping] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatAction = useAction(api.chat.chat);
+  const sendSubmission = useMutation(api.submissions.sendSubmission);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -76,7 +83,7 @@ export default function ServiceRecommendation() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isBotTyping]);
+  }, [messages, isBotTyping, showLeadForm]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -87,14 +94,33 @@ export default function ServiceRecommendation() {
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
-    if (showInitially) {
-      setShowInitially(false);
-    }
+    if (showInitially) setShowInitially(false);
   };
 
   const toggleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsExpanded(!isExpanded);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await sendSubmission(formData);
+      setFormSubmitted(true);
+      setTimeout(() => {
+        setShowLeadForm(false);
+        setFormSubmitted(false);
+        setMessages(prev => [...prev, {
+          id: Date.now().toString(),
+          text: `Thank you, ${formData.name}! I've received your details. Our team will get back to you shortly to discuss your project. 🚀`,
+          isUser: false,
+          role: 'assistant'
+        }]);
+        setFormData({ name: "", email: "", phone: "", city: "", service: "Digital Marketing", message: "" });
+      }, 2000);
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
   };
 
   const handleChat = async (text: string) => {
@@ -117,10 +143,7 @@ export default function ServiceRecommendation() {
         content: m.text
       })).slice(-6);
 
-      const response = await chatAction({ 
-        message: text, 
-        history 
-      });
+      const response = await chatAction({ message: text, history });
       
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -132,13 +155,12 @@ export default function ServiceRecommendation() {
       setMessages((prev) => [...prev, botResponse]);
     } catch (error) {
       console.error('Chat Error:', error);
-      const errorMessage: Message = {
+      setMessages((prev) => [...prev, {
         id: 'error',
         text: "Sorry, I'm having trouble connecting. Please try again later.",
         isUser: false,
         role: 'assistant'
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      }]);
     } finally {
       setIsBotTyping(false);
     }
@@ -153,16 +175,17 @@ export default function ServiceRecommendation() {
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.8 }}
-              className="bg-white p-4 rounded-lg shadow-lg mb-4 max-w-xs fixed bottom-24 right-6 border border-orange-100"
+              className="bg-white p-4 rounded-lg shadow-lg mb-4 max-w-xs fixed bottom-24 right-6 border border-orange-100 cursor-pointer"
+              onClick={togglePopup}
             >
               <button
-                onClick={() => setShowInitially(false)}
+                onClick={(e) => { e.stopPropagation(); setShowInitially(false); }}
                 className="absolute -top-2 -right-2 bg-white rounded-full shadow-md p-1 hover:bg-gray-100"
               >
                 <X size={14} />
               </button>
               <p className="text-sm text-gray-700 font-medium">
-                Scaling your business? Ask our AI expert for advice! 🚀
+                Want a tailored strategy for your brand? Let's talk! 🚀
               </p>
             </motion.div>
           )}
@@ -194,7 +217,7 @@ export default function ServiceRecommendation() {
               y: 0, 
               scale: 1,
               width: isExpanded ? '90vw' : '384px',
-              height: isExpanded ? '85vh' : '500px',
+              height: isExpanded ? '85vh' : '550px',
               maxWidth: isExpanded ? '1000px' : '384px'
             }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
@@ -214,6 +237,13 @@ export default function ServiceRecommendation() {
                 </div>
               </div>
               <div className="flex items-center space-x-1">
+                <Button 
+                  size="sm"
+                  onClick={() => setShowLeadForm(!showLeadForm)}
+                  className="bg-white/20 hover:bg-white/30 text-white border border-white/30 text-[10px] h-7 px-2 font-bold uppercase tracking-tight mr-2"
+                >
+                  {showLeadForm ? "Back to Chat" : "Get Free Strategy"}
+                </Button>
                 <button 
                   onClick={toggleExpand}
                   className="hover:bg-white/20 p-2 rounded-full transition-colors hidden md:block"
@@ -221,68 +251,167 @@ export default function ServiceRecommendation() {
                 >
                   {isExpanded ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
                 </button>
-                <button 
-                  onClick={togglePopup}
-                  className="hover:bg-white/20 p-2 rounded-full transition-colors"
-                >
+                <button onClick={togglePopup} className="hover:bg-white/20 p-2 rounded-full transition-colors">
                   <X size={20} />
                 </button>
               </div>
             </div>
 
-            <div 
-              className="flex-1 p-4 overflow-y-auto flex flex-col space-y-4 bg-gray-50/50"
-              data-lenis-prevent
-            >
-              {messages.map((message) => (
-                <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
-                  <div
-                    className={`max-w-[85%] p-3 rounded-2xl shadow-sm ${
-                      message.isUser
-                        ? "bg-[#FF6B00] text-white rounded-tr-none"
-                        : "bg-white text-gray-800 rounded-tl-none border border-gray-100"
-                    }`}
+            <div className="flex-1 p-0 overflow-hidden bg-gray-50/50 flex flex-col">
+              <AnimatePresence mode="wait">
+                {showLeadForm ? (
+                  <motion.div
+                    key="lead-form"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    className="flex-1 p-6 overflow-y-auto"
+                    data-lenis-prevent
                   >
-                    <MarkdownText text={message.text} isUser={message.isUser} />
-                  </div>
-                </div>
-              ))}
-              {isBotTyping && (
-                <div className="flex justify-start">
-                  <div className="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:0.4s]"></div>
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
+                    {formSubmitted ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
+                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-500">
+                          <CheckCircle2 size={40} />
+                        </div>
+                        <h2 className="text-xl font-bold text-gray-800">Sent Successfully!</h2>
+                        <p className="text-gray-600">Scaling your brand starting now.</p>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleFormSubmit} className="space-y-4">
+                        <div className="text-center mb-6">
+                          <h2 className="text-lg font-bold text-gray-800">Elevate Your Brand Today</h2>
+                          <p className="text-xs text-gray-500">Fill the form and we'll get back to you.</p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 gap-4">
+                          <div className="relative">
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                            <input
+                              required
+                              placeholder="Your Name"
+                              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                              value={formData.name}
+                              onChange={e => setFormData({...formData, name: e.target.value})}
+                            />
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="relative">
+                              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                              <input
+                                required type="email" placeholder="Email"
+                                className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                                value={formData.email}
+                                onChange={e => setFormData({...formData, email: e.target.value})}
+                              />
+                            </div>
+                            <div className="relative">
+                              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                              <input
+                                required placeholder="Phone"
+                                className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                                value={formData.phone}
+                                onChange={e => setFormData({...formData, phone: e.target.value})}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="relative">
+                            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                            <input
+                              placeholder="City"
+                              className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                              value={formData.city}
+                              onChange={e => setFormData({...formData, city: e.target.value})}
+                            />
+                          </div>
+
+                          <select
+                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 appearance-none"
+                            value={formData.service}
+                            onChange={e => setFormData({...formData, service: e.target.value})}
+                          >
+                            <option>Digital Marketing</option>
+                            <option>Performance Marketing</option>
+                            <option>Workflow Automation</option>
+                            <option>Brand Building</option>
+                            <option>Content Creation</option>
+                          </select>
+
+                          <textarea
+                            placeholder="Tell us about your project..."
+                            rows={3}
+                            className="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                            value={formData.message}
+                            onChange={e => setFormData({...formData, message: e.target.value})}
+                          ></textarea>
+                        </div>
+
+                        <Button type="submit" className="w-full bg-[#FF6B00] hover:bg-[#FF8533] text-white py-6 rounded-xl font-bold shadow-lg">
+                          Launch Your Project
+                        </Button>
+                      </form>
+                    )}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="chat-messages"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex-1 p-4 overflow-y-auto flex flex-col space-y-4"
+                    data-lenis-prevent
+                  >
+                    {messages.map((message) => (
+                      <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`max-w-[85%] p-3 rounded-2xl shadow-sm ${
+                          message.isUser ? "bg-[#FF6B00] text-white rounded-tr-none" : "bg-white text-gray-800 rounded-tl-none border border-gray-100"
+                        }`}>
+                          <MarkdownText text={message.text} isUser={message.isUser} />
+                        </div>
+                      </div>
+                    ))}
+                    {isBotTyping && (
+                      <div className="flex justify-start">
+                        <div className="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm">
+                          <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce"></div>
+                            <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                            <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <div ref={messagesEndRef} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            <form 
-              onSubmit={(e) => { e.preventDefault(); handleChat(inputValue); }} 
-              className="p-4 bg-white border-t border-gray-100 flex items-center space-x-2"
-            >
-              <div className="flex-1 relative">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Type your message..."
-                  className="w-full p-3 pr-4 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
-                  disabled={isBotTyping}
-                />
-              </div>
-              <Button 
-                type="submit"
-                disabled={!inputValue.trim() || isBotTyping}
-                className="bg-[#FF6B00] hover:bg-[#FF8533] text-white rounded-full p-3 h-auto shadow-md"
+            {!showLeadForm && (
+              <form 
+                onSubmit={(e) => { e.preventDefault(); handleChat(inputValue); }} 
+                className="p-4 bg-white border-t border-gray-100 flex items-center space-x-2"
               >
-                <Send size={18} />
-              </Button>
-            </form>
+                <div className="flex-1 relative">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Type your message..."
+                    className="w-full p-3 pr-4 bg-gray-50 border border-gray-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
+                    disabled={isBotTyping}
+                  />
+                </div>
+                <Button 
+                  type="submit"
+                  disabled={!inputValue.trim() || isBotTyping}
+                  className="bg-[#FF6B00] hover:bg-[#FF8533] text-white rounded-full p-3 h-auto shadow-md"
+                >
+                  <Send size={18} />
+                </Button>
+              </form>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
