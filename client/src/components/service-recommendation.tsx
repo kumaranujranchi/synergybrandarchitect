@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Briefcase, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAction } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 interface Message {
   id: string;
@@ -29,6 +31,8 @@ export default function ServiceRecommendation() {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+
+  const chatAction = useAction(api.chat.chat);
 
   // Auto-scroll to bottom
   const scrollToBottom = () => {
@@ -119,24 +123,20 @@ export default function ServiceRecommendation() {
         content: m.text
       })).slice(-6); // Keep last 6 messages for context
 
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history })
+      const response = await chatAction({ 
+        message: text, 
+        history 
       });
-
-      if (!response.ok) throw new Error('Failed to fetch response');
       
-      const data = await response.json();
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.reply,
+        text: response.reply,
         isUser: false,
         role: 'assistant'
       };
 
       setMessages((prev) => [...prev, botResponse]);
-      speak(data.reply);
+      speak(response.reply);
     } catch (error) {
       console.error('Chat Error:', error);
       const errorMessage: Message = {
