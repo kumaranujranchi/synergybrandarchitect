@@ -1,6 +1,5 @@
 import { action } from "./_generated/server";
 import { v } from "convex/values";
-import OpenAI from "openai";
 
 export const chat = action({
   args: {
@@ -16,34 +15,43 @@ export const chat = action({
       throw new Error("DEEPSEEK_API_KEY not set in Convex dashboard");
     }
 
-    const openai = new OpenAI({
-      apiKey: apiKey,
-      baseURL: "https://api.deepseek.com",
-    });
-
     try {
-      const response = await openai.chat.completions.create({
-        model: "deepseek-chat",
-        messages: [
-          { 
-            role: "system", 
-            content: `You are the Synergy AI Assistant for Synergy Brand Architect. You are professional, creative, and results-oriented. 
-            You specialize in Digital Marketing, Brand Building, Performance Marketing, and Workflow Automation.
-            Your goal is to help visitors understand how Synergy Brand Architect can scale their business.
-            Keep responses concise and conversational. Speak in a mix of English and Hindi (Hinglish) where appropriate to be relatable.
-            If the user is interested in services, encourage them to "Book a strategy call" on the website.` 
-          },
-          ...args.history,
-          { role: "user", content: args.message }
-        ],
+      const response = await fetch("https://api.deepseek.com/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "deepseek-chat",
+          messages: [
+            { 
+              role: "system", 
+              content: `You are the Synergy AI Assistant for Synergy Brand Architect. You are professional, creative, and results-oriented. 
+              You specialize in Digital Marketing, Brand Building, Performance Marketing, and Workflow Automation.
+              Your goal is to help visitors understand how Synergy Brand Architect can scale their business.
+              Keep responses concise and conversational. Speak in a mix of English and Hindi (Hinglish) where appropriate to be relatable.
+              If the user is interested in services, encourage them to "Book a strategy call" on the website.` 
+            },
+            ...args.history,
+            { role: "user", content: args.message }
+          ],
+          stream: false,
+        }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`DeepSeek API error: ${response.status} ${JSON.stringify(errorData)}`);
+      }
+
+      const data = await response.json();
       return {
-        reply: response.choices[0].message.content
+        reply: data.choices[0].message.content
       };
     } catch (error: any) {
       console.error("DeepSeek API Error:", error);
-      throw new Error("Failed to get response from AI: " + error.message);
+      throw new Error(error.message || "Failed to get response from AI");
     }
   },
 });
