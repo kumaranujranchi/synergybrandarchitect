@@ -30,7 +30,7 @@ export default function BlogDetail() {
     return (
       <div className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 pt-52 md:pt-56 pb-20">
+        <div className="container mx-auto px-4 pt-72 md:pt-56 pb-20">
           <div className="max-w-3xl mx-auto space-y-8 animate-pulse">
             <div className="h-10 bg-gray-200 rounded w-3/4" />
             <div className="h-6 bg-gray-100 rounded w-1/4" />
@@ -46,7 +46,7 @@ export default function BlogDetail() {
     return (
       <div className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 pt-52 md:pt-56 pb-20 text-center">
+        <div className="container mx-auto px-4 pt-72 md:pt-56 pb-20 text-center">
           <h1 className="text-4xl font-bold mb-4">Post Not Found</h1>
           <Button onClick={() => setLocation('/blog')}>Return to Blog Feed</Button>
         </div>
@@ -104,7 +104,7 @@ export default function BlogDetail() {
       <Header />
       <WhatsappButton />
       
-      <article className="pt-52 md:pt-56 pb-20">
+      <article className="pt-72 md:pt-56 pb-20">
         <div className="container mx-auto px-4 max-w-[1280px]">
           
           {/* SEO BREADCRUMBS */}

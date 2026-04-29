@@ -20,7 +20,7 @@ export default function AboutPage() {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#FF6B35] to-[#F7931E] text-white pt-52 md:pt-56 pb-16 md:pb-20">
+      <section className="bg-gradient-to-r from-[#FF6B35] to-[#F7931E] text-white pt-72 md:pt-56 pb-16 md:pb-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="font-poppins font-bold text-4xl md:text-5xl mb-6">

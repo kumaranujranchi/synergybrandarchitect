@@ -5,13 +5,13 @@ export default function SaleBanner() {
 
   return (
     <div 
-      className="bg-[#007bff] text-white overflow-hidden py-2 px-4 relative group cursor-pointer border-b border-blue-400/30" 
+      className="bg-[#007bff] text-white overflow-hidden py-1.5 px-4 relative group cursor-pointer border-b border-blue-400/30" 
       onClick={openModal}
     >
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0">
         {/* Left Section: SERVICE SUMMER SALE */}
         <div 
-          className="text-2xl sm:text-3xl md:text-4xl font-black italic tracking-tighter uppercase flex items-baseline gap-2 select-none transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-105"
+          className="text-xl sm:text-3xl md:text-4xl font-black italic tracking-tighter uppercase flex items-baseline gap-2 select-none transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-105"
           style={{
             textShadow: "1px 1px 0 #000, 2px 2px 0 #000, 3px 3px 0 #000, 4px 4px 0 #000, 5px 5px 0 #000",
             transform: "perspective(1000px) rotateX(10deg) skewX(-5deg)"
@@ -33,9 +33,9 @@ export default function SaleBanner() {
         </div>
 
         {/* Right Section: Yellow CTA Box */}
-        <div className="bg-[#faff00] text-black px-4 py-2 rounded-lg font-black uppercase flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
+        <div className="bg-[#faff00] text-black px-4 py-1.5 rounded-lg font-black uppercase flex items-center gap-2 shadow-lg hover:scale-105 transition-transform">
           <span className="text-[10px] md:text-xs leading-none">FLAT</span>
-          <span className="text-2xl md:text-4xl leading-none tracking-tighter">50</span>
+          <span className="text-xl md:text-4xl leading-none tracking-tighter">50</span>
           <div className="flex flex-col items-start leading-none">
             <span className="text-xs md:text-sm">%</span>
             <span className="text-[8px] md:text-[10px]">OFF</span>

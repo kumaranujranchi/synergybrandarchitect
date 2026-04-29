@@ -147,13 +147,13 @@ export default function BlogList() {
           </div>
         </div>
       ) : !allPosts.length ? (
-        <div className="text-center py-40 text-gray-500 pt-64">
+        <div className="text-center py-40 text-gray-500 pt-72">
            <TrendingUp className="mx-auto mb-4 opacity-20" size={48} />
            <p className="text-xl">No blog posts found. Stay tuned for updates!</p>
         </div>
       ) : (
         <motion.main 
-          className="pt-52 md:pt-56 pb-20"
+          className="pt-72 md:pt-56 pb-20"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
