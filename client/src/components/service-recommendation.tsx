@@ -164,14 +164,14 @@ export default function ServiceRecommendation() {
   return (
     <>
       {/* AI Assistant Button */}
-      <div className="fixed bottom-6 right-24 z-50">
+      <div className="fixed bottom-6 right-6 z-50">
         <AnimatePresence>
           {showInitially && !isOpen && (
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.8 }}
-              className="bg-white p-4 rounded-lg shadow-lg mb-4 max-w-xs fixed bottom-24 right-24 border border-orange-100"
+              className="bg-white p-4 rounded-lg shadow-lg mb-4 max-w-xs fixed bottom-24 right-6 border border-orange-100"
             >
               <button
                 onClick={() => setShowInitially(false)}
@@ -207,7 +207,7 @@ export default function ServiceRecommendation() {
             initial={{ opacity: 0, y: 20, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
-            className="fixed bottom-24 right-24 w-80 md:w-96 bg-white rounded-2xl shadow-2xl z-50 overflow-hidden border border-gray-100 flex flex-col h-[500px]"
+            className="fixed bottom-24 right-6 w-80 md:w-96 bg-white rounded-2xl shadow-2xl z-50 overflow-hidden border border-gray-100 flex flex-col h-[500px]"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white p-4 flex justify-between items-center shadow-md">
