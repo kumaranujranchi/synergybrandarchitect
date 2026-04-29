@@ -243,7 +243,10 @@ export default function ServiceRecommendation() {
             </div>
 
             {/* Chat Messages */}
-            <div className="flex-1 p-4 overflow-y-auto flex flex-col space-y-4 bg-gray-50/50">
+            <div 
+              className="flex-1 p-4 overflow-y-auto flex flex-col space-y-4 bg-gray-50/50"
+              data-lenis-prevent
+            >
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
                   <div
