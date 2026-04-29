@@ -114,7 +114,8 @@ export default function AdminPortfolioEditor() {
       // Automatically optimize image before upload
       const optimizedFile = await optimizeImage(file, {
         maxWidth: 2560,
-        quality: 0.9,
+        maxHeight: 10000, // Allow long screenshots without aggressive downscaling
+        quality: 0.95,
         format: 'image/webp'
       });
 
