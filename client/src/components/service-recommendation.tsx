@@ -27,7 +27,7 @@ export default function ServiceRecommendation() {
   const [isBotTyping, setIsBotTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
@@ -91,8 +91,21 @@ export default function ServiceRecommendation() {
     // Stop any current speech
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'hi-IN'; // Try Hindi voice for Hinglish feel
+    // Remove markdown symbols (**, #, etc) for cleaner speech
+    const cleanText = text.replace(/\*\*|\*|#|__/g, '');
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    
+    // Find a good voice
+    const voices = window.speechSynthesis.getVoices();
+    // Prefer Google Hindi or Microsoft Hemant if available, otherwise any Hindi voice
+    const hindiVoice = voices.find(v => v.lang.includes('hi-IN') && (v.name.includes('Google') || v.name.includes('Natural'))) 
+                   || voices.find(v => v.lang.includes('hi-IN'));
+    
+    if (hindiVoice) {
+      utterance.voice = hindiVoice;
+    }
+    
+    utterance.lang = 'hi-IN';
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
     
