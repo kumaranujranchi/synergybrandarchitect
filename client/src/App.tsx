@@ -200,6 +200,14 @@ function App({ initialData = {} }: { initialData?: Record<string, any> }) {
       updatePageTitle(normalizedPath);
     }
     
+    // Remove hash from URL if present to keep it clean
+    if (typeof window !== 'undefined' && window.location.hash) {
+      // Use a small delay to allow any anchor scrolling to happen first
+      setTimeout(() => {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }, 500);
+    }
+
     // Only use smooth scroll when not coming from an external site
     scrollToTop(false);
   }, [location, isAdminRoute]);
