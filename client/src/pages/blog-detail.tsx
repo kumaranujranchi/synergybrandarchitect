@@ -4,20 +4,21 @@ import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 import { Calendar, Clock, ArrowLeft, Share2, Tag, ChevronRight, Home, ArrowRight } from 'lucide-react';
 import { useQuery } from 'convex/react';
+import { useSSRQuery } from "@/hooks/use-ssr-query";
 import { api } from "../../../convex/_generated/api";
 import { format } from 'date-fns';
 import { useLocation, useParams, Link } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export default function BlogDetail() {
   const { slug } = useParams();
   const [, setLocation] = useLocation();
   
   // Convex Query - Fetch a single blog by slug
-  const blog = useQuery(api.blogs.getBlogBySlug, slug ? { slug } : "skip");
+  const blog = useSSRQuery(api.blogs.getBlogBySlug, slug ? { slug } : "skip", "blogs.getBlogBySlug");
   // Fetch all published blogs for context (Related, Next/Prev)
-  const allBlogs = useQuery(api.blogs.listBlogs, { status: "published" });
+  const allBlogs = useSSRQuery(api.blogs.listBlogs, { status: "published" }, "blogs.listBlogs");
   
   const isLoading = blog === undefined || allBlogs === undefined;
 

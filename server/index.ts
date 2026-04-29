@@ -104,9 +104,13 @@ if (process.env.NODE_ENV !== 'production') {
     });
 } else {
   // Production mode
-  serveStatic(app);
-  const port = Number(process.env.PORT) || 5001;
-  server.listen(port, "0.0.0.0", () => {
-    console.log(`Server listening on port ${port}`);
+  serveStatic(app).then(() => {
+    const port = Number(process.env.PORT) || 5001;
+    server.listen(port, "0.0.0.0", () => {
+      console.log(`Server listening on port ${port}`);
+    });
+  }).catch(err => {
+    console.error('Failed to setup static/SSR:', err);
+    process.exit(1);
   });
 }

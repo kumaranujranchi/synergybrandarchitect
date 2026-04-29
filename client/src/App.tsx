@@ -33,9 +33,13 @@ import AdminDashboard from "@/pages/admin/dashboard";
 import AdminSubmissions from "@/pages/admin/submissions";
 import AdminUsers from "@/pages/admin/users";
 import AdminBlogs from "@/pages/admin/blogs/index";
-import AdminBlogEditor from "@/pages/admin/blogs/editor";
+// Lazy load editor pages - they use Tiptap which has browser-only deps (@tiptap/extension-link)
+// that crash during SSR. Lazy loading defers them to client-side only.
+import { lazy, Suspense, useEffect } from "react";
+const AdminBlogEditor = lazy(() => import("@/pages/admin/blogs/editor"));
+const AdminPortfolioEditor = lazy(() => import("@/pages/admin/portfolio/editor"));
+
 import AdminPortfolio from "@/pages/admin/portfolio/index";
-import AdminPortfolioEditor from "@/pages/admin/portfolio/editor";
 
 import WishluvBuildconCaseStudy from "@/pages/case-studies/wishluv-buildcon";
 import BiryaniMahalCaseStudy from "@/pages/case-studies/biryani-mahal";
@@ -43,7 +47,6 @@ import TheHelpingHandCaseStudy from "@/pages/case-studies/the-helping-hand";
 
 import AuthPage from "@/pages/auth-page";
 import ResetPasswordPage from "@/pages/reset-password";
-import { useEffect, lazy, Suspense } from "react";
 import { scrollToTop } from "@/lib/scrollHelper";
 import { AuthProvider } from "@/hooks/use-auth";
 import { updateSchemaMarkup } from "@/utils/schemaMarkup";
@@ -51,6 +54,8 @@ import { updateSchemaMarkup } from "@/utils/schemaMarkup";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ContactModalProvider } from "@/hooks/use-contact-modal";
 import ContactModal from "@/components/contact-modal";
+import { ClientOnly } from "@/components/ClientOnly";
+import { InitialDataProvider } from "@/hooks/use-initial-data";
 
 
 function Router() {
@@ -114,11 +119,28 @@ function Router() {
       <Route path="/admin/submissions" component={AdminSubmissions} />
       <Route path="/admin/users" component={AdminUsers} />
       <Route path="/admin/blogs" component={AdminBlogs} />
-      <Route path="/admin/blogs/new" component={AdminBlogEditor} />
-      <Route path="/admin/blogs/edit/:id" component={AdminBlogEditor} />
+      {/* Tiptap editor pages are lazy-loaded to prevent SSR crash from browser-only @tiptap/extension-link */}
+      <Route path="/admin/blogs/new">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading editor...</div>}>
+          <AdminBlogEditor />
+        </Suspense>
+      </Route>
+      <Route path="/admin/blogs/edit/:id">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading editor...</div>}>
+          <AdminBlogEditor />
+        </Suspense>
+      </Route>
       <Route path="/admin/portfolio" component={AdminPortfolio} />
-      <Route path="/admin/portfolio/new" component={AdminPortfolioEditor} />
-      <Route path="/admin/portfolio/edit/:id" component={AdminPortfolioEditor} />
+      <Route path="/admin/portfolio/new">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading editor...</div>}>
+          <AdminPortfolioEditor />
+        </Suspense>
+      </Route>
+      <Route path="/admin/portfolio/edit/:id">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading editor...</div>}>
+          <AdminPortfolioEditor />
+        </Suspense>
+      </Route>
 
 
       
@@ -128,12 +150,15 @@ function Router() {
   );
 }
 
-function App() {
+function App({ initialData = {} }: { initialData?: Record<string, any> }) {
   const [location] = useLocation();
   const isAdminRoute = location.startsWith('/admin');
   
   // Update canonical URL, schema markup, and scroll to top whenever location changes
   useEffect(() => {
+    // Skip browser-only logic on server
+    if (typeof window === 'undefined') return;
+
     // Don't include hash in canonical URL
     const path = location.split('#')[0];
     
@@ -215,18 +240,20 @@ function App() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <InitialDataProvider data={initialData}>
       <AuthProvider>
         <SmoothScroll>
           <ContactModalProvider>
             <Router />
-            <ContactModal />
-            {/* Popup removed */}
-            <Toaster />
+            {/* ClientOnly: Modals/Toasts use Radix UI useId() which causes SSR hydration mismatches */}
+            <ClientOnly>
+              <ContactModal />
+              <Toaster />
+            </ClientOnly>
           </ContactModalProvider>
         </SmoothScroll>
       </AuthProvider>
-    </QueryClientProvider>
+    </InitialDataProvider>
   );
 }
 

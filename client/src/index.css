@@ -4,6 +4,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   LARGE SCREEN (1280px+) PROPORTIONAL SCALING
+   Makes the site look good at 100% zoom on 1920x1080 monitors.
+   Without these, sections appear oversized because the layout
+   was originally designed for ~1366px screens.
+   ============================================================ */
+@media (min-width: 1280px) {
+  /* Scale down section vertical padding on large screens */
+  section.py-16 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+  section.py-24 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+  
+  /* Constrain the overall page content width to prevent over-stretching */
+  .container { max-width: 1280px !important; }
+
+  /* Scale down large section headings (h2) slightly on big screens */
+  section h2.text-3xl { font-size: 2rem !important; }
+  section h2.text-4xl { font-size: 2.25rem !important; }
+}
+
+
 /* Quill Editor Alignment Support */
 .ql-align-center {
   text-align: center;

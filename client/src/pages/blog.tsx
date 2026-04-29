@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 import { Calendar, ArrowRight, TrendingUp, Clock, FileText, ChevronRight, Share2, MessageSquare, LineChart, BarChart, LayoutGrid } from 'lucide-react';
 import { useQuery } from 'convex/react';
+import { useSSRQuery } from "@/hooks/use-ssr-query";
 import { api } from "../../../convex/_generated/api";
 import { format } from 'date-fns';
 import { useLocation } from 'wouter';
@@ -91,7 +92,7 @@ export default function BlogList() {
   }, []);
 
   // Convex Query - Fetch only published blogs
-  const blogs = useQuery(api.blogs.listBlogs, { status: "published" });
+  const blogs = useSSRQuery(api.blogs.listBlogs, { status: "published" }, "blogs.listBlogs");
   const isLoading = blogs === undefined;
 
   // Derive categories and groups

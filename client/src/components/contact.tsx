@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { staggerContainer, fadeUp, slideLeft, slideRight } from "@/lib/animations";
 import ContactForm from "./contact-form";
+import { ClientOnly } from "./ClientOnly";
 
 export default function Contact() {
 
@@ -33,7 +34,24 @@ export default function Contact() {
             variants={slideRight}
           >
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <ContactForm />
+              {/* ClientOnly: ContactForm uses Radix UI Form/Select with useId() - SSR would cause hydration mismatch */}
+              <ClientOnly fallback={
+                <div className="space-y-4 animate-pulse">
+                  <div className="h-10 bg-gray-100 rounded-2xl" />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="h-10 bg-gray-100 rounded-2xl" />
+                    <div className="h-10 bg-gray-100 rounded-2xl" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="h-10 bg-gray-100 rounded-2xl" />
+                    <div className="h-10 bg-gray-100 rounded-2xl" />
+                  </div>
+                  <div className="h-24 bg-gray-100 rounded-2xl" />
+                  <div className="h-14 bg-orange-100 rounded-2xl" />
+                </div>
+              }>
+                <ContactForm />
+              </ClientOnly>
             </div>
           </motion.div>
           

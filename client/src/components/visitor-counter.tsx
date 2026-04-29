@@ -30,7 +30,7 @@ export default function VisitorCounter() {
   return (
     <div className="flex items-center text-gray-400 text-sm">
       <Users size={16} className="mr-2" />
-      <span>{visitorCount.toLocaleString()} Visitors</span>
+      <span suppressHydrationWarning>{visitorCount.toLocaleString()} Visitors</span>
     </div>
   );
 }

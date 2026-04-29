@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import Header from "@/components/header";

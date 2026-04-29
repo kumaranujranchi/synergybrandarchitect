@@ -36,7 +36,7 @@ export async function setupVite(app: Express, server: Server) {
       ...viteLogger,
       error: (msg, options) => {
         viteLogger.error(msg, options);
-        process.exit(1);
+        // Don't exit on SSR errors - let the graceful fallback handle them
       },
     },
     server: serverOptions,
@@ -57,21 +57,50 @@ export async function setupVite(app: Express, server: Server) {
 
       // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      template = template.replace(
-        `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${nanoid()}"`,
+      
+      // Transform HTML through Vite (handles HMR scripts, etc.)
+      // Wrapped in try-catch: if a Vite plugin fails to parse index.html (e.g. JSON-LD script),
+      // we fall through to the raw template which is fine for SSR rendering.
+      try {
+        template = await vite.transformIndexHtml(url, template);
+      } catch (transformErr) {
+        console.warn("[SSR] transformIndexHtml failed, using raw template:", (transformErr as Error).message?.slice(0, 80));
+      }
+
+      // Load the server entry point
+      const { render } = await vite.ssrLoadModule(
+        path.resolve(__dirname, "..", "client", "src", "entry-server.tsx")
       );
-      const page = await vite.transformIndexHtml(url, template);
-      res.status(200).set({ "Content-Type": "text/html" }).end(page);
+
+      // Render the app to HTML and head tags
+      const rendered = await render(url);
+
+      // Inject the rendered content into the template safely
+      const html = template
+        .replace(`<!--app-html-->`, () => rendered.html)
+        .replace(`<!--app-head-->`, () => rendered.head);
+
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
-      vite.ssrFixStacktrace(e as Error);
-      next(e);
+      const err = e as Error;
+      console.error("[SSR] Render error:", err.message);
+      vite.ssrFixStacktrace(err);
+      // Graceful fallback: send the plain HTML and let the client handle rendering
+      try {
+        const clientTemplate = path.resolve(__dirname, "..", "client", "index.html");
+        let template = await fs.promises.readFile(clientTemplate, "utf-8");
+        template = await vite.transformIndexHtml(url, template);
+        res.status(200).set({ "Content-Type": "text/html" }).end(template);
+      } catch {
+        next(e);
+      }
     }
   });
 }
 
-export function serveStatic(app: Express) {
-  const distPath = path.resolve(__dirname);
+export async function serveStatic(app: Express) {
+  const distPath = path.resolve(__dirname, "..", "dist", "client");
+  const serverPath = path.resolve(__dirname, "..", "dist", "server");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
@@ -79,10 +108,37 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  // Serve static assets from dist/client
+  app.use(express.static(distPath, { index: false }));
 
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+  // Handle SSR for all other routes
+  app.use("*", async (req, res, next) => {
+    const url = req.originalUrl;
+
+    try {
+      // 1. Read index.html from dist/client
+      let template = await fs.promises.readFile(
+        path.resolve(distPath, "index.html"),
+        "utf-8",
+      );
+
+      // 2. Load the pre-built server entry
+      // We use import() to dynamically load the ESM module
+      const { render } = await import(path.resolve(serverPath, "entry-server.js"));
+
+      // 3. Render the app
+      const rendered = await render(url);
+
+      // 4. Inject into template
+      const html = template
+        .replace(`<!--app-html-->`, rendered.html)
+        .replace(`<!--app-head-->`, rendered.head);
+
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    } catch (e) {
+      console.error("SSR Error:", e);
+      // Fallback to sending the raw index.html if SSR fails
+      res.sendFile(path.resolve(distPath, "index.html"));
+    }
   });
 }

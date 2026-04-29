@@ -4,6 +4,24 @@ export default {
   darkMode: ["class"],
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    // Constrain container to 1280px so it looks good on 1920px screens at 100% zoom
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem",
+        sm: "1.5rem",
+        lg: "2rem",
+        xl: "2rem",
+        "2xl": "2rem",
+      },
+      screens: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1280px", // Max content width - prevents over-stretching on 1920px screens
+      },
+    },
     extend: {
       borderRadius: {
         lg: "var(--radius)",

@@ -7,6 +7,7 @@ import { ArrowRight, ExternalLink, Star, Users, Calendar, Target } from "lucide-
 import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { useQuery } from "convex/react";
+import { useSSRQuery } from "@/hooks/use-ssr-query";
 import { api } from "../../../convex/_generated/api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { OptimizedImage } from "@/components/ui/optimized-image";
@@ -15,7 +16,7 @@ import SEO from "@/components/seo";
 export default function PortfolioPage() {
   const { openModal } = useContactModal();
 
-  const data = useQuery(api.portfolio.listPortfolio, {});
+  const data = useSSRQuery(api.portfolio.listPortfolio, {}, "portfolio.listPortfolio");
   const portfolioItems = data ?? [];
   const isLoading = data === undefined;
 

@@ -42,7 +42,7 @@ export default function AdAccountAccess() {
               <Shield className="w-4 h-4 text-orange-500" />
               <span className="text-orange-400 font-bold text-sm tracking-wider uppercase">Ban-Proof Advertising</span>
             </div>
-            <h2 className="text-4xl md:text-7xl font-poppins font-black mb-6 leading-tight">
+            <h2 className="text-4xl md:text-7xl xl:text-5xl font-poppins font-black mb-6 leading-tight">
               Tired of <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 italic">Ad Account Bans?</span><br />
               <span className="text-white">We've Got You Covered.</span>
             </h2>
