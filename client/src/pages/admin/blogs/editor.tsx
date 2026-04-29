@@ -190,7 +190,7 @@ export default function AdminBlogEditor() {
       // Automatically optimize image before upload
       const optimizedFile = await optimizeImage(file, {
         maxWidth: 1920,
-        quality: 0.8,
+        quality: 0.9,
         format: 'image/webp'
       });
 

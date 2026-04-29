@@ -24,7 +24,7 @@ export async function optimizeImage(
   const {
     maxWidth = 1920,
     maxHeight = 1080,
-    quality = 0.8,
+    quality = 0.9,
     format = 'image/webp'
   } = options;
 
@@ -41,20 +41,30 @@ export async function optimizeImage(
       img.src = event.target?.result as string;
       
       img.onload = () => {
+        // If image is already smaller than maxWidth and maxHeight, 
+        // we might still want to convert to webp for optimization, 
+        // but let's ensure we don't resize up.
+        
         const canvas = document.createElement('canvas');
         let width = img.width;
         let height = img.height;
 
         // Calculate new dimensions preserving aspect ratio
+        let needsResize = false;
         if (width > maxWidth) {
           height = Math.round((height * maxWidth) / width);
           width = maxWidth;
+          needsResize = true;
         }
         if (height > maxHeight) {
           width = Math.round((width * maxHeight) / height);
           height = maxHeight;
+          needsResize = true;
         }
 
+        // If no resize is needed and it's already the right format, return original
+        // But usually we want to convert to webp regardless for consistency/optimization
+        
         canvas.width = width;
         canvas.height = height;
 
@@ -63,6 +73,10 @@ export async function optimizeImage(
           reject(new Error('Failed to get canvas context'));
           return;
         }
+
+        // Set high quality smoothing for resizing
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
 
         // Draw and compress
         ctx.drawImage(img, 0, 0, width, height);
