@@ -19,7 +19,7 @@ export default function WishluvBuildconCaseStudy() {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-44 md:pt-56 pb-16 bg-gradient-to-r from-[#FF6B00]/5 to-[#0066CC]/5">
+      <section className="pt-52 md:pt-56 pb-16 bg-gradient-to-r from-[#FF6B00]/5 to-[#0066CC]/5">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-center gap-8">

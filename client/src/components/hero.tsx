@@ -11,7 +11,7 @@ import { ClientOnly } from "./ClientOnly";
 export default function Hero() {
   const { openModal } = useContactModal();
   return (
-    <section id="home" className="pt-44 md:pt-56 pb-16 md:pb-20 xl:pb-16 overflow-hidden">
+    <section id="home" className="pt-52 md:pt-56 pb-16 md:pb-20 xl:pb-16 overflow-hidden">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center">
         <motion.div 
           className="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10"
@@ -26,7 +26,7 @@ export default function Hero() {
             <span className="text-[#333333] block">
               Synergy Brand Architect - Build Your Brand
             </span>
-            <div className="text-[#FF6B00] h-16 md:h-20 lg:h-24 xl:h-20 flex items-center overflow-hidden">
+            <div className="text-[#FF6B00] h-24 md:h-20 lg:h-24 xl:h-20 flex items-center overflow-hidden">
               <ClientOnly fallback={<span className="font-poppins font-bold text-4xl md:text-5xl lg:text-6xl xl:text-5xl">Grow Your Business</span>}>
                 <TypingAnimation
                   phrases={[
