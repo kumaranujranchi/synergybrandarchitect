@@ -11,7 +11,7 @@ import { ClientOnly } from "./ClientOnly";
 export default function Hero() {
   const { openModal } = useContactModal();
   return (
-    <section id="home" className="pt-36 pb-16 md:pt-44 md:pb-20 xl:pt-52 xl:pb-16">
+    <section id="home" className="pt-40 pb-16 md:pt-52 md:pb-20 xl:pt-60 xl:pb-16">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center">
         <motion.div 
           className="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10"
