@@ -23,7 +23,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
   apiKey: process.env.DEEPSEEK_API_KEY,
-  baseURL: 'https://api.deepseek.com/v1',
+  baseURL: 'https://api.deepseek.com',
 });
 
 export function registerRoutes(app: Express): void {
