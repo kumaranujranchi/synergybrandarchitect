@@ -2,8 +2,7 @@ import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
-// Popup removed: user requested disabling the site-wide promotional popup.
-// Service Recommendation (AI Assistant) removed as requested
+import ServiceRecommendation from "@/components/service-recommendation";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import PrivacyPolicy from "@/pages/privacy-policy";
@@ -256,6 +255,7 @@ function App({ initialData = {} }: { initialData?: Record<string, any> }) {
             {/* ClientOnly: Modals/Toasts use Radix UI useId() which causes SSR hydration mismatches */}
             <ClientOnly>
               <ContactModal />
+              <ServiceRecommendation />
               <Toaster />
             </ClientOnly>
           </ContactModalProvider>

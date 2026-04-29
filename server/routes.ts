@@ -19,6 +19,12 @@ import cookieParser from 'cookie-parser';
 import { sendPasswordResetEmail, sendOTPEmail } from './utils/mailer';
 import { z } from 'zod';
 import { incrementVisitorCount, getVisitorCount } from './visitorCount';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.DEEPSEEK_API_KEY,
+  baseURL: 'https://api.deepseek.com/v1',
+});
 
 export function registerRoutes(app: Express): void {
   // Middleware
@@ -94,9 +100,39 @@ export function registerRoutes(app: Express): void {
         message: 'Form submitted successfully',
         id: submission.id
       });
-    } catch (error) {
-      console.error('Error creating submission:', error);
-      res.status(400).json({ error: 'Invalid form data' });
+    }
+  });
+
+  app.post('/api/chat', async (req, res) => {
+    try {
+      const { message, history } = req.body;
+      
+      if (!message) {
+        return res.status(400).json({ error: 'Message is required' });
+      }
+
+      const response = await openai.chat.completions.create({
+        model: 'deepseek-chat',
+        messages: [
+          { 
+            role: 'system', 
+            content: `You are the Synergy AI Assistant for Synergy Brand Architect. You are professional, creative, and results-oriented. 
+            You specialize in Digital Marketing, Brand Building, Performance Marketing, and Workflow Automation.
+            Your goal is to help visitors understand how Synergy Brand Architect can scale their business.
+            Keep responses concise and conversational. Speak in a mix of English and Hindi (Hinglish) where appropriate to be relatable.
+            If the user is interested in services, encourage them to "Book a strategy call" on the website.` 
+          },
+          ...(history || []),
+          { role: 'user', content: message }
+        ],
+        stream: false,
+      });
+
+      const reply = response.choices[0].message.content;
+      res.json({ reply });
+    } catch (error: any) {
+      console.error('DeepSeek API Error:', error);
+      res.status(500).json({ error: 'Failed to get response from AI' });
     }
   });
   

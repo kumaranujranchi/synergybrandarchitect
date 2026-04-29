@@ -1,78 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Briefcase } from "lucide-react";
+import { X, Send, Briefcase, Mic, MicOff, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { smoothScrollTo } from "@/lib/scrollHelper";
-
-type Service = {
-  id: number;
-  name: string;
-  description: string;
-  sectionId: string;
-};
-
-const services: Service[] = [
-  {
-    id: 1,
-    name: "Brand Strategy",
-    description: "Define your unique market position and connect with your target audience through our comprehensive brand strategy.",
-    sectionId: "services"
-  },
-  {
-    id: 2,
-    name: "Logo Design",
-    description: "Get a distinctive visual identity with our professional logo design services.",
-    sectionId: "services"
-  },
-  {
-    id: 3,
-    name: "Website Development",
-    description: "Create a responsive, SEO-friendly website optimized for conversions and exceptional user experience.",
-    sectionId: "services"
-  },
-  {
-    id: 4,
-    name: "SEO Optimization",
-    description: "Improve your search engine visibility and drive organic traffic with our tailored SEO strategies.",
-    sectionId: "services"
-  },
-  {
-    id: 5,
-    name: "Social Media Marketing",
-    description: "Build brand awareness and engagement through strategic content and campaigns across social media platforms.",
-    sectionId: "services"
-  },
-  {
-    id: 6,
-    name: "Email Marketing",
-    description: "Nurture leads and drive conversions with targeted email campaigns and automated sequences.",
-    sectionId: "services"
-  },
-  {
-    id: 7,
-    name: "Video Marketing",
-    description: "Create engaging video content to increase engagement and stand out from competitors.",
-    sectionId: "services"
-  },
-  {
-    id: 8,
-    name: "Marketing Automation",
-    description: "Streamline your lead nurturing and sales processes with intelligent automation tools.",
-    sectionId: "services"
-  },
-  {
-    id: 9,
-    name: "Online Reputation Management",
-    description: "Build and protect your brand's credibility across digital platforms.",
-    sectionId: "services"
-  }
-];
 
 interface Message {
   id: string;
   text: string;
   isUser: boolean;
-  recommendations?: Service[];
+  role?: 'user' | 'assistant';
 }
 
 export default function ServiceRecommendation() {
@@ -82,17 +17,59 @@ export default function ServiceRecommendation() {
     {
       id: "welcome",
       text: "Hi there! 👋 I'm Synergy AI Assistant. How can I help you today with your branding or digital marketing needs?",
-      isUser: false
+      isUser: false,
+      role: 'assistant'
     }
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isBotTyping, setIsBotTyping] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
+
+  // Auto-scroll to bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isBotTyping]);
 
   useEffect(() => {
     // Show popup after 10 seconds of page load
     const timer = setTimeout(() => {
       setShowInitially(true);
     }, 10000);
+
+    // Initialize Speech Recognition
+    if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = 'en-IN'; // Support Indian English/Hindi mix
+
+      recognitionRef.current.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setInputValue(transcript);
+        setIsListening(false);
+        // Automatically send after voice input
+        handleChat(transcript);
+      };
+
+      recognitionRef.current.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsListening(false);
+      };
+    }
 
     return () => clearTimeout(timer);
   }, []);
@@ -104,120 +81,84 @@ export default function ServiceRecommendation() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+  const speak = (text: string) => {
+    if (!voiceEnabled || typeof window === 'undefined') return;
+    
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'hi-IN'; // Try Hindi voice for Hinglish feel
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inputValue.trim() === "") return;
+  const handleChat = async (text: string) => {
+    if (!text.trim()) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputValue,
-      isUser: true
+      text: text,
+      isUser: true,
+      role: 'user'
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
     setIsBotTyping(true);
 
-    // Simulate AI response after a short delay
-    setTimeout(() => {
-      const recommendedServices = getRecommendedServices(inputValue);
+    try {
+      const history = messages.map(m => ({
+        role: m.role || (m.isUser ? 'user' : 'assistant'),
+        content: m.text
+      })).slice(-6); // Keep last 6 messages for context
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, history })
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch response');
+      
+      const data = await response.json();
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: getBotResponse(inputValue, recommendedServices),
+        text: data.reply,
         isUser: false,
-        recommendations: recommendedServices
+        role: 'assistant'
       };
 
       setMessages((prev) => [...prev, botResponse]);
+      speak(data.reply);
+    } catch (error) {
+      console.error('Chat Error:', error);
+      const errorMessage: Message = {
+        id: 'error',
+        text: "Sorry, I'm having trouble connecting. Please try again.",
+        isUser: false,
+        role: 'assistant'
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
       setIsBotTyping(false);
-    }, 1500);
+    }
   };
 
-  const getRecommendedServices = (userQuery: string): Service[] => {
-    const query = userQuery.toLowerCase();
-    
-    // Simple keyword matching for service recommendations
-    const keywordMap: { [key: string]: number[] } = {
-      "brand": [1, 2, 4],
-      "logo": [2],
-      "design": [2],
-      "website": [3],
-      "web": [3],
-      "site": [3],
-      "seo": [4],
-      "search": [4],
-      "google": [4],
-      "ranking": [4],
-      "social": [5],
-      "facebook": [5],
-      "instagram": [5],
-      "linkedin": [5],
-      "email": [6],
-      "newsletter": [6],
-      "video": [7],
-      "youtube": [7],
-      "reels": [7],
-      "automation": [8],
-      "crm": [8],
-      "leads": [8, 6],
-      "reputation": [9],
-      "reviews": [9],
-      "feedback": [9],
-      "identity": [1, 2],
-      "start": [1, 2, 3],
-      "beginning": [1, 2, 3],
-      "new": [1, 2, 3]
-    };
-    
-    // Find matching services based on keywords
-    const matchingServiceIds = new Set<number>();
-    
-    Object.entries(keywordMap).forEach(([keyword, serviceIds]) => {
-      if (query.includes(keyword)) {
-        serviceIds.forEach(id => matchingServiceIds.add(id));
-      }
-    });
-    
-    // If no specific matches, recommend strategic services
-    if (matchingServiceIds.size === 0) {
-      return [services[0], services[2], services[4]]; // Brand Strategy, Website, Social Media
+  const toggleListening = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      recognitionRef.current?.start();
+      setIsListening(true);
     }
-    
-    return services.filter(service => matchingServiceIds.has(service.id));
-  };
-
-  const getBotResponse = (userQuery: string, recommendedServices: Service[]): string => {
-    if (recommendedServices.length === 0) {
-      return "I'm not sure I understand your needs. Could you tell me more about what you're looking for?";
-    }
-    
-    const query = userQuery.toLowerCase();
-    
-    // Personalized responses based on query patterns
-    if (query.includes("hello") || query.includes("hi ") || query.includes("hey")) {
-      return "Hello! 👋 Based on your interests, I think these services might be helpful for you:";
-    }
-    
-    if (query.includes("cost") || query.includes("price") || query.includes("pricing") || query.includes("package")) {
-      return "Our pricing depends on your specific needs. Based on what you're asking about, here are some services that might interest you:";
-    }
-    
-    if (query.includes("time") || query.includes("long") || query.includes("duration") || query.includes("when")) {
-      return "Project timelines vary based on complexity. For the services you're interested in, here are some options we offer:";
-    }
-    
-    return "Based on what you're looking for, I'd recommend these services:";
-  };
-
-  const handleServiceClick = (sectionId: string) => {
-    setIsOpen(false);
-    setTimeout(() => {
-      smoothScrollTo(`#${sectionId}`);
-    }, 300);
   };
 
   return (
@@ -230,7 +171,7 @@ export default function ServiceRecommendation() {
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.8 }}
-              className="bg-white p-4 rounded-lg shadow-lg mb-4 max-w-xs fixed bottom-24 right-24"
+              className="bg-white p-4 rounded-lg shadow-lg mb-4 max-w-xs fixed bottom-24 right-24 border border-orange-100"
             >
               <button
                 onClick={() => setShowInitially(false)}
@@ -238,8 +179,8 @@ export default function ServiceRecommendation() {
               >
                 <X size={16} />
               </button>
-              <p className="text-sm">
-                Need help choosing the right service for your business? Chat with our AI assistant! 🤖
+              <p className="text-sm font-medium text-gray-700">
+                Hi! Main Liv hoon. 😊 Need help with your branding? Talk to me! 🎤
               </p>
             </motion.div>
           )}
@@ -247,12 +188,15 @@ export default function ServiceRecommendation() {
 
         <motion.button
           onClick={togglePopup}
-          className="w-16 h-16 bg-[#0066CC] rounded-full flex items-center justify-center shadow-lg hover:bg-[#005bb7] transition-colors"
+          className="w-16 h-16 bg-[#FF6B00] rounded-full flex items-center justify-center shadow-lg hover:bg-orange-600 transition-colors relative"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           aria-label="Chat with AI Assistant"
         >
           <Briefcase className="text-white text-3xl" />
+          {isBotTyping && (
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-blue-500 rounded-full animate-pulse" />
+          )}
         </motion.button>
       </div>
 
@@ -263,82 +207,104 @@ export default function ServiceRecommendation() {
             initial={{ opacity: 0, y: 20, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
-            className="fixed bottom-24 right-24 w-80 md:w-96 bg-white rounded-xl shadow-2xl z-50 overflow-hidden"
+            className="fixed bottom-24 right-24 w-80 md:w-96 bg-white rounded-2xl shadow-2xl z-50 overflow-hidden border border-gray-100 flex flex-col h-[500px]"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white p-4 flex justify-between items-center">
-              <div className="flex items-center">
-                <Briefcase className="mr-2" size={20} />
-                <h3 className="font-medium">Synergy AI Assistant</h3>
+            <div className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white p-4 flex justify-between items-center shadow-md">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center border border-white/30 relative">
+                  <Briefcase size={20} />
+                  {isSpeaking && (
+                    <div className="absolute inset-0 rounded-full border-2 border-white animate-ping opacity-50" />
+                  )}
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm">Synergy AI - Liv</h3>
+                  <div className="flex items-center gap-1">
+                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                    <span className="text-[10px] opacity-90 uppercase tracking-widest font-bold">Online</span>
+                  </div>
+                </div>
               </div>
-              <button
-                onClick={togglePopup}
-                className="text-white hover:text-gray-200 transition-colors"
-              >
-                <X size={20} />
-              </button>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => setVoiceEnabled(!voiceEnabled)}
+                  className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                >
+                  {voiceEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+                </button>
+                <button
+                  onClick={togglePopup}
+                  className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
 
             {/* Chat Messages */}
-            <div className="p-4 h-80 overflow-y-auto flex flex-col space-y-4">
+            <div className="flex-1 p-4 overflow-y-auto flex flex-col space-y-4 bg-gray-50/50">
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
                   <div
-                    className={`rounded-lg p-3 max-w-[80%] ${
+                    className={`rounded-2xl p-4 max-w-[85%] shadow-sm text-sm leading-relaxed ${
                       message.isUser
-                        ? 'bg-[#0066CC] text-white'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'bg-[#1A1A1A] text-white rounded-tr-none'
+                        : 'bg-white text-gray-800 border border-gray-100 rounded-tl-none'
                     }`}
                   >
-                    <p className="text-sm">{message.text}</p>
-                    
-                    {message.recommendations && message.recommendations.length > 0 && (
-                      <div className="mt-2 space-y-2">
-                        {message.recommendations.map((service) => (
-                          <button
-                            key={service.id}
-                            onClick={() => handleServiceClick(service.sectionId)}
-                            className="w-full text-left px-3 py-2 bg-white text-[#0066CC] text-xs rounded border border-[#0066CC]/30 hover:bg-[#0066CC]/10 transition-colors"
-                          >
-                            <div className="font-medium">{service.name}</div>
-                            <div className="text-gray-600 text-xs mt-1 line-clamp-2">{service.description}</div>
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                    {message.text}
                   </div>
                 </div>
               ))}
 
               {isBotTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-100 text-gray-800 rounded-lg p-3">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-4 shadow-sm">
+                    <div className="flex space-x-1.5">
+                      <div className="w-1.5 h-1.5 bg-[#FF6B00] rounded-full animate-bounce"></div>
+                      <div className="w-1.5 h-1.5 bg-[#FF6B00] rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                      <div className="w-1.5 h-1.5 bg-[#FF6B00] rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
                     </div>
                   </div>
                 </div>
               )}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
-            <form onSubmit={handleSubmit} className="border-t p-3 flex">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-                placeholder="Ask about our services..."
-                className="flex-1 px-3 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#0066CC]"
-              />
-              <Button
-                type="submit"
-                className="bg-[#0066CC] hover:bg-[#005bb7] rounded-l-none"
+            <div className="p-4 bg-white border-t border-gray-100">
+              <form 
+                onSubmit={(e) => { e.preventDefault(); handleChat(inputValue); }} 
+                className="flex items-center gap-2"
               >
-                <Send size={18} />
-              </Button>
-            </form>
+                <div className="flex-1 relative">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder={isListening ? "Listening..." : "Type or speak..."}
+                    className="w-full pl-4 pr-10 py-3 bg-gray-100 border-none rounded-2xl focus:ring-2 focus:ring-orange-500/50 text-sm transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleListening}
+                    className={`absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full transition-all ${
+                      isListening ? 'bg-red-500 text-white animate-pulse' : 'text-gray-400 hover:text-orange-500'
+                    }`}
+                  >
+                    {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                  </button>
+                </div>
+                <Button
+                  type="submit"
+                  disabled={!inputValue.trim() || isBotTyping}
+                  className="bg-[#1A1A1A] hover:bg-black text-white w-12 h-12 rounded-2xl p-0 flex items-center justify-center shadow-lg active:scale-95 transition-transform"
+                >
+                  <Send size={20} />
+                </Button>
+              </form>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
