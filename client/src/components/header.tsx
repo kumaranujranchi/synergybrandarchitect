@@ -14,7 +14,7 @@ const navLinks = [
   { href: "/portfolio", label: "Portfolio", isPage: true },
   { href: "/blog", label: "Blog", isPage: true },
   { href: "/careers", label: "Careers", isPage: true },
-  { href: "#contact", label: "Contact" },
+  { href: "/contact", label: "Contact", isPage: true },
 ];
 
 export default function Header() {
