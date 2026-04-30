@@ -141,8 +141,19 @@ export default function BlogDetail() {
               </h1>
 
               {blog.coverImage && (
-                <div className="mb-12 rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                  <img src={blog.coverImage} className="w-full h-auto object-contain max-h-[550px] bg-gray-50" alt={blog.title} />
+                <div className="mb-12 rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-black relative aspect-video">
+                  {/* Blurred Background */}
+                  <img 
+                    src={blog.coverImage} 
+                    className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-50 scale-110" 
+                    alt="" 
+                  />
+                  {/* Main Image */}
+                  <img 
+                    src={blog.coverImage} 
+                    className="relative z-10 w-full h-auto object-contain max-h-[550px] mx-auto" 
+                    alt={blog.title} 
+                  />
                 </div>
               )}
 
@@ -225,10 +236,17 @@ export default function BlogDetail() {
                           className="group cursor-pointer flex gap-4"
                           onClick={() => setLocation(`/blog/${post.slug}`)}
                         >
-                          <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden border border-gray-50 shadow-sm">
+                          <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden border border-gray-50 shadow-sm bg-black relative">
+                            {/* Blurred Background */}
                             <img 
                               src={post.coverImage || "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400"} 
-                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 bg-gray-50" 
+                              className="absolute inset-0 w-full h-full object-cover blur-lg opacity-40 scale-110" 
+                              alt="" 
+                            />
+                            {/* Main Image */}
+                            <img 
+                              src={post.coverImage || "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400"} 
+                              className="relative z-10 w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" 
                               alt={post.title}
                             />
                           </div>

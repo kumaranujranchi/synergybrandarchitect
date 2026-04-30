@@ -75,4 +75,44 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
   }),
+
+  // Careers / Job Board
+  jobs: defineTable({
+    title: v.string(),
+    slug: v.string(),
+    department: v.string(),
+    type: v.string(), // 'Full-time', 'Part-time', 'Internship', 'Contract'
+    location: v.string(),
+    salary: v.optional(v.string()),
+    description: v.string(), // Rich text / Markdown
+    requirements: v.array(v.string()),
+    benefits: v.optional(v.array(v.string())),
+    questions: v.optional(v.array(v.object({
+      id: v.string(),
+      text: v.string(),
+      type: v.string(), // 'text', 'textarea', 'select'
+      required: v.boolean(),
+      options: v.optional(v.array(v.string())), // For select type
+    }))),
+    status: v.string(), // 'draft', 'open', 'closed'
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_slug", ["slug"]),
+
+  applications: defineTable({
+    jobId: v.id("jobs"),
+    name: v.string(),
+    email: v.string(),
+    phone: v.string(),
+    resumeUrl: v.string(), // File storage ID or URL
+    portfolioUrl: v.optional(v.string()),
+    linkedinUrl: v.optional(v.string()),
+    answers: v.optional(v.array(v.object({
+      questionId: v.string(),
+      answer: v.string(),
+    }))),
+    status: v.string(), // 'pending', 'reviewed', 'shortlisted', 'rejected', 'hired'
+    appliedAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_job", ["jobId"]),
 });

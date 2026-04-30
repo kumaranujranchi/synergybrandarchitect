@@ -59,9 +59,20 @@ const CategorySection = ({ title, posts, color, icon: Icon, setLocation }: any) 
             className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all flex flex-col group cursor-pointer" 
             onClick={() => setLocation(`/blog/${post.slug}`)}
           >
-            <div className="relative aspect-video overflow-hidden bg-gray-100">
-              <img src={post.coverImage || `https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&sig=${post._id}`} className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" alt={post.title} />
-              <span className={`absolute top-3 left-3 ${theme.bg} text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10 shadow-sm`}>{post.category || title}</span>
+            <div className="relative aspect-video overflow-hidden bg-black">
+              {/* Blurred Background */}
+              <img 
+                src={post.coverImage || `https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&sig=${post._id}`} 
+                className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110" 
+                alt="" 
+              />
+              {/* Main Image */}
+              <img 
+                src={post.coverImage || `https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&sig=${post._id}`} 
+                className="relative z-10 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" 
+                alt={post.title} 
+              />
+              <span className={`absolute top-3 left-3 ${theme.bg} text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-20 shadow-sm`}>{post.category || title}</span>
             </div>
             <div className="p-6 flex flex-col flex-grow">
                <div className="flex items-center text-xs text-gray-400 gap-2 mb-3">
@@ -172,13 +183,20 @@ export default function BlogList() {
                   className="lg:col-span-8 group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 flex flex-col transition-all"
                   onClick={() => setLocation(`/blog/${mainFeature.slug}`)}
                 >
-                  <div className="relative aspect-video lg:max-h-[450px] overflow-hidden bg-gray-100">
+                  <div className="relative aspect-video lg:max-h-[450px] overflow-hidden bg-black">
+                    {/* Blurred Background */}
+                    <img 
+                      src={mainFeature.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200"} 
+                      className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-60 scale-110" 
+                      alt="" 
+                    />
+                    {/* Main Image */}
                     <img 
                       src={mainFeature.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200"} 
                       alt={mainFeature.title}
-                      className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                      className="relative z-10 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                     />
-                    <span className="absolute top-4 left-4 bg-[#FF6B00] text-white font-semibold text-xs px-3 py-1 rounded shadow-md uppercase tracking-wider z-10">
+                    <span className="absolute top-4 left-4 bg-[#FF6B00] text-white font-semibold text-xs px-3 py-1 rounded shadow-md uppercase tracking-wider z-20">
                       {mainFeature.category || "Featured"}
                     </span>
                   </div>
@@ -210,11 +228,18 @@ export default function BlogList() {
                     className="flex flex-col group cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all"
                     onClick={() => setLocation(`/blog/${post.slug}`)}
                   >
-                    <div className="relative aspect-video overflow-hidden bg-gray-100">
+                    <div className="relative aspect-video overflow-hidden bg-black">
+                      {/* Blurred Background */}
+                      <img 
+                        src={post.coverImage || (idx === 0 ? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" : "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800")} 
+                        className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110" 
+                        alt="" 
+                      />
+                      {/* Main Image */}
                       <img 
                         src={post.coverImage || (idx === 0 ? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" : "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800")} 
                         alt={post.title}
-                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                        className="relative z-10 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
                     
@@ -304,9 +329,20 @@ export default function BlogList() {
                             className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md border border-gray-100 transition-all flex flex-col group cursor-pointer" 
                             onClick={() => setLocation(`/blog/${post.slug}`)}
                           >
-                            <div className="relative aspect-video overflow-hidden bg-gray-100">
-                              <img src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" alt={post.title} />
-                              <span className="absolute top-3 left-3 bg-[#333333] text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">{post.category || "Insight"}</span>
+                            <div className="relative aspect-video overflow-hidden bg-black">
+                              {/* Blurred Background */}
+                              <img 
+                                src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} 
+                                className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-50 scale-110" 
+                                alt="" 
+                              />
+                              {/* Main Image */}
+                              <img 
+                                src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} 
+                                className="relative z-10 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" 
+                                alt={post.title} 
+                              />
+                              <span className="absolute top-3 left-3 bg-[#333333] text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-20">{post.category || "Insight"}</span>
                             </div>
                             <div className="p-6 flex flex-col flex-grow">
                                <div className="flex items-center text-xs text-gray-400 gap-2 mb-3">
@@ -370,7 +406,20 @@ export default function BlogList() {
                    <div className="space-y-5">
                      {editorsPicks.map((post: any, idx: number) => (
                        <div key={post._id} className="flex gap-4 group cursor-pointer" onClick={() => setLocation(`/blog/${post.slug}`)}>
-                         <img src={post.coverImage || `https://images.unsplash.com/photo-1542435503-956c469947f6?w=200&q=80&random=${idx}`} className="w-20 h-20 object-contain rounded shadow-sm bg-gray-50" alt="Thumbnail" />
+                         <div className="relative w-20 h-20 shrink-0 overflow-hidden rounded shadow-sm bg-black">
+                           {/* Blurred Background */}
+                           <img 
+                             src={post.coverImage || `https://images.unsplash.com/photo-1542435503-956c469947f6?w=200&q=80&random=${idx}`} 
+                             className="absolute inset-0 w-full h-full object-cover blur-lg opacity-40 scale-110" 
+                             alt="" 
+                           />
+                           {/* Main Image */}
+                           <img 
+                             src={post.coverImage || `https://images.unsplash.com/photo-1542435503-956c469947f6?w=200&q=80&random=${idx}`} 
+                             className="relative z-10 w-full h-full object-contain" 
+                             alt="Thumbnail" 
+                           />
+                         </div>
                          <div>
                            <h4 className="text-sm font-bold text-gray-900 group-hover:text-[#0066CC] line-clamp-2 leading-tight mb-2">{post.title}</h4>
                            <span className="text-xs text-gray-400 flex items-center"><Clock size={12} className="mr-1"/>{format(post.publishedAt || post.createdAt, 'MMM dd')}</span>

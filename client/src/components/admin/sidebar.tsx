@@ -9,7 +9,8 @@ import {
   ChevronRight,
   LayoutDashboard,
   Newspaper,
-  FolderKanban
+  FolderKanban,
+  Briefcase
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -178,6 +179,15 @@ export default function AdminSidebar() {
           >
             <FolderKanban className="h-5 w-5" />
             {!isCollapsed && <span>Portfolio</span>}
+          </Button>
+
+          <Button
+            variant="ghost"
+            className={menuItemClass('/admin/careers')}
+            onClick={() => setLocation('/admin/careers')}
+          >
+            <Briefcase className="h-5 w-5" />
+            {!isCollapsed && <span>Careers</span>}
           </Button>
         </nav>
       </div>

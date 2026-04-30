@@ -12,8 +12,10 @@ import type * as auth from "../auth.js";
 import type * as blogs from "../blogs.js";
 import type * as chat from "../chat.js";
 import type * as cli from "../cli.js";
+import type * as jobs from "../jobs.js";
 import type * as portfolio from "../portfolio.js";
 import type * as submissions from "../submissions.js";
+import type * as voice from "../voice.js";
 
 import type {
   ApiFromModules,
@@ -26,8 +28,10 @@ declare const fullApi: ApiFromModules<{
   blogs: typeof blogs;
   chat: typeof chat;
   cli: typeof cli;
+  jobs: typeof jobs;
   portfolio: typeof portfolio;
   submissions: typeof submissions;
+  voice: typeof voice;
 }>;
 
 /**

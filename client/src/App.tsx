@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect } from "react";
 import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -32,12 +33,6 @@ import AdminDashboard from "@/pages/admin/dashboard";
 import AdminSubmissions from "@/pages/admin/submissions";
 import AdminUsers from "@/pages/admin/users";
 import AdminBlogs from "@/pages/admin/blogs/index";
-// Lazy load editor pages - they use Tiptap which has browser-only deps (@tiptap/extension-link)
-// that crash during SSR. Lazy loading defers them to client-side only.
-import { lazy, Suspense, useEffect } from "react";
-const AdminBlogEditor = lazy(() => import("@/pages/admin/blogs/editor"));
-const AdminPortfolioEditor = lazy(() => import("@/pages/admin/portfolio/editor"));
-
 import AdminPortfolio from "@/pages/admin/portfolio/index";
 
 import WishluvBuildconCaseStudy from "@/pages/case-studies/wishluv-buildcon";
@@ -49,12 +44,23 @@ import ResetPasswordPage from "@/pages/reset-password";
 import { scrollToTop } from "@/lib/scrollHelper";
 import { AuthProvider } from "@/hooks/use-auth";
 import { updateSchemaMarkup } from "@/utils/schemaMarkup";
-
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { ContactModalProvider } from "@/hooks/use-contact-modal";
 import ContactModal from "@/components/contact-modal";
 import { ClientOnly } from "@/components/ClientOnly";
 import { InitialDataProvider } from "@/hooks/use-initial-data";
+
+// Lazy load editor pages - they use Tiptap which has browser-only deps (@tiptap/extension-link)
+// that crash during SSR. Lazy loading defers them to client-side only.
+const AdminBlogEditor = lazy(() => import("@/pages/admin/blogs/editor"));
+const AdminPortfolioEditor = lazy(() => import("@/pages/admin/portfolio/editor"));
+
+// Lazy load Careers pages to prevent SSR issues
+const Careers = lazy(() => import("@/pages/careers"));
+const JobDetail = lazy(() => import("@/pages/job-detail"));
+const AdminCareers = lazy(() => import("@/pages/admin/careers/index"));
+const AdminJobEditor = lazy(() => import("@/pages/admin/careers/job-editor"));
+const AdminApplications = lazy(() => import("@/pages/admin/careers/applications"));
 
 
 function Router() {
@@ -92,6 +98,18 @@ function Router() {
       
       {/* Search Route */}
       <Route path="/search" component={SearchPage} />
+      
+      {/* Careers Routes */}
+      <Route path="/careers">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+          <Careers />
+        </Suspense>
+      </Route>
+      <Route path="/careers/:slug">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+          <JobDetail />
+        </Suspense>
+      </Route>
       
       {/* Case Study Routes */}
       <Route path="/case-study" component={CaseStudyPage} />
@@ -138,6 +156,28 @@ function Router() {
       <Route path="/admin/portfolio/edit/:id">
         <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading editor...</div>}>
           <AdminPortfolioEditor />
+        </Suspense>
+      </Route>
+      
+      {/* Admin Careers Routes */}
+      <Route path="/admin/careers">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+          <AdminCareers />
+        </Suspense>
+      </Route>
+      <Route path="/admin/careers/new">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+          <AdminJobEditor />
+        </Suspense>
+      </Route>
+      <Route path="/admin/careers/edit/:id">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+          <AdminJobEditor />
+        </Suspense>
+      </Route>
+      <Route path="/admin/careers/applications">
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+          <AdminApplications />
         </Suspense>
       </Route>
 
