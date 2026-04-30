@@ -250,7 +250,7 @@ export default function AuthPage() {
                         <FormItem>
                           <FormLabel>Full Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="John Doe" {...field} />
+                            <Input placeholder="Full Name" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

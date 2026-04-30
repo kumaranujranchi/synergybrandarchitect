@@ -216,12 +216,18 @@ export default function ServiceRecommendation() {
               opacity: 1, 
               y: 0, 
               scale: 1,
-              width: isExpanded ? '90vw' : '384px',
-              height: isExpanded ? '85vh' : '550px',
-              maxWidth: isExpanded ? '1000px' : '384px'
             }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
-            className={`fixed bottom-24 right-6 bg-white rounded-2xl shadow-2xl z-[9999] overflow-hidden border border-gray-100 flex flex-col transition-all duration-300`}
+            className={`fixed z-[9999] bg-white shadow-2xl border border-gray-100 flex flex-col transition-all duration-300 overflow-hidden
+              ${
+                isExpanded
+                  ? "inset-4 rounded-2xl"
+                  : "bottom-20 right-3 left-3 rounded-2xl sm:left-auto sm:right-6 sm:w-96 sm:bottom-24"
+              }
+              ${
+                isExpanded ? "" : "max-h-[80vh] sm:max-h-[550px]"
+              }
+            `}
           >
             <div className="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white p-4 flex justify-between items-center shadow-md">
               <div className="flex items-center space-x-3">

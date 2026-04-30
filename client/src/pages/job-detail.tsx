@@ -241,7 +241,7 @@ export default function JobDetail() {
                           <input 
                             {...register("email")}
                             className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] outline-none transition-all"
-                            placeholder="john@example.com"
+                            placeholder="yourname@gmail.com"
                           />
                           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message as string}</p>}
                         </div>

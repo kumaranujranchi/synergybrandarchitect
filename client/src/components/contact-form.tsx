@@ -92,7 +92,7 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
                 <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">Your Name</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="John Doe" 
+                    placeholder="Full Name" 
                     {...field} 
                     className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300 placeholder:text-gray-400" 
                   />
@@ -111,7 +111,7 @@ export default function ContactForm({ onSuccess, className }: ContactFormProps) 
                   <FormLabel className="text-gray-700 font-semibold text-sm uppercase tracking-wider ml-1">Email Address</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="john@example.com" 
+                      placeholder="yourname@gmail.com" 
                       type="email" 
                       {...field} 
                       className="px-5 py-4 h-auto bg-gray-50/50 border-gray-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-orange-500/10 focus:border-[#FF6B00] transition-all duration-300 placeholder:text-gray-400" 
