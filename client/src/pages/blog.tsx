@@ -60,7 +60,7 @@ const CategorySection = ({ title, posts, color, icon: Icon, setLocation }: any) 
             onClick={() => setLocation(`/blog/${post.slug}`)}
           >
             <div className="relative aspect-video overflow-hidden bg-gray-100">
-              <img src={post.coverImage || `https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&sig=${post._id}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={post.title} />
+              <img src={post.coverImage || `https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80&sig=${post._id}`} className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" alt={post.title} />
               <span className={`absolute top-3 left-3 ${theme.bg} text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10 shadow-sm`}>{post.category || title}</span>
             </div>
             <div className="p-6 flex flex-col flex-grow">
@@ -176,7 +176,7 @@ export default function BlogList() {
                     <img 
                       src={mainFeature.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200"} 
                       alt={mainFeature.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                     />
                     <span className="absolute top-4 left-4 bg-[#FF6B00] text-white font-semibold text-xs px-3 py-1 rounded shadow-md uppercase tracking-wider z-10">
                       {mainFeature.category || "Featured"}
@@ -214,7 +214,7 @@ export default function BlogList() {
                       <img 
                         src={post.coverImage || (idx === 0 ? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" : "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800")} 
                         alt={post.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
                     
@@ -305,7 +305,7 @@ export default function BlogList() {
                             onClick={() => setLocation(`/blog/${post.slug}`)}
                           >
                             <div className="relative aspect-video overflow-hidden bg-gray-100">
-                              <img src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={post.title} />
+                              <img src={post.coverImage || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"} className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105" alt={post.title} />
                               <span className="absolute top-3 left-3 bg-[#333333] text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">{post.category || "Insight"}</span>
                             </div>
                             <div className="p-6 flex flex-col flex-grow">
@@ -370,7 +370,7 @@ export default function BlogList() {
                    <div className="space-y-5">
                      {editorsPicks.map((post: any, idx: number) => (
                        <div key={post._id} className="flex gap-4 group cursor-pointer" onClick={() => setLocation(`/blog/${post.slug}`)}>
-                         <img src={post.coverImage || `https://images.unsplash.com/photo-1542435503-956c469947f6?w=200&q=80&random=${idx}`} className="w-20 h-20 object-cover rounded shadow-sm" alt="Thumbnail" />
+                         <img src={post.coverImage || `https://images.unsplash.com/photo-1542435503-956c469947f6?w=200&q=80&random=${idx}`} className="w-20 h-20 object-contain rounded shadow-sm bg-gray-50" alt="Thumbnail" />
                          <div>
                            <h4 className="text-sm font-bold text-gray-900 group-hover:text-[#0066CC] line-clamp-2 leading-tight mb-2">{post.title}</h4>
                            <span className="text-xs text-gray-400 flex items-center"><Clock size={12} className="mr-1"/>{format(post.publishedAt || post.createdAt, 'MMM dd')}</span>

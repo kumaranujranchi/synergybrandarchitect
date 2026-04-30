@@ -142,7 +142,7 @@ export default function BlogDetail() {
 
               {blog.coverImage && (
                 <div className="mb-12 rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                  <img src={blog.coverImage} className="w-full h-auto object-cover max-h-[550px]" alt={blog.title} />
+                  <img src={blog.coverImage} className="w-full h-auto object-contain max-h-[550px] bg-gray-50" alt={blog.title} />
                 </div>
               )}
 
@@ -228,7 +228,7 @@ export default function BlogDetail() {
                           <div className="w-20 h-20 shrink-0 rounded-lg overflow-hidden border border-gray-50 shadow-sm">
                             <img 
                               src={post.coverImage || "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400"} 
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 bg-gray-50" 
                               alt={post.title}
                             />
                           </div>
