@@ -174,8 +174,8 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <SEO 
-        title="Our Services | Digital Marketing & Brand Building - Synergy Brand Architect"
-        description="Comprehensive services including SEO, Social Media Marketing, Web Development, Automation, and Brand Building to scale your business impact."
+        title="Our Services | Best Web Development Agency in Patna - Synergy Brand Architect"
+        description="Explore premium services from the Best Web Development Agency in Patna. We offer expert SEO, Performance Marketing, and Workflow Automation tailored for your brand growth."
         canonicalPath="/services"
       />
       <Header />

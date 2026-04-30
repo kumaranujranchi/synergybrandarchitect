@@ -1,12 +1,13 @@
-import { Link } from "wouter";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import WhatsappButton from "../components/whatsapp-button";
 import { ArrowLeft, Lock } from "lucide-react";
+import SEO from "@/components/seo";
 
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO title="Privacy Policy | Synergy Brand Architect" description="Read our privacy policy to understand how we collect and use your data." noindex={true} />
       <Header />
 
       <main className="container mx-auto px-4 pt-72 md:pt-56 pb-12">

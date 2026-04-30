@@ -7,6 +7,7 @@ import { useMutation } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { useToast } from "@/hooks/use-toast";
 import { LoginData } from "@shared/schema";
+import SEO from "@/components/seo";
 
 import {
   Card,
@@ -96,6 +97,7 @@ export default function AdminLogin() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+      <SEO title="Admin Login | Synergy Brand Architect" description="Login to access the admin dashboard" noindex={true} />
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
           <img 

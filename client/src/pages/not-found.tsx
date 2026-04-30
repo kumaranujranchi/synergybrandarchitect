@@ -4,11 +4,13 @@ import { useContactModal } from "@/hooks/use-contact-modal";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
+import SEO from "@/components/seo";
 
 export default function NotFound() {
   const { openModal } = useContactModal();
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
+      <SEO title="404 - Page Not Found" description="The page you are looking for does not exist." noindex={true} />
       <Header />
       
       <main className="flex-grow">

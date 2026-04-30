@@ -4,6 +4,7 @@ import WhatsappButton from "@/components/whatsapp-button";
 import { useState, useEffect } from "react";
 import { Search as SearchIcon } from "lucide-react";
 import { useLocation } from "wouter";
+import SEO from "@/components/seo";
 
 export default function SearchPage() {
   const [, setLocation] = useLocation();
@@ -26,6 +27,11 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="Search | Synergy Brand Architect"
+        description="Search results for Synergy Brand Architect website."
+        noindex={true}
+      />
       <Header />
       
       {/* Hero Section */}

@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { Menu, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AdminSidebar from "./sidebar";
+import SEO from "@/components/seo";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -44,6 +45,11 @@ export default function AdminLayout({ children, title, description, backButton }
 
   return (
     <div className="flex min-h-screen bg-slate-50 relative">
+      <SEO 
+        title={title ? `${title} | Admin - Synergy Brand Architect` : "Admin Dashboard | Synergy Brand Architect"} 
+        description={description || "Admin management area for Synergy Brand Architect"}
+        noindex={true}
+      />
       {/* Sidebar - desktop */}
       <div className="hidden md:block sticky top-0 h-screen z-20 shrink-0 shadow-sm">
         <AdminSidebar />

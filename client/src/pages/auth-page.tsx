@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // Import types from our auth hook instead of schema
 import type { LoginData, RegisterData } from "@/hooks/use-auth";
+import Header from "@/components/header";
+import SEO from "@/components/seo";
 import { z } from "zod";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2 } from "lucide-react";
@@ -163,7 +165,14 @@ export default function AuthPage() {
   }
   
   return (
-    <div className="container mx-auto px-4 py-32 md:py-40 min-h-screen">
+    <div className="min-h-screen bg-white">
+      <SEO 
+        title="Login / Register | Synergy Brand Architect"
+        description="Secure login and registration for Synergy Brand Architect clients and administrators."
+        noindex={true}
+      />
+      <Header />
+      <div className="container mx-auto px-4 py-32 md:py-40">
       <div className="flex flex-col md:flex-row shadow-lg rounded-lg overflow-hidden">
         {/* Left Column - Form */}
         <div className="w-full md:w-1/2 p-6 sm:p-8 bg-white">

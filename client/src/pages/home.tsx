@@ -21,8 +21,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="Synergy Brand Architect | Digital Marketing & Brand Building Agency in Patna"
-        description="Top-rated digital marketing agency in Patna. We specialize in SEO, Social Media Marketing, Web Development, and Brand Building strategies for business growth."
+        title="Best Digital Marketing Agency in Patna | Synergy Brand Architect"
+        description="Looking for the Best Digital Marketing Agency in Patna? Synergy Brand Architect offers top-notch SEO, Best Web Development in Patna, and Social Media Marketing services to scale your business."
         canonicalPath="/"
       />
       <Header />

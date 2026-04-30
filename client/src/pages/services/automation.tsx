@@ -24,8 +24,9 @@ import {
 import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/seo";
 
-export default function Automation() {
+export default function AutomationPage() {
   const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -73,6 +74,11 @@ export default function Automation() {
 
   return (
     <div className="min-h-screen bg-white selection:bg-emerald-100 selection:text-emerald-600">
+      <SEO 
+        title="Workflow Automation Services | Best Digital Marketing Agency in Patna"
+        description="Optimize your business with automation from the Best Digital Marketing Agency in Patna. We build efficient workflows using n8n and Make.com."
+        canonicalPath="/services/workflow-automation"
+      />
       <Header />
       
       <main className="pt-72 md:pt-56 overflow-x-hidden">

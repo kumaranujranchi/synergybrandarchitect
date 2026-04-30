@@ -2,27 +2,24 @@ import { Link } from "wouter";
 import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useContactModal } from "@/hooks/use-contact-modal";
+import SEO from "@/components/seo";
 
 const services = [
-  { title: "Brand Strategy & Positioning", url: "/services?tab=brand" },
-  { title: "Logo & Identity Design", url: "/services?tab=brand" },
-  { title: "Brand Guidelines", url: "/services?tab=brand" },
-  { title: "Brand Messaging", url: "/services?tab=brand" },
-  { title: "SEO Optimization", url: "/services?tab=digital" },
-  { title: "Social Media Marketing", url: "/services?tab=digital" },
-  { title: "Paid Advertising", url: "/services?tab=digital" },
-  { title: "Content Marketing", url: "/services?tab=digital" },
-  { title: "Email Marketing", url: "/services?tab=digital" },
-  { title: "Lead Generation", url: "/services?tab=digital" },
-  { title: "Website Development", url: "/services?tab=tech" },
-  { title: "Website Maintenance", url: "/services?tab=tech" },
-  { title: "E-commerce Development", url: "/services?tab=tech" },
+  { title: "Brand Building & Strategy", url: "/services/brand-building" },
+  { title: "Social Media Marketing", url: "/services/social-media-marketing" },
+  { title: "Web & Mobile App Development", url: "/services/web-app-development" },
+  { title: "Workflow Automation", url: "/services/automation" },
+  { title: "Performance Marketing", url: "/services/performance-marketing" },
+  { title: "SEO Optimization", url: "/services/seo" },
 ];
 
 const resources = [
-  { title: "Case Study: Wishluv Buildcon", url: "/case-study/wishluv-buildcon" },
-  { title: "Case Study: Biryani Mahal", url: "/case-study/biryani-mahal" },
-  { title: "Case Study: The Helping Hand", url: "/case-study/the-helping-hand" }
+  { title: "Case Study: Wishluv Buildcon", url: "/case-studies/wishluv-buildcon" },
+  { title: "Case Study: Biryani Mahal", url: "/case-studies/biryani-mahal" },
+  { title: "Case Study: The Helping Hand", url: "/case-studies/the-helping-hand" },
+  { title: "Portfolio", url: "/portfolio" },
+  { title: "Careers", url: "/careers" },
+  { title: "Blog", url: "/blog" },
 ];
 
 const pageCategories = [
@@ -32,9 +29,9 @@ const pageCategories = [
       { title: "Home", url: "/" },
       { title: "About Us", url: "/about" },
       { title: "Services", url: "/services" },
-      { title: "Resources", url: "/resources" },
-      { title: "Contact", url: "/#contact" },
-
+      { title: "Portfolio", url: "/portfolio" },
+      { title: "Contact", url: "/contact" },
+      { title: "Careers", url: "/careers" },
     ]
   },
   {
@@ -77,6 +74,11 @@ export default function Sitemap() {
   
   return (
     <div className="min-h-screen bg-white pt-72 md:pt-56 pb-16 px-4">
+      <SEO 
+        title="Website Sitemap | Synergy Brand Architect" 
+        description="Find all pages on Synergy Brand Architect's website with this complete sitemap. Navigate to any section of our site with ease." 
+        noindex={true} 
+      />
       
       <div className="container mx-auto max-w-5xl">
         <div className="mb-8">

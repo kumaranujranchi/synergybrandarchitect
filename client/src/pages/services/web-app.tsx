@@ -29,8 +29,9 @@ import {
 import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/seo";
 
-export default function WebApp() {
+export default function WebAppPage() {
   const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,6 +46,11 @@ export default function WebApp() {
 
   return (
     <div className="min-h-screen bg-white selection:bg-indigo-100 selection:text-indigo-600">
+      <SEO 
+        title="Web Development in Patna | Best Web Development Agency"
+        description="Get a high-performance website from the Best Web Development Agency in Patna. We build responsive, SEO-friendly websites that convert."
+        canonicalPath="/services/web-app-development"
+      />
       <Header />
       
       <main className="pt-72 md:pt-56 overflow-x-hidden">

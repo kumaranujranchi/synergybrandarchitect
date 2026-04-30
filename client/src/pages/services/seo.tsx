@@ -25,8 +25,9 @@ import {
 import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/seo";
 
-export default function SEO() {
+export default function SEOPage() {
   const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);

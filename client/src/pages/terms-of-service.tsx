@@ -1,12 +1,13 @@
-import { Link } from "wouter";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import WhatsappButton from "../components/whatsapp-button";
 import { ArrowLeft, FileText } from "lucide-react";
+import SEO from "@/components/seo";
 
 export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO title="Terms of Service | Synergy Brand Architect" description="Read our terms of service to understand the rules for using our website." noindex={true} />
       <Header />
 
       <main className="container mx-auto px-4 pt-72 md:pt-56 pb-12">

@@ -23,8 +23,9 @@ import {
 import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/seo";
 
-export default function PerformanceMarketing() {
+export default function PerformanceMarketingPage() {
   const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,6 +73,11 @@ export default function PerformanceMarketing() {
 
   return (
     <div className="min-h-screen bg-white selection:bg-amber-100 selection:text-amber-700">
+      <SEO 
+        title="Performance Marketing in Patna | Best Digital Marketing Agency"
+        description="Drive ROI with performance marketing from the Best Digital Marketing Agency in Patna. We specialize in Google Ads, Meta Ads, and data-driven growth."
+        canonicalPath="/services/performance-marketing"
+      />
       <Header />
       
       <main className="pt-72 md:pt-56 overflow-x-hidden">

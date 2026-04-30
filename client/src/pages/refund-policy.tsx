@@ -1,12 +1,13 @@
-import { Link } from "wouter";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import WhatsappButton from "../components/whatsapp-button";
 import { ArrowLeft, RefreshCw } from "lucide-react";
+import SEO from "@/components/seo";
 
 export default function RefundPolicy() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO title="Refund Policy | Synergy Brand Architect" description="Read our refund policy to understand our commitment to customer satisfaction." noindex={true} />
       <Header />
       
       <main className="container mx-auto px-4 pt-72 md:pt-56 pb-12 md:pb-24">

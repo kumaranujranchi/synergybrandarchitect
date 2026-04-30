@@ -9,6 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import Header from "@/components/header";
+import SEO from "@/components/seo";
 
 const resetSchema = z.object({
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
@@ -87,7 +89,10 @@ export default function ResetPasswordPage() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-32 md:py-40 min-h-screen">
+    <div className="min-h-screen bg-white">
+      <SEO title="Reset Password | Synergy Brand Architect" description="Reset your account password." noindex={true} />
+      <Header />
+      <div className="container mx-auto px-4 py-32 md:py-40">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="p-8">
           <h2 className="text-2xl font-bold text-center mb-6 text-[#333333]">Reset Your Password</h2>

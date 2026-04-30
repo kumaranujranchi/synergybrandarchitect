@@ -127,9 +127,9 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] font-inter text-gray-900">
-      <SEO
-        title="Contact Us | Get a Free Consultation - Synergy Brand Architect"
-        description="Get in touch with Synergy Brand Architect, Patna's leading digital marketing agency. Call, email, or visit us. Free consultation available for all digital marketing services."
+      <SEO 
+        title="Contact Us | Best Digital Marketing Agency in Patna - Synergy Brand Architect"
+        description="Get in touch with the Best Digital Marketing Agency in Patna. Contact Synergy Brand Architect for a free consultation on SEO, Web Development, and Brand Scaling."
         canonicalPath="/contact"
       />
       <Header />

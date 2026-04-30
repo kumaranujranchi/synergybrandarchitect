@@ -23,8 +23,8 @@ export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="Portfolio | Our Featured Website Projects - Synergy Brand Architect"
-        description="Explore our diverse portfolio of digital marketing and web development success stories. From SEO results to full-stack applications."
+        title="Our Portfolio | Success Stories by the Best Digital Marketing Agency in Patna"
+        description="Check out our portfolio of successful projects. As the Best Digital Marketing Agency in Patna, we help brands build a strong online presence and achieve measurable growth."
         canonicalPath="/portfolio"
       />
       <Header />

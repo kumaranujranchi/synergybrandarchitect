@@ -6,6 +6,7 @@ interface SEOProps {
   canonicalPath?: string;
   ogImage?: string;
   ogType?: string;
+  noindex?: boolean;
 }
 
 export default function SEO({ 
@@ -13,7 +14,8 @@ export default function SEO({
   description = "Transform your brand with Synergy Brand Architect. We provide expert digital marketing, web development, SEO, and brand building services in Patna.",
   canonicalPath,
   ogImage = "https://imagizer.imageshack.com/img924/5789/CC6b4R.png",
-  ogType = "website"
+  ogType = "website",
+  noindex = false
 }: SEOProps) {
   const siteUrl = "https://synergybrandarchitect.in";
   // Ensure canonical path doesn't have double slashes if it starts with one
@@ -27,6 +29,8 @@ export default function SEO({
       <title>{title}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={fullCanonicalUrl} />
+
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />

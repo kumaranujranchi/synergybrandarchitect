@@ -23,8 +23,9 @@ import {
 import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/seo";
 
-export default function SocialMedia() {
+export default function SocialMediaPage() {
   const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -72,6 +73,11 @@ export default function SocialMedia() {
 
   return (
     <div className="min-h-screen bg-white selection:bg-blue-100 selection:text-blue-600">
+      <SEO 
+        title="Social Media Marketing in Patna | Best Digital Marketing Agency"
+        description="Engage your audience with the Best Digital Marketing Agency in Patna. We offer comprehensive social media management and content strategy."
+        canonicalPath="/services/social-media-marketing"
+      />
       <Header />
       
       <main className="pt-72 md:pt-56 overflow-x-hidden">

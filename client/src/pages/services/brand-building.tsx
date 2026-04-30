@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
@@ -18,8 +17,9 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { useContactModal } from "@/hooks/use-contact-modal";
+import SEO from "@/components/seo";
 
-export default function BrandBuilding() {
+export default function BrandBuildingPage() {
   const { openModal } = useContactModal();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -80,6 +80,11 @@ export default function BrandBuilding() {
 
   return (
     <div className="min-h-screen bg-slate-50/30">
+      <SEO 
+        title="Brand Building Services in Patna | Best Digital Marketing Agency"
+        description="Build a powerful brand identity with the Best Digital Marketing Agency in Patna. We offer end-to-end branding solutions for lasting business impact."
+        canonicalPath="/services/branding-strategy"
+      />
       <Header />
       
       <main className="pt-72 md:pt-56 pb-20 overflow-x-hidden">
