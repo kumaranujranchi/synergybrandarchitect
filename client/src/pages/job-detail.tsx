@@ -231,7 +231,7 @@ export default function JobDetail() {
                           <input 
                             {...register("name")}
                             className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] outline-none transition-all"
-                            placeholder="John Doe"
+                            placeholder="Enter your full name"
                           />
                           {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message as string}</p>}
                         </div>
