@@ -50,7 +50,7 @@ const formSchema = z.object({
   location: z.string().min(2, "Location is required"),
   salary: z.string().optional(),
   description: z.string().min(10, "Description is required"),
-  status: z.string().default("draft"),
+  status: z.string().default("open"),
 });
 
 export default function AdminJobEditor() {
@@ -79,7 +79,7 @@ export default function AdminJobEditor() {
       location: "Patna, Bihar",
       salary: "",
       description: "",
-      status: "draft",
+      status: "open",
     },
   });
 
@@ -312,6 +312,7 @@ export default function AdminJobEditor() {
                                 <SelectContent>
                                   <SelectItem value="text">Short Text</SelectItem>
                                   <SelectItem value="textarea">Long Text</SelectItem>
+                                  <SelectItem value="number">Number Only</SelectItem>
                                   <SelectItem value="select">Dropdown</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -322,10 +323,11 @@ export default function AdminJobEditor() {
                             <div className="space-y-2 pt-2">
                               <Label className="text-xs font-bold uppercase">Dropdown Options (Comma separated)</Label>
                               <Input 
-                                value={q.options?.join(", ") || ""} 
-                                onChange={(e) => updateQuestion(i, { options: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })} 
+                                defaultValue={q.options?.join(", ") || ""} 
+                                onBlur={(e) => updateQuestion(i, { options: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })} 
                                 placeholder="Option 1, Option 2, Option 3"
                               />
+                              <p className="text-[10px] text-gray-400 italic">Example: Yes, No, Maybe (Press enter or click away to save)</p>
                             </div>
                           )}
 

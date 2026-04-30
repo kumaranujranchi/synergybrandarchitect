@@ -316,6 +316,19 @@ export default function JobDetail() {
                                       <option key={opt} value={opt}>{opt}</option>
                                     ))}
                                   </select>
+                                ) : q.type === "number" ? (
+                                  <input 
+                                    type="number"
+                                    required={q.required}
+                                    onChange={(e) => {
+                                      if (typeof window === 'undefined') return;
+                                      const ans = (window as any).answers || {};
+                                      ans[q.id] = e.target.value;
+                                      (window as any).answers = ans;
+                                    }}
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#FF6B00]/20 focus:border-[#FF6B00] outline-none transition-all"
+                                    placeholder="Enter number..."
+                                  />
                                 ) : (
                                   <input 
                                     type="text"
