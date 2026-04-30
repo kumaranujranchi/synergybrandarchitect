@@ -13,7 +13,6 @@ const navLinks = [
   { href: "/services", label: "Services", isPage: true },
   { href: "/portfolio", label: "Portfolio", isPage: true },
   { href: "/blog", label: "Blog", isPage: true },
-  { href: "/resources", label: "Resources", isPage: true },
   { href: "/careers", label: "Careers", isPage: true },
   { href: "#contact", label: "Contact" },
 ];

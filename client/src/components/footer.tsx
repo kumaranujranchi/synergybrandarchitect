@@ -8,6 +8,7 @@ const quickLinks = [
   { href: "/", label: "Home", isPage: true },
   { href: "/services", label: "Services", isPage: true },
   { href: "/careers", label: "Careers", isPage: true },
+  { href: "/resources", label: "Resources", isPage: true },
   { href: "#contact", label: "Contact", isPage: false }
 ];
 
