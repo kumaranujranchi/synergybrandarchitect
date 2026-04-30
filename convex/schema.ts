@@ -97,7 +97,9 @@ export default defineSchema({
     status: v.string(), // 'draft', 'open', 'closed'
     createdAt: v.number(),
     updatedAt: v.number(),
-  }).index("by_slug", ["slug"]),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_status", ["status"]),
 
   applications: defineTable({
     jobId: v.id("jobs"),

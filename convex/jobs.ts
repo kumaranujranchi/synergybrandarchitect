@@ -9,11 +9,14 @@ import { v } from "convex/values";
 export const listJobs = query({
   args: { status: v.optional(v.string()) },
   handler: async (ctx, args) => {
-    let jobQuery = ctx.db.query("jobs");
     if (args.status) {
-      jobQuery = jobQuery.filter((q) => q.eq(q.field("status"), args.status));
+      return await ctx.db
+        .query("jobs")
+        .withIndex("by_status", (q) => q.eq("status", args.status))
+        .order("desc")
+        .collect();
     }
-    return await jobQuery.order("desc").collect();
+    return await ctx.db.query("jobs").order("desc").collect();
   },
 });
 
