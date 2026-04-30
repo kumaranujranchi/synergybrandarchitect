@@ -7,7 +7,7 @@ import { useQuery } from 'convex/react';
 import { api } from "../../../convex/_generated/api";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { fadeUp, staggerContainer } from "@/lib/animations";
+import { fadeUp } from "@/lib/animations";
 import SEO from "@/components/seo";
 import { Button } from "@/components/ui/button";
 
@@ -16,7 +16,9 @@ const JobCard = ({ job }: any) => {
   
   return (
     <motion.div 
-      variants={fadeUp}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ y: -5 }}
       className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 transition-all group cursor-pointer"
       onClick={() => setLocation(`/careers/${job.slug}`)}
@@ -176,13 +178,7 @@ export default function Careers() {
             </div>
           </div>
 
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             {jobs === undefined ? (
               [1, 2, 3].map(i => (
                 <div key={i} className="h-32 bg-gray-200 rounded-2xl animate-pulse" />
@@ -195,12 +191,20 @@ export default function Careers() {
               </div>
             ) : (
               <AnimatePresence mode="popLayout">
-                {filteredJobs?.map((job) => (
-                  <JobCard key={job._id} job={job} />
+                {filteredJobs?.map((job, index) => (
+                  <motion.div
+                    key={job._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <JobCard job={job} />
+                  </motion.div>
                 ))}
               </AnimatePresence>
             )}
-          </motion.div>
+          </div>
         </section>
 
         {/* --- CULTURE / BENEFITS --- */}
