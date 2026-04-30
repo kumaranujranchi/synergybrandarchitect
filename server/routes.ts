@@ -20,8 +20,11 @@ import { sendPasswordResetEmail, sendOTPEmail } from './utils/mailer';
 import { z } from 'zod';
 import { incrementVisitorCount, getVisitorCount } from './visitorCount';
 import OpenAI from 'openai';
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "../convex/_generated/api";
 
 const baseURL = 'https://api.deepseek.com';
+const convex = new ConvexHttpClient(process.env.VITE_CONVEX_URL!);
 
 export function registerRoutes(app: Express): void {
   // Middleware
@@ -68,10 +71,78 @@ export function registerRoutes(app: Express): void {
     next();
   });
   
-  // Static files with specific content types
-  app.get('/sitemap.xml', (req, res) => {
-    res.header('Content-Type', 'application/xml');
-    res.sendFile('sitemap.xml', { root: './public' });
+  // Dynamic sitemap generation
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      // Fetch dynamic data from Convex
+      const [blogs, jobs] = await Promise.all([
+        convex.query(api.blogs.listBlogs, { status: 'published' }),
+        convex.query(api.jobs.listJobs, { status: 'open' }).catch(() => []) // Fallback if query doesn't exist
+      ]);
+
+      const baseUrl = 'https://synergybrandarchitect.in';
+      const lastMod = new Date().toISOString().split('T')[0];
+
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+                            http://www.google.com/schemas/sitemap-image/1.1
+                            http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+  <!-- Main Pages -->
+  <url>
+    <loc>${baseUrl}</loc>
+    <lastmod>${lastMod}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url><loc>${baseUrl}/about</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services</loc><lastmod>${lastMod}</lastmod><priority>0.9</priority></url>
+  <url><loc>${baseUrl}/portfolio</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/contact</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/careers</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/blog</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  
+  <!-- Service Pages -->
+  <url><loc>${baseUrl}/services/brand-building</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services/social-media-marketing</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services/web-app-development</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services/automation</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services/performance-marketing</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/services/seo</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+
+  <!-- Case Studies -->
+  <url><loc>${baseUrl}/case-studies/wishluv-buildcon</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/case-studies/biryani-mahal</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/case-studies/the-helping-hand</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
+
+  <!-- Dynamic Blogs -->
+  ${blogs.map((blog: any) => `
+  <url>
+    <loc>${baseUrl}/blog/${blog.slug}</loc>
+    <lastmod>${new Date(blog.publishedAt || blog.updatedAt || Date.now()).toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`).join('')}
+
+  <!-- Dynamic Jobs -->
+  ${jobs.map((job: any) => `
+  <url>
+    <loc>${baseUrl}/careers/${job.slug}</loc>
+    <lastmod>${new Date(job.updatedAt || Date.now()).toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>`).join('')}
+</urlset>`;
+
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+    } catch (error) {
+      console.error('Sitemap generation error:', error);
+      res.status(500).end();
+    }
   });
   
   app.get('/robots.txt', (req, res) => {

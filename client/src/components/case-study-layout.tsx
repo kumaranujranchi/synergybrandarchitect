@@ -35,7 +35,7 @@ export default function CaseStudyLayout({ children, caseStudy }: CaseStudyLayout
                 Home
               </Link>
               <span className="mx-2">/</span>
-              <Link href="/#case-studies" className="hover:text-[#0066CC]">
+              <Link href="/portfolio" className="hover:text-[#0066CC]">
                 Case Studies
               </Link>
               <span className="mx-2">/</span>
@@ -48,7 +48,7 @@ export default function CaseStudyLayout({ children, caseStudy }: CaseStudyLayout
         <div className="bg-gradient-to-br from-gray-50 to-white py-12 md:py-20">
           <div className="container mx-auto px-4">
             <div className="flex flex-col items-center text-center mb-12">
-              <Link href="/#case-studies" className="inline-flex items-center text-[#0066CC] hover:text-[#0066CC]/80 mb-6">
+              <Link href="/portfolio" className="inline-flex items-center text-[#0066CC] hover:text-[#0066CC]/80 mb-6">
                 <ChevronLeft className="w-4 h-4 mr-1" />
                 Back to all case studies
               </Link>
@@ -103,7 +103,7 @@ export default function CaseStudyLayout({ children, caseStudy }: CaseStudyLayout
                 >
                   Contact Us Today
                 </Button>
-                <Link href="/#case-studies">
+                <Link href="/portfolio">
                   <Button variant="outline" className="px-8">
                     View More Case Studies
                   </Button>

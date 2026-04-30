@@ -9,7 +9,7 @@ import { useContactModal } from "@/hooks/use-contact-modal";
 import SaleBanner from "./sale-banner";
 
 const navLinks = [
-  { href: "#home", label: "Home", isHome: true },
+  { href: "/", label: "Home", isPage: true, isHome: true },
   { href: "/services", label: "Services", isPage: true },
   { href: "/portfolio", label: "Portfolio", isPage: true },
   { href: "/blog", label: "Blog", isPage: true },
@@ -40,26 +40,14 @@ export default function Header() {
   const handleNavigation = (e: React.MouseEvent, link: any) => {
     e.preventDefault();
     
-    // If we're not on the home page and the link is to a home page section
-    if (location !== '/' && !link.isPage) {
-      // Navigate to home page first, then scroll
-      window.location.href = '/' + link.href;
-      return;
-    }
-    
-    // If it's the contact link, open the modal
-    if (link.href === '#contact') {
-      openModal();
+    // If it's a page link, use wouter navigation
+    if (link.isPage) {
       closeMenu();
       return;
     }
 
-    // Otherwise use smooth scroll for hash links
-    if (!link.isPage) {
-      smoothScrollTo(link.href);
-    }
-    
-    // If it's a page link, the Link component will handle it
+    // Otherwise use smooth scroll for any remaining hash links
+    smoothScrollTo(link.href);
     closeMenu();
   };
 

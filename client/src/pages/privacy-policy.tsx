@@ -2,6 +2,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import WhatsappButton from "../components/whatsapp-button";
 import { ArrowLeft, Lock } from "lucide-react";
+import { Link } from "wouter";
 import SEO from "@/components/seo";
 
 export default function PrivacyPolicy() {

@@ -58,12 +58,12 @@ export default function BlogDetail() {
   // --- SEO Interlinking Logic ---
   
   // 1. Related Blogs (Same category first, excluding current)
-  const sameCategoryBlogs = allBlogs?.filter(b => b.category === blog.category && b.slug !== slug) || [];
-  const otherBlogs = allBlogs?.filter(b => b.category !== blog.category && b.slug !== slug) || [];
+  const sameCategoryBlogs = allBlogs?.filter((b: any) => b.category === blog.category && b.slug !== slug) || [];
+  const otherBlogs = allBlogs?.filter((b: any) => b.category !== blog.category && b.slug !== slug) || [];
   const relatedBlogs = [...sameCategoryBlogs, ...otherBlogs].slice(0, 3);
 
   // 2. Next/Prev Navigation
-  const currentIndex = allBlogs?.findIndex(b => b.slug === slug) ?? -1;
+  const currentIndex = allBlogs?.findIndex((b: any) => b.slug === slug) ?? -1;
   const nextPost = currentIndex > 0 ? allBlogs?.[currentIndex - 1] : null;
   const prevPost = currentIndex < (allBlogs?.length ?? 0) - 1 ? allBlogs?.[currentIndex + 1] : null;
 

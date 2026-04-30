@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowLeft } from "lucide-react";
-import { useEffect } from "react";
 import { useContactModal } from "@/hooks/use-contact-modal";
 import SEO from "@/components/seo";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 const services = [
   { title: "Brand Building & Strategy", url: "/services/brand-building" },
@@ -54,6 +56,50 @@ const pageCategories = [
 
 export default function Sitemap() {
   const { openModal } = useContactModal();
+
+  // Fetch dynamic content from Convex
+  const blogs = useQuery(api.blogs.listBlogs, { status: "published" });
+  const jobs = useQuery(api.jobs.listJobs, { status: "open" });
+
+  const dynamicResources = [
+    ...resources.filter(r => r.url !== "/blog" && r.url !== "/careers"),
+    { title: "Blog Home", url: "/blog" },
+    ...(blogs?.map(blog => ({ title: `Blog: ${blog.title}`, url: `/blog/${blog.slug}` })) || []),
+    { title: "Careers Home", url: "/careers" },
+    ...(jobs?.map(job => ({ title: `Job: ${job.title}`, url: `/careers/${job.slug}` })) || []),
+    { title: "Portfolio", url: "/portfolio" },
+  ];
+
+  const dynamicCategories = [
+    {
+      title: "Main Pages",
+      pages: [
+        { title: "Home", url: "/" },
+        { title: "About Us", url: "/about" },
+        { title: "Services", url: "/services" },
+        { title: "Portfolio", url: "/portfolio" },
+        { title: "Contact", url: "/contact" },
+        { title: "Careers", url: "/careers" },
+      ]
+    },
+    {
+      title: "Our Services",
+      pages: services
+    },
+    {
+      title: "Resources & Insights",
+      pages: dynamicResources
+    },
+    {
+      title: "Legal Pages",
+      pages: [
+        { title: "Privacy Policy", url: "/privacy-policy" },
+        { title: "Terms of Service", url: "/terms-of-service" },
+        { title: "Refund Policy", url: "/refund-policy" },
+      ]
+    },
+  ];
+
   // Set the document title
   useEffect(() => {
     document.title = "Website Sitemap - Synergy Brand Architect";
@@ -100,7 +146,7 @@ export default function Sitemap() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {pageCategories.map((category, categoryIndex) => (
+          {dynamicCategories.map((category, categoryIndex) => (
             <div key={categoryIndex} className="mb-8">
               <h2 className="text-xl font-poppins font-semibold text-[#FF6B00] mb-4 pb-2 border-b border-gray-200">
                 {category.title}

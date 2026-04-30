@@ -179,7 +179,7 @@ export default function JobDetail() {
                   <section>
                     <h2 className="text-2xl font-bold text-gray-900 font-poppins mb-4">Benefits & Perks</h2>
                     <ul className="list-disc pl-5 space-y-2">
-                      {job.benefits.map((ben, i) => (
+                      {job.benefits.map((ben: string, i: number) => (
                         <li key={i}>{ben}</li>
                       ))}
                     </ul>

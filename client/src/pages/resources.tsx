@@ -30,18 +30,21 @@ export default function Resources() {
               Discover practical tools, case studies, and resources to help grow your business and strengthen your brand.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="#free-tools" className="inline-block">
-                <Button className="bg-[#0066CC] hover:bg-[#0055AA] text-white text-lg px-6 py-6 rounded-lg">
-                  Explore Free Tools
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
-              <a href="#case-studies" className="inline-block">
-                <Button variant="outline" className="border-[#FF6B00] text-[#FF6B00] hover:bg-[#FF6B00]/10 text-lg px-6 py-6 rounded-lg">
-                  View Case Studies
-                  <ChevronRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
+              <Button 
+                className="bg-[#0066CC] hover:bg-[#0055AA] text-white text-lg px-6 py-6 rounded-lg"
+                onClick={() => document.getElementById('free-tools')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Explore Free Tools
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-[#FF6B00] text-[#FF6B00] hover:bg-[#FF6B00]/10 text-lg px-6 py-6 rounded-lg"
+                onClick={() => document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                View Case Studies
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
             </div>
           </div>
         </div>

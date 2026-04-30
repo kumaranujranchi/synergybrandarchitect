@@ -118,9 +118,9 @@ export default function BlogList() {
   
   // Filter for specific categories (Logic for Magazine sections)
   // Enhanced to match new predefined categories
-  const businessPosts = remaining.filter(p => !p.category || p.category.toLowerCase().includes('business') || p.category.toLowerCase().includes('strategy')).slice(0, 3);
-  const seoPosts = remaining.filter(p => p.category?.toLowerCase().includes('seo') || p.category?.toLowerCase().includes('organic')).slice(0, 3);
-  const marketingPosts = remaining.filter(p => 
+  const businessPosts = remaining.filter((p: any) => !p.category || p.category.toLowerCase().includes('business') || p.category.toLowerCase().includes('strategy')).slice(0, 3);
+  const seoPosts = remaining.filter((p: any) => p.category?.toLowerCase().includes('seo') || p.category?.toLowerCase().includes('organic')).slice(0, 3);
+  const marketingPosts = remaining.filter((p: any) => 
     p.category?.toLowerCase().includes('marketing') || 
     p.category?.toLowerCase().includes('social') ||
     p.category?.toLowerCase().includes('content') ||
@@ -129,11 +129,11 @@ export default function BlogList() {
 
   // Everything else for the "General archive" at the bottom
   const featuredIds = new Set([
-      ...businessPosts.map(p => p._id), 
-      ...seoPosts.map(p => p._id), 
-      ...marketingPosts.map(p => p._id)
+      ...businessPosts.map((p: any) => p._id), 
+      ...seoPosts.map((p: any) => p._id), 
+      ...marketingPosts.map((p: any) => p._id)
   ]);
-  const generalArchive = remaining.filter(p => !featuredIds.has(p._id));
+  const generalArchive = remaining.filter((p: any) => !featuredIds.has(p._id));
 
   // 3. Sidebar Widget: Trending / Picks
   const editorsPicks = allPosts.slice(3, 7).length > 0 ? allPosts.slice(3, 7) : allPosts.slice(1, 4);
@@ -220,7 +220,7 @@ export default function BlogList() {
 
               {/* Side Sub-Features */}
               <div className="lg:col-span-4 grid grid-rows-2 gap-6">
-                {subFeatures.map((post, idx) => (
+                {subFeatures.map((post: any, idx: any) => (
                   <motion.div 
                     key={post._id} 
                     variants={fadeUp}
@@ -267,7 +267,7 @@ export default function BlogList() {
                </div>
                <div className="flex-1 overflow-hidden relative h-[52px]">
                  <div className="absolute inset-0 flex items-center animate-marquee whitespace-nowrap px-4 text-sm font-medium">
-                   {allPosts.slice(0,5).map((p, i) => (
+                   {allPosts.slice(0,5).map((p: any, i: any) => (
                      <span key={i} className="mx-6 flex items-center group cursor-pointer" onClick={() => setLocation(`/blog/${p.slug}`)}>
                        <span className="text-[#FF6B00] mr-3">♦</span>
                        <span className="group-hover:text-[#0066CC] transition-colors text-gray-700">

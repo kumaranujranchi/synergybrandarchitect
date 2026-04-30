@@ -84,12 +84,12 @@ export default function PortfolioPage() {
                       <Skeleton className="h-12 w-full" />
                   </div>
                ))
-            ) : portfolioItems.filter(item => item.featured).length === 0 ? (
+            ) : portfolioItems.filter((item: any) => item.featured).length === 0 ? (
                <div className="col-span-full text-center py-10 text-gray-500">
                   No featured website projects yet.
                </div>
             ) : (
-                portfolioItems.filter(item => item.featured).map((item) => (
+                portfolioItems.filter((item: any) => item.featured).map((item: any) => (
                 <div key={item._id} className="portfolio-card bg-white shadow-lg border border-gray-100 group">
                     <div className="portfolio-image-container">
                     <OptimizedImage
@@ -114,7 +114,7 @@ export default function PortfolioPage() {
                     </p>
 
                     <div className="space-y-2 mb-6">
-                        {item.results && item.results.map((result, index) => (
+                        {item.results && item.results.map((result: any, index: any) => (
                         <div key={index} className="flex items-center gap-2 text-sm text-gray-700">
                             <div className="w-2 h-2 bg-[#FF6B00] rounded-full"></div>
                             <span>{result}</span>
@@ -173,7 +173,7 @@ export default function PortfolioPage() {
                   Projects are being updated. Check back soon!
                </div>
             ) : (
-                portfolioItems.map((item) => (
+                portfolioItems.map((item: any) => (
                 <div key={item._id} className="portfolio-card bg-white shadow-md border border-gray-100 group">
                     <div className="portfolio-image-container flex">
                     <OptimizedImage

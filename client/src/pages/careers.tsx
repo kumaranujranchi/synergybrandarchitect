@@ -65,7 +65,7 @@ export default function Careers() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", ...new Set((jobs || []).map(j => j.department))];
+  const categories = ["All", ...Array.from(new Set((jobs || []).map(j => j.department)))];
 
   const filteredJobs = (jobs || []).filter(job => {
     const matchesSearch = (job.title || "").toLowerCase().includes(searchTerm.toLowerCase()) || 

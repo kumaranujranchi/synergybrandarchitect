@@ -12,7 +12,7 @@ export const listJobs = query({
     if (args.status) {
       return await ctx.db
         .query("jobs")
-        .withIndex("by_status", (q) => q.eq("status", args.status))
+        .withIndex("by_status", (q) => q.eq("status", args.status!))
         .order("desc")
         .collect();
     }
@@ -147,7 +147,7 @@ export const listApplications = query({
     if (args.jobId) {
       return await ctx.db
         .query("applications")
-        .withIndex("by_job", (q) => q.eq("jobId", args.jobId))
+        .withIndex("by_job", (q) => q.eq("jobId", args.jobId!))
         .order("desc")
         .collect();
     }
