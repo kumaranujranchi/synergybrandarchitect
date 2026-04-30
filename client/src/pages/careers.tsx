@@ -4,7 +4,6 @@ import Footer from "@/components/footer";
 import WhatsappButton from "@/components/whatsapp-button";
 import { Briefcase, MapPin, Clock, ArrowRight, Search, Filter, Sparkles, Building2, Users2, Trophy, Globe2 } from 'lucide-react';
 import { useQuery } from 'convex/react';
-import { useSSRQuery } from "@/hooks/use-ssr-query";
 import { api } from "../../../convex/_generated/api";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
@@ -60,7 +59,7 @@ const JobCard = ({ job }: any) => {
 };
 
 export default function Careers() {
-  const jobs = useSSRQuery(api.jobs.listJobs, { status: "open" });
+  const jobs = useQuery(api.jobs.listJobs, { status: "open" });
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
