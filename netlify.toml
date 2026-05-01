@@ -2,20 +2,6 @@
 [build]
   publish = "dist/client"
   command = "npx convex deploy --cmd 'npm run build'"
-  functions = "netlify/functions"
-
-# Dynamic Sitemap - Netlify Function (MUST be before catch-all)
-[[redirects]]
-  from = "/sitemap.xml"
-  to = "/.netlify/functions/sitemap"
-  status = 200
-  force = true
-
-# Robots.txt - serve from static file
-[[redirects]]
-  from = "/robots.txt"
-  to = "/robots.txt"
-  status = 200
 
 # Catch-all - serve React SPA for all other routes
 [[redirects]]
