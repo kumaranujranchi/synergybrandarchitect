@@ -80,7 +80,7 @@ async function run() {
       const { html, head } = await render(url);
 
       const fullHtml = template
-        .replace('<!--app-head-->', head)
+        .replace('<!--app-head-meta-->', head)
         .replace('<!--app-html-->', html);
 
       // Determine output file path
