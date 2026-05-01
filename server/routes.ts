@@ -30,55 +30,26 @@ export function registerRoutes(app: Express): void {
   // Middleware
   app.use(cookieParser());
   
-  // URL Redirects for SEO
-  app.use((req, res, next) => {
-    // Get host from different possible headers
-    const host = req.header('host') || req.header('x-forwarded-host') || req.hostname;
-    const path = req.path;
-    // Get protocol considering potential proxies
-    const protocol = req.header('x-forwarded-proto') || req.protocol;
-    
-    // Skip SEO redirects for API calls to avoid issues with non-GET methods or JSON expectations
-    if (path.startsWith('/api')) {
-      return next();
-    }
-    
-    // Canonical domain and HTTPS handling - prevent redirect chains
-    const isWww = host && host.match(/^www\./i);
-    const isHttp = protocol !== 'https';
-
-    if (process.env.NODE_ENV === 'production' && (isWww || isHttp)) {
-      const newHost = isWww ? host.replace(/^www\./i, '') : host;
-      // Always redirect to HTTPS and non-WWW in one go
-      const redirectUrl = `https://${newHost}${req.originalUrl || req.url}`;
-      console.log(`SEO Redirect (HTTPS/non-WWW): ${redirectUrl}`);
-      return res.redirect(301, redirectUrl);
-    }
-    
-    // Redirect old URLs to new paths with consistent handling
-    if (path === '/contact-brand-building-services') {
-      return res.redirect(301, '/contact');
-    }
-    
-    // Remove trailing slashes from URLs for consistency
-    if (path.length > 1 && path.endsWith('/')) {
-      const trimmedPath = path.slice(0, -1);
-      const redirectUrl = `${protocol}://${host}${trimmedPath}${req.originalUrl?.includes('?') ? req.originalUrl.substring(req.originalUrl.indexOf('?')) : ''}`;
-      console.log(`Removing trailing slash: ${redirectUrl}`);
-      return res.redirect(301, redirectUrl);
-    }
-    
-    next();
-  });
-  
-  // Dynamic sitemap generation
+  // Dynamic sitemap generation - Move this BEFORE the redirect middleware to ensure it's caught
   app.get('/sitemap.xml', async (req, res) => {
+    console.log(`[Sitemap] Request received for /sitemap.xml from ${req.ip}`);
     try {
+      // Check if Convex URL is configured
+      if (!process.env.VITE_CONVEX_URL) {
+        console.error('[Sitemap] VITE_CONVEX_URL is not configured');
+        throw new Error('Convex URL missing');
+      }
+
       // Fetch dynamic data from Convex
       const [blogs, jobs] = await Promise.all([
         convex.query(api.blogs.listBlogs, { status: 'published' }),
-        convex.query(api.jobs.listJobs, { status: 'open' }).catch(() => []) // Fallback if query doesn't exist
+        convex.query(api.jobs.listJobs, { status: 'open' }).catch((err) => {
+          console.error('[Sitemap] Error fetching jobs:', err);
+          return [];
+        })
       ]);
+
+      console.log(`[Sitemap] Fetched ${blogs.length} blogs and ${jobs.length} jobs`);
 
       const baseUrl = 'https://synergybrandarchitect.in';
       const lastMod = new Date().toISOString().split('T')[0];
@@ -162,10 +133,12 @@ export function registerRoutes(app: Express): void {
       res.header('Content-Type', 'application/xml');
       res.send(xml);
     } catch (error) {
-      console.error('Sitemap generation error:', error);
-      res.status(500).end();
+      console.error('[Sitemap] Generation error:', error);
+      res.status(500).send(`Sitemap error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   });
+
+  // URL Redirects for SEO
   
   app.get('/robots.txt', (req, res) => {
     res.header('Content-Type', 'text/plain');
