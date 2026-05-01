@@ -17,8 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Serve static files from public directory
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'public')));
+
 
 // Set up logging middleware
 app.use((req, res, next) => {
@@ -76,7 +75,10 @@ process.on('SIGINT', () => {
   });
 });
 
-// Add global error handler
+// Register all routes - MUST be before error handler
+registerRoutes(app);
+
+// Add global error handler (always last)
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error('Error:', err);
   const status = err.status || err.statusCode || 500;
@@ -84,8 +86,8 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   res.status(status).json({ message });
 });
 
-// Register all routes
-registerRoutes(app);
+// Serve static files from public directory
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'public')));
 
 // Setup Vite/static files 
 if (process.env.NODE_ENV !== 'production') {
