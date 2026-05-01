@@ -97,13 +97,29 @@ export function registerRoutes(app: Express): void {
     <lastmod>${lastMod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://imagizer.imageshack.com/img924/5789/CC6b4R.png</image:loc>
+      <image:title>Synergy Brand Architect Logo</image:title>
+      <image:caption>Digital Marketing &amp; Brand Building Agency in Patna</image:caption>
+    </image:image>
   </url>
   <url><loc>${baseUrl}/about</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
-  <url><loc>${baseUrl}/services</loc><lastmod>${lastMod}</lastmod><priority>0.9</priority></url>
+  <url>
+    <loc>${baseUrl}/services</loc>
+    <lastmod>${lastMod}</lastmod>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://imagizer.imageshack.com/img923/615/RnlW5s.jpg</image:loc>
+      <image:title>Digital Marketing Services</image:title>
+      <image:caption>Comprehensive digital marketing services including SEO, SEM, social media marketing</image:caption>
+    </image:image>
+  </url>
   <url><loc>${baseUrl}/portfolio</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
   <url><loc>${baseUrl}/contact</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
   <url><loc>${baseUrl}/careers</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
   <url><loc>${baseUrl}/blog</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/resources</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
+  <url><loc>${baseUrl}/sitemap</loc><lastmod>${lastMod}</lastmod><priority>0.3</priority></url>
   
   <!-- Service Pages -->
   <url><loc>${baseUrl}/services/brand-building</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
@@ -114,9 +130,15 @@ export function registerRoutes(app: Express): void {
   <url><loc>${baseUrl}/services/seo</loc><lastmod>${lastMod}</lastmod><priority>0.8</priority></url>
 
   <!-- Case Studies -->
+  <url><loc>${baseUrl}/case-studies</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
   <url><loc>${baseUrl}/case-studies/wishluv-buildcon</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
   <url><loc>${baseUrl}/case-studies/biryani-mahal</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
   <url><loc>${baseUrl}/case-studies/the-helping-hand</loc><lastmod>${lastMod}</lastmod><priority>0.7</priority></url>
+
+  <!-- Legal Pages -->
+  <url><loc>${baseUrl}/privacy-policy</loc><lastmod>${lastMod}</lastmod><priority>0.3</priority></url>
+  <url><loc>${baseUrl}/terms-of-service</loc><lastmod>${lastMod}</lastmod><priority>0.3</priority></url>
+  <url><loc>${baseUrl}/refund-policy</loc><lastmod>${lastMod}</lastmod><priority>0.3</priority></url>
 
   <!-- Dynamic Blogs -->
   ${blogs.map((blog: any) => `
