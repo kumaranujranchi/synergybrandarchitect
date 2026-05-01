@@ -1,5 +1,5 @@
 # Synergy Brand Architect Robots.txt
-# Updated: April 30, 2025
+# Updated: May 01, 2026
 
 # Allow all bots to crawl most of the site
 User-agent: *
@@ -44,9 +44,10 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /auth
 
-# Block bad bots
+# Block Ahrefs to hide strategy from competitors
 User-agent: AhrefsBot
 Disallow: /
 
+# Allow Semrush for site auditing
 User-agent: SemrushBot
-Disallow: /
+Allow: /
