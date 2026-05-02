@@ -24,6 +24,7 @@ export default function SEO({
     ? siteUrl 
     : `${siteUrl}${cleanPath}`;
 
+
   return (
     <Helmet>
       <title>{title}</title>

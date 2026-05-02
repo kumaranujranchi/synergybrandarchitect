@@ -78,10 +78,12 @@ async function run() {
     try {
       console.log(`Rendering: ${url}`);
       const { html, head } = await render(url);
-
+      if (url.includes('digital-marketing-kya-hai')) {
+        fs.writeFileSync('scripts/debug_head.txt', head);
+      }
       const fullHtml = template
-        .replace('<!--app-head-meta-->', head)
-        .replace('<!--app-html-->', html);
+        .replace(/<meta name="app-head-meta" content="placeholder" \/?>/, head)
+        .replace('SSR_APP_HTML', html);
 
       // Determine output file path
       const fileName = url === '/' ? 'index.html' : `${url.slice(1)}/index.html`;
@@ -90,6 +92,12 @@ async function run() {
       // Create directory if it doesn't exist
       fs.mkdirSync(path.dirname(filePath), { recursive: true });
       fs.writeFileSync(filePath, fullHtml);
+      
+      if (url.startsWith('/blog/')) {
+        const check = fs.readFileSync(filePath, 'utf-8');
+        const hasData = check.includes('blogs.getBlogBySlug') && !check.includes('window.__INITIAL_DATA__ = {}');
+        console.log(`VERIFICATION for ${url}: ${hasData ? '✅ PASSED' : '❌ FAILED'}`);
+      }
     } catch (e) {
       console.error(`Failed to prerender ${url}:`, e);
     }

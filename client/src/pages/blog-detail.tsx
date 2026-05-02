@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import { useLocation, useParams, Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Helmet } from 'react-helmet-async';
+import SEO from "@/components/seo";
 
 export default function BlogDetail() {
   const { slug } = useParams();
@@ -90,16 +91,33 @@ export default function BlogDetail() {
     }
   };
 
+  console.log(`Rendering BlogDetail for slug: ${slug}, blog found: ${!!blog}`);
+  const pageTitle = blog.seoTitle || `${blog.title} | Synergy Brand Architect`;
+  const pageDescription = blog.seoDescription || blog.excerpt || "";
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      <Helmet>
-        <title>{blog.seoTitle || `${blog.title} | Synergy Brand Architect`}</title>
-        <meta name="description" content={blog.seoDescription || blog.excerpt || ""} />
-        {blog.seoKeywords && <meta name="keywords" content={blog.seoKeywords} />}
-        <script type="application/ld+json">
-          {JSON.stringify(articleSchema)}
-        </script>
-      </Helmet>
+      <SEO 
+        title={pageTitle}
+        description={pageDescription}
+        ogImage={blog.coverImage}
+        ogType="article"
+      />
+      {blog.seoKeywords && (
+        <Helmet>
+          <meta name="keywords" content={blog.seoKeywords} />
+          <script type="application/ld+json">
+            {JSON.stringify(articleSchema)}
+          </script>
+        </Helmet>
+      )}
+      {!blog.seoKeywords && (
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify(articleSchema)}
+          </script>
+        </Helmet>
+      )}
 
       <Header />
       <WhatsappButton />
